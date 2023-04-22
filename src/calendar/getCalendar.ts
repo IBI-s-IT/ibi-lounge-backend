@@ -1,0 +1,77 @@
+import {LessonDay} from "../types/parser";
+import ical, {ICalAlarmType, ICalEventBusyStatus} from "ical-generator";
+
+export async function convertLessonDaysToiCalendarEvents(days: LessonDay[]) {
+  if (!days || !days.length) {
+    throw new Error('No data');
+  }
+
+  const calendar = ical({name: 'Учёба'});
+
+  days.map((day) => {
+    day.lessons.map((lesson) => {
+      const event = calendar.createEvent({
+        start: lesson.time_start,
+        end: lesson.time_end,
+        summary: lesson.text,
+      });
+
+      let description = '';
+
+      if (lesson?.additional?.type) {
+        switch (lesson.additional.type) {
+          case "lecture":
+            description += `📖 Лекция\n`;
+            break;
+          case "practice":
+            description += `💻 Практика\n`
+            break;
+          case "project_work":
+            description += `🔨 Проектная деятельность\n`
+            break;
+          case "library_day":
+            description += `📚 Библиотечный день\n`
+            break;
+          case "subject_report":
+            description += `⚠️ Зачёт\n`;
+            break;
+          case "exam":
+            description += `⚠️ Экзамен\n`;
+            break;
+          default:
+            description += `⚠️ Неизвестный тип занятия\n`
+        }
+      }
+
+      if (lesson?.additional?.is_online) {
+        event.busystatus(ICalEventBusyStatus.FREE)
+        const alarm = event.createAlarm();
+        alarm.type(ICalAlarmType.display)
+        alarm.triggerBefore(60 * 15)
+        description += `🌎Онлайн занятие\n`;
+
+        if (lesson?.additional?.url) {
+          event.location(lesson.additional.url);
+        }
+      } else if (lesson?.additional?.location) {
+        event.location(lesson.additional.location);
+        description += `Место: ${lesson.additional.location}\n`;
+        const alarm = event.createAlarm();
+        alarm.type(ICalAlarmType.display)
+        alarm.triggerBefore(3600 * 2)
+      }
+
+      if (lesson?.additional?.subgroup) {
+        description += `👥 Подгруппа: ${lesson.additional.subgroup}\n`;
+      }
+
+      if (lesson?.additional?.teacher_name) {
+        description += `👩‍🏫 Преподаватель: ${lesson.additional.teacher_name}`;
+      }
+
+      event.description(description);
+    })
+  })
+
+  return calendar.toString();
+}

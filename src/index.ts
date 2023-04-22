@@ -1,0 +1,64 @@
+import bodyParser from "body-parser";
+import express, { Application } from "express";
+import {wrapInResponse} from "./utils/response";
+import {GetGroupsRequest, GetSchedulesRequest} from "./types/request";
+import {getGroups} from "./api/getGroups";
+import {getSchedules} from "./api/getSchedules";
+import {getRaspisanFormattedDate} from "./utils/date";
+import {convertLessonDaysToiCalendarEvents} from "./calendar/getCalendar";
+
+const app: Application = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/ping', async (req, res) => {
+  res
+    .type('json')
+    .send(wrapInResponse('pong'));
+})
+
+app.get('/getGroups', async (req: GetGroupsRequest, res) => {
+  const { query } = req;
+  
+  res.send(
+    await getGroups(query)
+  );
+});
+
+app.get('/getSchedules', async (req: GetSchedulesRequest, res) => {
+  const { query } = req;
+
+  res.send(
+    await getSchedules(query)
+  );
+});
+
+app.get('/calendar', async (req: GetSchedulesRequest, res) => {
+  try {
+    const data = await getSchedules({
+      group: req.query.group,
+      dateStart: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 0, 1)),
+      dateEnd: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 11, 31)),
+    });
+    
+    if (data && 'response' in data) {
+      const calendar = await convertLessonDaysToiCalendarEvents(data.response);
+      res
+        .type('text/calendar')
+        .send(calendar);
+    }
+    
+    res.status(500);
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+});
+
+
+const PORT = process.env.PORT || 8000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on PORT ${PORT}`);
+});
