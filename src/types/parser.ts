@@ -17,8 +17,10 @@ export interface Lesson {
  * - `project_work`: Проектная деятельность (в 2023 году не встречался)
  * - `exam`: Экзамен
  * - `subject_report`: Зачёт
+ * - `consultation`: Консультация
+ * - `subject_report_with_grade`: Дифференцированный зачёт
  */
-type AdditionalLessonDataType = 'practice' | 'lecture' | 'library_day' | 'project_work' | 'exam' | 'subject_report'
+type AdditionalLessonDataType = 'practice' | 'lecture' | 'library_day' | 'project_work' | 'exam' | 'subject_report' | 'consultation' | 'subject_report_with_grade';
 
 interface CustomTime {
   start: Date;

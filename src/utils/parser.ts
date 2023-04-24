@@ -54,6 +54,16 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     result.type = 'practice';
   }
   
+  if (text.includes('-Конс')) {
+    text = text.replace(' -Конс', '');
+    result.type = 'consultation';
+  }
+
+  if (text.includes('-ДифЗ')) {
+    text = text.replace(' -ДифЗ', '');
+    result.type = 'subject_report_with_grade';
+  }
+
   if (text.includes('-Экз')) {
     text = text.replace(' -Экз', '');
     result.type = 'exam';

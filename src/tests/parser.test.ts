@@ -14,7 +14,11 @@ import {
   combinedMultipleSubgroupsHtml,
   combinedMultipleSubgroupsReceived,
   subjectReportEventHtml,
-  subjectReportEventReceived, noSubjectLectureHtml, noSubjectLectureReceived,
+  subjectReportEventReceived,
+  noSubjectLectureHtml,
+  noSubjectLectureReceived,
+  subjectReportWithGradeHtml,
+  subjectReportWithGradeReceived,
 } from "./parser.mocks";
 
 function toSafeData(data: any) {
@@ -30,6 +34,11 @@ describe('Schedules parsing', () => {
   test('parse subject report events', () => {
     const data = parse(subjectReportEventHtml);
     expect(toSafeData(data)).toEqual(subjectReportEventReceived);
+  })
+
+  test ('parse subject report with grade and consultation events', () => {
+    const data = parse(subjectReportWithGradeHtml);
+    expect(toSafeData(data)).toEqual(subjectReportWithGradeReceived);
   })
 
   test('parse lecture event', () => {

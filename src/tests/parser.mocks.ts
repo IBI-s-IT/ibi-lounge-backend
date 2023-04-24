@@ -518,3 +518,39 @@ export const noSubjectLectureReceived =  [
     ]
   }
 ];
+
+export const subjectReportWithGradeHtml = `<center><h4>Расписание группы 123-ПИвЭ за период с 29.12.2022 по 29.12.2022</h4></center><table border=1 cellspacing=0 cellpadding=0 style='border-color: Black;  border-collapse: collapse; background-color : #FFFFFF;' >
+                    <tr align=center>
+                    <td rowspan=2 style='border-color: Black; background-color: #f6ecc8'><b>Дата</b></td>
+                    <td colspan=2 style='border-color: Black; background-color: #f6ecc8'><b>Время занятий</b></td></tr><td align=center style='border-color: Black; background-color: #f6ecc8'><b>10:40-12:10&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>12:50-14:20&nbsp;</b></td></tr><tr style='background-color: transparent' align=center>
+                            <td style='border-color: Black;'>29.12 Чт&nbsp;</td><td style='border-color: Black;'>Мат.анализ -ДифЗ, Антипова Т.Б., ауд. МС-34&nbsp;</td><td style='border-color: Black;'>История_ИРос,ВИ -Конс, Кривошеев М.В., ауд. МС-31&nbsp;</td></tr></table>`;
+
+export const subjectReportWithGradeReceived = {
+  "response": [
+    {
+      "date": "2023-12-28T21:00:00.000Z",
+      "lessons": [
+        {
+          "text": "Мат.анализ",
+          "time_start": "2023-12-29T07:40:00.000Z",
+          "time_end": "2023-12-29T09:10:00.000Z",
+          "additional": {
+            "type": "subject_report_with_grade",
+            "location": "МС-34",
+            "teacher_name": "Антипова Т.Б."
+          }
+        },
+        {
+          "text": "История_ИРос,ВИ",
+          "time_start": "2023-12-29T09:50:00.000Z",
+          "time_end": "2023-12-29T11:20:00.000Z",
+          "additional": {
+            "type": "consultation",
+            "location": "МС-31",
+            "teacher_name": "Кривошеев М.В."
+          }
+        }
+      ]
+    }
+  ]
+};
