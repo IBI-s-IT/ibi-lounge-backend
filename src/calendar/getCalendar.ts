@@ -36,7 +36,13 @@ export async function convertLessonDaysToiCalendarEvents(days: LessonDay[]) {
             description += `⚠️ Зачёт\n`;
             break;
           case "exam":
-            description += `⚠️ Экзамен\n`;
+            description += `🚨 Экзамен\n`;
+            break;
+          case "consultation":
+            description += `ℹ️ Консультация`;
+            break;
+          case "subject_report_with_grade":
+            description += `⚠️ Диф. зачёт`;
             break;
           default:
             description += `⚠️ Неизвестный тип занятия\n`
