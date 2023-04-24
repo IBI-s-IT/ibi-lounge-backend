@@ -267,42 +267,42 @@ export const lectureEventReceived = [
   }
 ]
 
-export const combinedMultipleSubgroupsHtml = `<center><h4>Расписание группы 113-ПИвЭ за период с 11.05.2023 по 11.05.2023</h4></center><table border=1 cellspacing=0 cellpadding=0 style='border-color: Black;  border-collapse: collapse; background-color : #FFFFFF;' >
+export const combinedMultipleSubgroupsHtml = `<center><h4>Расписание группы 113-ПИвЭ за период с 27.04.2023 по 27.04.2023</h4></center><table border=1 cellspacing=0 cellpadding=0 style='border-color: Black;  border-collapse: collapse; background-color : #FFFFFF;' >
                     <tr align=center>
                     <td rowspan=2 style='border-color: Black; background-color: #f6ecc8'><b>Дата</b></td>
                     <td colspan=4 style='border-color: Black; background-color: #f6ecc8'><b>Время занятий</b></td></tr><td align=center style='border-color: Black; background-color: #f6ecc8'><b>9:00-10:30&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>10:40-12:10&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>12:50-14:20&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>14:30-16:00&nbsp;</b></td></tr><tr style='background-color: transparent' align=center>
-                            <td style='border-color: Black;'>11.05 Чт&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 3В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-22, ПОДГРУППА 1А и ПОДГРУППА 3А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 1С И ПОДГРУППА 3С&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 3В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-22, ПОДГРУППА 1А и ПОДГРУППА 3А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 1 И ПОДГРУППА 3С&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 2В и ПОДГРУППА 4В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-22, ПОДГРУППА 2А и ПОДГРУППА 4А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 2С И ПОДГРУППА 4С&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 2В и ПОДГРУППА 4В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-22, ПОДГРУППА 2А и ПОДГРУППА 4А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 2С И ПОДГРУППА 4С&nbsp;</td></tr></table>;`
+                            <td style='border-color: Black;'>27.04 Чт&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 1В И ПОДГРУППА 3В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-53, ПОДГРУППА 1А и ПОДГРУППА 3А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 1С И ПОДГРУППА 3С&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 3В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-53, ПОДГРУППА 1А и ПОДГРУППА 3А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 1 И ПОДГРУППА 3С&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 2В и ПОДГРУППА 4В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-53, ПОДГРУППА 2А и ПОДГРУППА 4А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 2С И ПОДГРУППА 4С&nbsp;</td><td style='border-color: Black;'>Ин.язык -Прак, Бурчакова Н.Ю., ауд. МС-54, ПОДГРУППА 2В и ПОДГРУППА 4В<br>--------<br>Ин.язык -Прак, Иванова Е.В., ауд. МС-53, ПОДГРУППА 2А и ПОДГРУППА 4А<br>--------<br>Ин.язык -Прак, Штылева Е.В., ауд. МС-43-к, ПОДГРУППА 2С И ПОДГРУППА 4С&nbsp;</td></tr></table>`
 
 export const combinedMultipleSubgroupsReceived = [
   {
-    "date": "2023-05-10T21:00:00.000Z",
+    "date": "2023-04-26T21:00:00.000Z",
     "lessons": [
       {
         "text": "Ин.язык",
-        "time_start": "2023-05-11T06:00:00.000Z",
-        "time_end": "2023-05-11T07:30:00.000Z",
+        "time_start": "2023-04-27T06:00:00.000Z",
+        "time_end": "2023-04-27T07:30:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "3В",
+          "subgroup": "1В, 3В",
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 1А и ПОДГРУППА 3А",
-        "time_start": "2023-05-11T06:00:00.000Z",
-        "time_end": "2023-05-11T07:30:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T06:00:00.000Z",
+        "time_end": "2023-04-27T07:30:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "1А, 3А",
-          "location": "МС-22",
+          "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
       },
       {
         "text": "Ин.язык",
-        "time_start": "2023-05-11T06:00:00.000Z",
-        "time_end": "2023-05-11T07:30:00.000Z",
+        "time_start": "2023-04-27T06:00:00.000Z",
+        "time_end": "2023-04-27T07:30:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "1С, 3С",
@@ -312,8 +312,8 @@ export const combinedMultipleSubgroupsReceived = [
       },
       {
         "text": "Ин.язык",
-        "time_start": "2023-05-11T07:40:00.000Z",
-        "time_end": "2023-05-11T09:10:00.000Z",
+        "time_start": "2023-04-27T07:40:00.000Z",
+        "time_end": "2023-04-27T09:10:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "3В",
@@ -322,31 +322,31 @@ export const combinedMultipleSubgroupsReceived = [
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 1А и ПОДГРУППА 3А",
-        "time_start": "2023-05-11T07:40:00.000Z",
-        "time_end": "2023-05-11T09:10:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T07:40:00.000Z",
+        "time_end": "2023-04-27T09:10:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "1А, 3А",
-          "location": "МС-22",
+          "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 1 И ПОДГРУППА 3С",
-        "time_start": "2023-05-11T07:40:00.000Z",
-        "time_end": "2023-05-11T09:10:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T07:40:00.000Z",
+        "time_end": "2023-04-27T09:10:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1 , 3С",
+          "subgroup": "1, 3С",
           "location": "МС-43-к",
           "teacher_name": "Штылева Е.В."
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 2В и ПОДГРУППА 4В",
-        "time_start": "2023-05-11T09:50:00.000Z",
-        "time_end": "2023-05-11T11:20:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T09:50:00.000Z",
+        "time_end": "2023-04-27T11:20:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "2В, 4В",
@@ -355,20 +355,20 @@ export const combinedMultipleSubgroupsReceived = [
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 2А и ПОДГРУППА 4А",
-        "time_start": "2023-05-11T09:50:00.000Z",
-        "time_end": "2023-05-11T11:20:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T09:50:00.000Z",
+        "time_end": "2023-04-27T11:20:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "2А, 4А",
-          "location": "МС-22",
+          "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
       },
       {
         "text": "Ин.язык",
-        "time_start": "2023-05-11T09:50:00.000Z",
-        "time_end": "2023-05-11T11:20:00.000Z",
+        "time_start": "2023-04-27T09:50:00.000Z",
+        "time_end": "2023-04-27T11:20:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "2С, 4С",
@@ -377,9 +377,9 @@ export const combinedMultipleSubgroupsReceived = [
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 2В и ПОДГРУППА 4В",
-        "time_start": "2023-05-11T11:30:00.000Z",
-        "time_end": "2023-05-11T13:00:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T11:30:00.000Z",
+        "time_end": "2023-04-27T13:00:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "2В, 4В",
@@ -388,20 +388,20 @@ export const combinedMultipleSubgroupsReceived = [
         }
       },
       {
-        "text": "Ин.язык, , ПОДГРУППА 2А и ПОДГРУППА 4А",
-        "time_start": "2023-05-11T11:30:00.000Z",
-        "time_end": "2023-05-11T13:00:00.000Z",
+        "text": "Ин.язык",
+        "time_start": "2023-04-27T11:30:00.000Z",
+        "time_end": "2023-04-27T13:00:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "2А, 4А",
-          "location": "МС-22",
+          "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
       },
       {
         "text": "Ин.язык",
-        "time_start": "2023-05-11T11:30:00.000Z",
-        "time_end": "2023-05-11T13:00:00.000Z",
+        "time_start": "2023-04-27T11:30:00.000Z",
+        "time_end": "2023-04-27T13:00:00.000Z",
         "additional": {
           "type": "practice",
           "subgroup": "2С, 4С",
@@ -453,7 +453,7 @@ export const noSubjectLectureHtml = `<center><h4>Расписание групп
                     <td colspan=5 style='border-color: Black; background-color: #f6ecc8'><b>Время занятий</b></td></tr><td align=center style='border-color: Black; background-color: #f6ecc8'><b>9:00-10:30&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>10:40-12:10&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>12:50-14:20&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>14:30-16:00&nbsp;</b></td><td align=center style='border-color: Black; background-color: #f6ecc8'><b>16:10-17:40&nbsp;</b></td></tr><tr style='background-color: transparent' align=center>
                             <td style='border-color: Black;'>13.03 Пн&nbsp;</td><td style='border-color: Black;'>Экон.пр.(орг) -Лекц, Юдина О.Н., ауд. Н-202-web, <font color=red><b> ОНЛАЙН! </b></font> https://lms.ibispb.ru/mod/bigbluebuttonbn/view.php?id=4778&nbsp;</td><td style='border-color: Black;'>АлгорИСтр-рыДан -Лекц, Комарова Е.В., ауд. Н-204-web, <font color=red><b> ОНЛАЙН! </b></font> https://lms.ibispb.ru/mod/bigbluebuttonbn/view.php?id=26140&nbsp;</td><td style='border-color: Black;'>Операц.сист. -Лекц, Андреев И.В., ауд. Н-202-1, <font color=red><b> ОНЛАЙН! </b></font> https://lms.ibispb.ru/mod/bigbluebuttonbn/view.php?id=26537&nbsp;</td><td style='border-color: Black;'>ВычС,Сети и Тел -Лекц, Анисимов А.В., ауд. Н-202-web, <font color=red><b> ОНЛАЙН! </b></font> https://lms.ibispb.ru/mod/bigbluebuttonbn/view.php?id=19013&nbsp;</td><td style='border-color: Black;'><font color=red><b> ОНЛАЙН ЛЕКЦИЯ! </b></font>https://disk.yandex.ru/d/S0yfRtR-6g222A&nbsp;</td></tr></table>`;
 
-export const noSubjectLectureReceived =  [
+export const noSubjectLectureReceived = [
   {
     "date": "2023-03-12T21:00:00.000Z",
     "lessons": [

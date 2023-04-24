@@ -84,7 +84,7 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     result.type = 'project_work'
   }
 
-  const subgroups = [...text.matchAll(/ПОДГРУППА [0-9]./gi)].map((el) => el[0]);
+  const subgroups = [...text.matchAll(/ПОДГРУППА [0-9]\S?/gi)].map((el) => el[0]);
   if (subgroups.length) {
     if (subgroups.length === 1) {
       text = text.replace(subgroups[0], '');
@@ -92,6 +92,7 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
       text = text.trim();
     } else if (subgroups.length > 1) {
       text = text.replace(subgroups.join(' И '), '');
+      text = text.replace(subgroups.join(' и '), '');
       result.subgroup = subgroups.map((sg) => sg.replace('ПОДГРУППА ', '')).join(', ');
       text = text.trim();
     }
