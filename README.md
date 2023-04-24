@@ -24,7 +24,7 @@ Backend server which is used to retrieve schedules in more readable format than 
 - `/ping`:
   - **returns** `pong`, can be used for avalaibility checks.
 
-- `/getGroups`
+- `/groups`
   - **requires** `education_level` param, possible values:
     - `undergraduate`
     - `specialty`
@@ -32,7 +32,7 @@ Backend server which is used to retrieve schedules in more readable format than 
     - `postgraduate`
     - `additionals`
   - **returns** an array of objects with keys such as `id` and `name`. `id` later is needed to retrieve schedules.
-- `/getSchedules`
+- `/schedules`
   - **requires** `group` param, can be retrieved by fetching `/getGroups` endpoint;
   - **requires** `dateStart` and `dateEnd` params. It's a date in `dd.MM.yyyy` format.
   - **returns** an array of days with schedules. Examples can be found at `test/parser.mocks.ts` file.

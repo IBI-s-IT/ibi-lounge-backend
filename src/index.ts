@@ -1,4 +1,3 @@
-import bodyParser from "body-parser";
 import express, { Application } from "express";
 import {wrapInResponse} from "./utils/response";
 import {GetGroupsRequest, GetSchedulesRequest} from "./types/request";
@@ -9,16 +8,13 @@ import {convertLessonDaysToiCalendarEvents} from "./calendar/getCalendar";
 
 const app: Application = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 app.get('/ping', async (req, res) => {
   res
     .type('json')
     .send(wrapInResponse('pong'));
 })
 
-app.get('/getGroups', async (req: GetGroupsRequest, res) => {
+app.get('/groups', async (req: GetGroupsRequest, res) => {
   const { query } = req;
   
   res.send(
@@ -26,7 +22,7 @@ app.get('/getGroups', async (req: GetGroupsRequest, res) => {
   );
 });
 
-app.get('/getSchedules', async (req: GetSchedulesRequest, res) => {
+app.get('/schedules', async (req: GetSchedulesRequest, res) => {
   const { query } = req;
 
   res.send(
