@@ -10,15 +10,15 @@ export type GetGroupsRequest = Request<{}, {}, GetGroupsRequestBody, GetGroupsRe
 
 interface GetSchedulesRequestBody {}
 export interface GetSchedulesRequestQuery {
-  group: Group['id'];
+  group:     Group['id'];
   dateStart: string;
-  dateEnd: string;
+  dateEnd:   string;
 }
 export type GetSchedulesRequest = Request<{}, {}, GetSchedulesRequestBody, GetSchedulesRequestQuery>
 
 interface GetCalendarRequestBody {}
 export interface GetCalendarRequestQuery {
-  group: Group['id'];
+  group:          Group['id'];
   ignoreSubgroup: string;
 }
 export type GetCalendarRequest = Request<{}, {}, GetCalendarRequestBody, GetCalendarRequestQuery>
