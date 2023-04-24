@@ -4,9 +4,9 @@ export interface LessonDay {
 }
 
 export interface Lesson {
-  text:       string;
-  time_start: Date;
-  time_end:   Date;
+  text:        string;
+  time_start:  Date;
+  time_end:    Date;
   additional?: AdditionalLessonData;
 }
 
@@ -20,15 +20,17 @@ export interface Lesson {
  */
 type AdditionalLessonDataType = 'practice' | 'lecture' | 'library_day' | 'project_work' | 'exam' | 'subject_report'
 
+interface CustomTime {
+  start: Date;
+  end: Date;
+}
+
 export interface AdditionalLessonData {
-  is_online?: boolean;
-  type?: AdditionalLessonDataType;
-  url?: string;
-  subgroup?: string;
-  location?: string;
-  custom_time?: {
-    start: Date;
-    end: Date;
-  };
+  is_online?:    boolean;
+  type?:         AdditionalLessonDataType;
+  url?:          string;
+  subgroup?:     string;
+  location?:     string;
+  custom_time?:  CustomTime;
   teacher_name?: string;
 }
