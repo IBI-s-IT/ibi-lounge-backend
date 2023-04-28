@@ -1,5 +1,5 @@
 import express, { Application } from "express";
-import {wrapInResponse} from "./utils/response";
+import {wrapInError, wrapInResponse} from "./utils/response";
 import {GetGroupsRequest, GetSchedulesRequest} from "./types/request";
 import {getGroups} from "./api/getGroups";
 import {getSchedules} from "./api/getSchedules";
@@ -32,6 +32,10 @@ app.get('/schedules', async (req: GetSchedulesRequest, res) => {
 
 app.get('/calendar', async (req: GetSchedulesRequest, res) => {
   try {
+    if (!req.query.group) {
+      return res.status(400).send(wrapInError('No group param provided'))
+    }
+
     const data = await getSchedules({
       group: req.query.group,
       dateStart: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 0, 1)),
@@ -40,12 +44,14 @@ app.get('/calendar', async (req: GetSchedulesRequest, res) => {
     
     if (data && 'response' in data) {
       const calendar = await convertLessonDaysToiCalendarEvents(data.response);
-      res
+      return res
         .type('text/calendar')
         .send(calendar);
     }
     
-    res.status(500);
+    res
+      .status(500)
+      .send(wrapInError('Unknown error'))
   } catch (e) {
     console.log(e);
     res.status(500);
