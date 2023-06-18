@@ -6,14 +6,29 @@ function detectURLs(input: string) {
 }
 
 function detectCustomTime(date: Date, input: string): [Date, Date, string] | undefined {
-  const custom_time = input.match(/[0-9]{2}-[0-9]{2}/);
-  if (custom_time) {
-    const time_start_hrs = custom_time[0].split('-')[0];
-    const time_start_min = custom_time[0].split('-')[1];
+  const custom_time_tire = input.match(/[0-9]{2}-[0-9]{2}/);
+  const custom_time_dot = input.match(/[0-9]{2}.[0-9]{2}/);
+  if (custom_time_tire) {
+    const time_start_hrs = custom_time_tire[0].split('-')[0];
+    const time_start_min = custom_time_tire[0].split('-')[1];
     const time_start_date_c = new Date(new Date(date).setHours(Number(time_start_hrs), Number(time_start_min)));
     const time_end_date_c = new Date(time_start_date_c.getTime() + (60000 * 90))
 
     const match = input.match(/,*\s+начало в [0-9]{2}-[0-9]{2} час!*/i);
+    if (match) {
+      input = input.replace(match[0], '');
+    }
+
+    return [time_start_date_c, time_end_date_c, input];
+  }
+
+  if (custom_time_dot) {
+    const time_start_hrs = custom_time_dot[0].split('.')[0];
+    const time_start_min = custom_time_dot[0].split('.')[1];
+    const time_start_date_c = new Date(new Date(date).setHours(Number(time_start_hrs), Number(time_start_min)));
+    const time_end_date_c = new Date(time_start_date_c.getTime() + (60000 * 90))
+
+    const match = input.match(/,*\s+начало в [0-9]{2}.[0-9]{2}!*/i);
     if (match) {
       input = input.replace(match[0], '');
     }
@@ -53,7 +68,7 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     text = text.replace(' -Прак', '');
     result.type = 'practice';
   }
-  
+
   if (text.includes('-Конс')) {
     text = text.replace(' -Конс', '');
     result.type = 'consultation';
@@ -68,7 +83,7 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     text = text.replace(' -Экз', '');
     result.type = 'exam';
   }
-  
+
   if (text.includes('-Зач')) {
     text = text.replace(' -Зач', '');
     result.type = 'subject_report';
@@ -207,6 +222,6 @@ export function parse(html: string) {
       }
     }
   }
-  
+
   return lessons_new;
 }

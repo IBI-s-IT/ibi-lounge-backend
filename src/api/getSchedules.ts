@@ -20,7 +20,6 @@ export async function getSchedules(query: GetSchedulesRequestQuery) {
       datafrom: dateStart,
       dataend: dateEnd,
     })
-
     const lessons_new = parse(data.data);
 
     return wrapInResponse(lessons_new);

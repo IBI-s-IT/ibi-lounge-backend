@@ -19,6 +19,8 @@ import {
   noSubjectLectureReceived,
   subjectReportWithGradeHtml,
   subjectReportWithGradeReceived,
+  customTimeDotHtml,
+  customTimeDotReceived
 } from "./parser.mocks";
 
 function toSafeData(data: any) {
@@ -30,7 +32,7 @@ describe('Schedules parsing', () => {
     const data = parse(examEventHtml);
     expect(toSafeData(data)).toEqual(examEventReceived);
   })
-  
+
   test('parse subject report events', () => {
     const data = parse(subjectReportEventHtml);
     expect(toSafeData(data)).toEqual(subjectReportEventReceived);
@@ -45,27 +47,32 @@ describe('Schedules parsing', () => {
     const data = parse(lectureEventHtml);
     expect(toSafeData(data)).toEqual(lectureEventReceived);
   })
-  
+
   test('parse online event', () => {
     const data = parse(onlineEventsHtml);
     expect(toSafeData(data)).toEqual(onlineEventsReceive);
   })
-  
+
   test('parse custom timed event', () => {
     const data = parse(customTimeEventHtml);
     expect(toSafeData(data)).toEqual(customTimeEventReceived);
   })
-  
+
+  test('parse custom timed with dot event', () => {
+    const data = parse(customTimeDotHtml);
+    expect(toSafeData(data)).toEqual(customTimeDotReceived);
+  })
+
   test('parse combined event', () => {
     const data = parse(combinedEventsHtml);
     expect(toSafeData(data)).toEqual(combinedEventsReceive);
   })
-  
+
   test('parse combined event with multiple subgroups', () => {
     const data = parse(combinedMultipleSubgroupsHtml);
     expect(toSafeData(data)).toEqual(combinedMultipleSubgroupsReceived);
   })
-  
+
   test('parse lecture event without subject', () => {
     const data = parse(noSubjectLectureHtml);
     expect(toSafeData(data)).toEqual(noSubjectLectureReceived);
