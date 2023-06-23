@@ -13,6 +13,6 @@ export function getCodFromEducationLevel(level: EducationLevel) {
     case "additionals":
       return 5;
     default:
-      throw new Error('Unknown education_level')
+      throw new Error('no_education_level_specified')
   }
 }

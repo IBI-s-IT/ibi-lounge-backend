@@ -12,12 +12,15 @@ export async function getGroups(query: GetGroupsRequestQuery) {
     let url = BASE_URL;
 
     if (!query['education_level']) {
-      throw new Error('No education_level specified');
+      throw new Error('no_education_level_specified');
     }
 
     url += `&cod=${getCodFromEducationLevel(query['education_level'])}`
 
     const data = await axios.get(url);
+    if (data.data.includes("Соединение не установлено")) {
+      throw new Error("bad_error")
+    }
     const dom = new JSDOM(data.data);
 
     let groups: Group[] = [];

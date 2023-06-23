@@ -33,7 +33,7 @@ app.get('/schedules', async (req: GetSchedulesRequest, res) => {
 app.get('/calendar', async (req: GetSchedulesRequest, res) => {
   try {
     if (!req.query.group) {
-      return res.status(400).send(wrapInError('No group param provided'))
+      return res.status(400).send(wrapInError('no_group_param'))
     }
 
     const data = await getSchedules({
@@ -51,7 +51,7 @@ app.get('/calendar', async (req: GetSchedulesRequest, res) => {
     
     res
       .status(500)
-      .send(wrapInError('Unknown error'))
+      .send(wrapInError('unknown_error'))
   } catch (e) {
     console.log(e);
     res.status(500);

@@ -156,7 +156,7 @@ export function parse(html: string) {
   const times = el.window.document.querySelectorAll("table > tbody > tr > td > b");
   const rows = el.window.document.querySelectorAll("table > tbody > tr");
 
-  if (!rows.length) throw new Error('Something bad happenned altogether');
+  if (!rows.length) throw new Error('bad_error_159');
 
   const year = (new Date()).getFullYear();
 
@@ -166,7 +166,7 @@ export function parse(html: string) {
 
   for (let rowcol = 2; rowcol < rows.length; rowcol++) {
     const day_month_el = rows[rowcol].childNodes[1];
-    if (day_month_el.textContent === null) throw new Error('Something bad with table at day_month');
+    if (day_month_el.textContent === null) throw new Error('bad_error_169');
 
     const day_month = day_month_el.textContent.trim().split(' ')[0].split('.');
     const date = new Date(year, Number(day_month[1]) - 1, Number(day_month[0]));
@@ -181,8 +181,8 @@ export function parse(html: string) {
       const cols = rows[rowcol].childNodes;
       const textEl = cols[col];
       const timeEl = times[col];
-      if (textEl.textContent === null) throw new Error('Something bad with lesson\'s text els');
-      if (timeEl.textContent === null) throw new Error('Something bad with lesson\'s time els');
+      if (textEl.textContent === null) throw new Error('bad_error_184');
+      if (timeEl.textContent === null) throw new Error('bad_error_185');
       if (textEl.textContent.trim() !== "") {
         // lesson
         const time = timeEl.textContent.trim();

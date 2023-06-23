@@ -3,7 +3,7 @@ import ical, {ICalAlarmType, ICalEventBusyStatus} from "ical-generator";
 
 export async function convertLessonDaysToiCalendarEvents(days: LessonDay[]) {
   if (!days || !days.length) {
-    throw new Error('No data');
+    throw new Error('no_data');
   }
 
   const calendar = ical({name: 'Учёба'});

@@ -20,6 +20,11 @@ export async function getSchedules(query: GetSchedulesRequestQuery) {
       datafrom: dateStart,
       dataend: dateEnd,
     })
+
+    if (data.data.includes("Информации для отображения отчета не обнаружено! Измените период.")) {
+      throw new Error('no_data')
+    }
+
     const lessons_new = parse(data.data);
 
     return wrapInResponse(lessons_new);
