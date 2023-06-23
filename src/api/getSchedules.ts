@@ -29,6 +29,6 @@ export async function getSchedules(query: GetSchedulesRequestQuery) {
 
     return wrapInResponse(lessons_new);
   } catch (e: any) {
-    return wrapInError(e.meesage)
+    return wrapInError(e.message)
   }
 }

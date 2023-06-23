@@ -1,10 +1,11 @@
 import express, { Application } from "express";
 import {wrapInError, wrapInResponse} from "./utils/response";
-import {GetGroupsRequest, GetSchedulesRequest} from "./types/request";
+import {GetGradesRequest, GetGroupsRequest, GetSchedulesRequest} from "./types/request";
 import {getGroups} from "./api/getGroups";
 import {getSchedules} from "./api/getSchedules";
 import {getRaspisanFormattedDate} from "./utils/date";
 import {convertLessonDaysToiCalendarEvents} from "./calendar/getCalendar";
+import {getGrades} from "./api/getGrades";
 
 const app: Application = express();
 
@@ -14,9 +15,17 @@ app.get('/ping', async (req, res) => {
     .send(wrapInResponse('pong'));
 })
 
+app.get('/grades', async (req: GetGradesRequest, res) => {
+  const { query } = req;
+
+  res.send(
+    await getGrades(query)
+  );
+});
+
 app.get('/groups', async (req: GetGroupsRequest, res) => {
   const { query } = req;
-  
+
   res.send(
     await getGroups(query)
   );
