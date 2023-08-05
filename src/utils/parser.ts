@@ -130,11 +130,11 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
 
     text = left;
   }
-
-  const loc = text.match(/ауд. \W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к)?/i);
+  const loc = text.match(/, ауд\. \W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к|-н)?/i);
   if (loc !== null) {
+    const location = loc[0].replace(', ', '');
     text = text.replace(loc[0], '');
-    result.location = loc[0].split(' ')[1].replace(',', '');
+    result.location = location.split(' ')[1].replace(',', '');
   }
 
   const teacher_name = text.match(/, .* .\..\./i);

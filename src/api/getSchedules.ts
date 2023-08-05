@@ -22,7 +22,7 @@ export async function getSchedules(query: GetSchedulesRequestQuery) {
     })
 
     if (data.data.includes("Информации для отображения отчета не обнаружено! Измените период.")) {
-      throw new Error('no_data')
+      throw new Error('no_schedules')
     }
 
     const lessons_new = parse(data.data);

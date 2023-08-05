@@ -23,8 +23,6 @@ export async function getGrades(query: GetGradesRequestQuery) {
     dom.window.document.querySelectorAll('tr').forEach((row: Element, index) => {
       if (index !== 0) {
         const [name, type, grade] = row.querySelectorAll('td');
-        console.log(name.textContent?.trim(), type.textContent?.trim(), grade.textContent?.trim());
-        
         let formattedType: Grade['type'];
 
         switch (type.textContent?.trim()) {
