@@ -24,7 +24,7 @@ type AdditionalLessonDataType = 'practice' | 'lecture' | 'library_day' | 'projec
 
 interface CustomTime {
   start: Date;
-  end: Date;
+  end:   Date;
 }
 
 export interface AdditionalLessonData {
@@ -35,4 +35,5 @@ export interface AdditionalLessonData {
   location?:     string;
   custom_time?:  CustomTime;
   teacher_name?: string;
+  compensation?: string;
 }

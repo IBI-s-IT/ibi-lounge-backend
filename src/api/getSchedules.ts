@@ -1,7 +1,7 @@
 import {GetSchedulesRequestQuery} from "../types/request";
 import axios from "axios";
 import {wrapInError, wrapInResponse} from "../utils/response";
-import {parse} from "../utils/parser";
+import {parse} from "../utils/parser/parser";
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 

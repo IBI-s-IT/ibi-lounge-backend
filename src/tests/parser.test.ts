@@ -1,5 +1,5 @@
 import {describe, expect, test} from '@jest/globals';
-import {parse} from '../utils/parser';
+import {parse} from '../utils/parser/parser';
 import {
   onlineEventsHtml,
   onlineEventsReceive,
@@ -20,7 +20,7 @@ import {
   subjectReportWithGradeHtml,
   subjectReportWithGradeReceived,
   customTimeDotHtml,
-  customTimeDotReceived
+  customTimeDotReceived, compensationHtml, compensationReceived
 } from "./parser.mocks";
 
 function toSafeData(data: any) {
@@ -76,5 +76,10 @@ describe('Schedules parsing', () => {
   test('parse lecture event without subject', () => {
     const data = parse(noSubjectLectureHtml);
     expect(toSafeData(data)).toEqual(noSubjectLectureReceived);
+  })
+
+  test('parse compensation', () => {
+    const data = parse(compensationHtml);
+    expect(toSafeData(data)).toEqual(compensationReceived);
   })
 });

@@ -61,7 +61,7 @@ export async function convertLessonDaysToiCalendarEvents(days: LessonDay[]) {
         }
       } else if (lesson?.additional?.location) {
         event.location(lesson.additional.location);
-        description += `Место: ${lesson.additional.location}\n`;
+        description += `🗺️ Место: ${lesson.additional.location}\n`;
         const alarm = event.createAlarm();
         alarm.type(ICalAlarmType.display)
         alarm.triggerBefore(3600 * 2)

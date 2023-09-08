@@ -1,27 +1,16 @@
-import {AdditionalLessonData, LessonDay} from "../types/parser";
+import {AdditionalLessonData, LessonDay} from "../../types/parser";
 import {JSDOM} from "jsdom";
+import {detectCustomTime} from "./features/customTime";
+import {detectURLs} from "./features/url";
 
-function detectURLs(input: string) {
-  return input.match(/\b((https?|ftp|file):\/\/|(www|ftp)\.)[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/ig);
-}
-
-function detectCustomTime(date: Date, input: string): [Date, Date, string] | undefined {
-  const custom_time = input.match(/[0-9]{2}[-:.][0-9]{2}/);
-
-  if (custom_time) {
-    const hour_minutes = custom_time[0].split(/[-:.]/);
-    const time_start_date_c = new Date(new Date(date).setHours(Number(hour_minutes[0]), Number(hour_minutes[1])));
-    const time_end_date_c = new Date(time_start_date_c.getTime() + (60000 * 90))
-
-    const match = input.match(/,*\s+начало в [0-9]{2}[-:.][0-9]{2}?( час)?!*/i);
-    if (match) {
-      input = input.replace(match[0], '');
-    }
-
-    return [time_start_date_c, time_end_date_c, input];
+function detectCompensation(text: string): [string | null, string] {
+  const compensation = text.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{2}/i);
+  if (compensation !== null) {
+    text = text.replace(`Возмещение за ${compensation[0]}`, '');
+    return [compensation[0], text];
   }
 
-  return undefined;
+  return [null, text]
 }
 
 export function parseAdditionals(text: string, date: Date): [AdditionalLessonData, string] {
@@ -105,6 +94,12 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     text = text.trim();
   }
 
+  const [compensation, left] = detectCompensation(text);
+  if (compensation) {
+    result.compensation = compensation;
+    text = left;
+  }
+
   const custom_time = detectCustomTime(date, text);
   if (custom_time) {
     const [start, end, left] = custom_time;
@@ -115,6 +110,7 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
 
     text = left;
   }
+
   const loc = text.match(/, ауд\. \W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к|-н)?/i);
   if (loc !== null) {
     const location = loc[0].replace(', ', '');
