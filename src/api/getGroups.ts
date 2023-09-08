@@ -15,7 +15,7 @@ export async function getGroups(query: GetGroupsRequestQuery) {
       throw new Error('no_education_level_specified');
     }
 
-    url += `&cod=${getCodFromEducationLevel(query['education_level'])}`
+    url += `&cod=${query['education_level']}`
 
     const data = await axios.get(url);
     if (data.data.includes("Соединение не установлено")) {
