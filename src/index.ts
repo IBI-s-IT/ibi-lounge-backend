@@ -6,6 +6,7 @@ import {getSchedules} from "./api/getSchedules";
 import {getRaspisanFormattedDate} from "./utils/date";
 import {convertLessonDaysToiCalendarEvents} from "./calendar/getCalendar";
 import {getGrades} from "./api/getGrades";
+import {getLevels} from "./api/getLevels";
 
 const app: Application = express();
 
@@ -31,6 +32,12 @@ app.get('/groups', async (req: GetGroupsRequest, res) => {
   );
 });
 
+app.get('/levels', async (_, res) => {
+  res.send(
+    await getLevels()
+  );
+});
+
 app.get('/schedules', async (req: GetSchedulesRequest, res) => {
   const { query } = req;
 
@@ -50,14 +57,14 @@ app.get('/calendar', async (req: GetSchedulesRequest, res) => {
       dateStart: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 0, 1)),
       dateEnd: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 11, 31)),
     });
-    
+
     if (data && 'response' in data) {
       const calendar = await convertLessonDaysToiCalendarEvents(data.response);
       return res
         .type('text/calendar')
         .send(calendar);
     }
-    
+
     res
       .status(500)
       .send(wrapInError('unknown_error'))

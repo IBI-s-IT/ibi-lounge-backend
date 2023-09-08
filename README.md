@@ -22,26 +22,21 @@ Backend server which is used to retrieve schedules in more readable format than 
 ### Routes
 
 - `/ping`:
-  - **returns** `pong`, can be used for avalaibility checks.
-
+  - **returns** `pong`, can be used for availability checks.
+- `/levels`
+  - **return** an array of objects of education levels with keys such as `id` and `name`. `id` later is needed to retrieve groups;
 - `/groups`
-  - **requires** `education_level` param, possible values:
-    - `undergraduate`
-    - `specialty`
-    - `magistracy`
-    - `postgraduate`
-    - `additionals`
-  - **returns** an array of objects with keys such as `id` and `name`. `id` later is needed to retrieve schedules.
+  - **requires** `education_level` 
+  - **returns** an array of objects of groups with keys such as `id` and `name`. `id` later is needed to retrieve schedules.
 - `/schedules`
   - **requires** `group` param, can be retrieved by fetching `/getGroups` endpoint;
   - **requires** `dateStart` and `dateEnd` params. It's a date in `dd.MM.yyyy` format.
   - **returns** an array of days with schedules. Examples can be found at `test/parser.mocks.ts` file.
 - `/calendar`
   - **requires** `group` param, can be retrieved by fetching `/getGroups` endpoint;
-  - **returns** an icalendar feed with `text/calendar` content type
+  - **returns** an icalendar feed with `text/calendar` content type for 1 year.
 
 ### Contributing
-
 1. Fork this repo and clone it somewhere
 2. Run `yarn install` in root project directory to install project dependencies
 3. Run `yarn dev` to start locally, default port is `8000`, but can be overrided via `PORT` env variable
