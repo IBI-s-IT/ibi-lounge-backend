@@ -13,7 +13,8 @@ export interface GetGradesRequestQuery {
 export type GetGradesRequest = Request<{}, {}, GetSchedulesRequestBody, GetGradesRequestQuery>
 
 export interface GetGroupsRequestQuery {
-  education_level: EducationLevel;
+  education_level?: EducationLevel;
+  level_id?: string;
 }
 export type GetGroupsRequest = Request<{}, {}, GetGroupsRequestBody, GetGroupsRequestQuery>
 

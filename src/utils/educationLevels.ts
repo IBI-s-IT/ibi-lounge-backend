@@ -1,5 +1,8 @@
 import {EducationLevel} from "../types/schedules";
 
+/**
+ * @deprecated Use `level_id` instead from /levels
+ * */
 export function getCodFromEducationLevel(level: EducationLevel) {
   switch (level) {
     case "undergraduate":
