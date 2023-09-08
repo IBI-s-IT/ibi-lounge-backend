@@ -26,7 +26,7 @@ Backend server which is used to retrieve schedules in more readable format than 
 - `/levels`
   - **return** an array of objects of education levels with keys such as `id` and `name`. `id` later is needed to retrieve groups;
 - `/groups`
-  - **requires** `education_level` 
+  - **requires** `level_id` 
   - **returns** an array of objects of groups with keys such as `id` and `name`. `id` later is needed to retrieve schedules.
 - `/schedules`
   - **requires** `group` param, can be retrieved by fetching `/getGroups` endpoint;
