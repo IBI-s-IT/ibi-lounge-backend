@@ -17,7 +17,8 @@ export const filterSubgroups = (lessons: LessonDay[], subgroups: Subgroup[]) => 
             for (const subject_props of subgroups) {
                 if (lesson_subject == subject_props.subject &&
                     lesson_group.includes(subject_props.group) &&
-                    lesson_subgroup == subject_props.subgroup) {
+                    lesson_subgroup == subject_props.subgroup
+                ) {
                     filtered_date_lessons.push(lesson);
                 }
             }
