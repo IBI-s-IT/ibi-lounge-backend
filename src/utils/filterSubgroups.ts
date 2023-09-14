@@ -13,8 +13,7 @@ export const filterSubgroups = (lessons: LessonDay[], subgroups: Subgroup[]) => 
             } // if the lesson doesn't have a group, add it to the filtered lessons
 
             const [lesson_subject, lesson_group] = lesson.text.split(', Группа ');
-            // @ts-ignore
-            const lesson_subgroup = lesson.additional.subgroup;
+            const lesson_subgroup = lesson.additional?.subgroup;
             for (const subject_props of subgroups) {
                 if (lesson_subject == subject_props.subject &&
                     lesson_group.includes(subject_props.group) &&

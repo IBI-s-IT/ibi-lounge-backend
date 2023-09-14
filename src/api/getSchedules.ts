@@ -28,8 +28,11 @@ export async function getSchedules(query: GetSchedulesRequestQuery) {
 
     const lessons_new = parse(data.data);
 
-    if (subgroups == null) return wrapInResponse(lessons_new);
-    else return wrapInResponse(filterSubgroups(lessons_new, JSON.parse(subgroups)));
+    return wrapInResponse(
+        subgroups
+            ? filterSubgroups(lessons_new, JSON.parse(subgroups))
+            : lessons_new
+    );
 
   } catch (e: any) {
     return wrapInError(e.message)
