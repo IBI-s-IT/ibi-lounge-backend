@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="040bd286-db23-4123-ae2d-937593f38356" name="dev.cullfy.ru">
+        <fileTransfer rootFolder="/home/windchester/ibi-lounge-backend" accessType="SFTP" host="45.12.72.131" port="22" sshConfigId="c3d7c26d-d4b8-4844-8e58-285a7d4e5811" sshConfig="root@45.12.72.131:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
