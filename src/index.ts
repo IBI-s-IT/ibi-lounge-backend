@@ -56,6 +56,7 @@ app.get('/calendar', async (req: GetSchedulesRequest, res) => {
       group: req.query.group,
       dateStart: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 0, 1)),
       dateEnd: getRaspisanFormattedDate(new Date(new Date().getFullYear(), 11, 31)),
+      subgroups: req.query.subgroups,
     });
 
     if (data && 'response' in data) {

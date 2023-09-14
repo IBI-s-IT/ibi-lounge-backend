@@ -23,6 +23,7 @@ export interface GetSchedulesRequestQuery {
   group:     Group['id'];
   dateStart: string;
   dateEnd:   string;
+  subgroups: string | null;
 }
 export type GetSchedulesRequest = Request<{}, {}, GetSchedulesRequestBody, GetSchedulesRequestQuery>
 
