@@ -2,11 +2,12 @@ import {GetSchedulesRequestQuery} from "../types/request";
 import axios from "axios";
 import {wrapInError, wrapInResponse} from "../utils/response";
 import {parse} from "../utils/parser/parser";
+import {filterSubgroups} from "../utils/filterSubgroups";
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
 export async function getSchedules(query: GetSchedulesRequestQuery) {
-  const {group, dateStart, dateEnd} = query;
+  const {group, dateStart, dateEnd, subgroups} = query;
 
   try {
     const data = await axios.postForm(BASE_URL, {
@@ -27,7 +28,9 @@ export async function getSchedules(query: GetSchedulesRequestQuery) {
 
     const lessons_new = parse(data.data);
 
+    if (subgroups) return wrapInResponse(filterSubgroups(lessons_new, JSON.parse(subgroups)));
     return wrapInResponse(lessons_new);
+
   } catch (e: any) {
     return wrapInError(e.message)
   }
