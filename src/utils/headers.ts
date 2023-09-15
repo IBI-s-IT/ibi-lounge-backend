@@ -10,12 +10,12 @@ const validateOrigin = (origin: string): string => {
     return __ALLOWED_ORIGINS__.includes(origin) ? '*' : '';
 }
 
- export const setHeaders = (res:  Response) => {
+ export const setHeaders = (origin: string, res:  Response) => {
     res.set({
         'Access-Control-Allow-Methods': 'GET',
         'Access-Control-Allow-Headers': 'Access-Control-Allow-Origin,' +
         ' Content-Type, Access-Control-Allow-Methods, Access-Control-Request-Headers,' +
         ' Access-Control-Allow-Headers, Accept'
     });
-    res.setHeader('Access-Control-Allow-Origin', validateOrigin(res.get('origin') || ''));
+    res.setHeader('Access-Control-Allow-Origin', validateOrigin(origin));
 }

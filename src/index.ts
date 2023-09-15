@@ -20,7 +20,8 @@ app.get('/ping', async (req, res) => {
 app.get('/grades', async (req: GetGradesRequest, res) => {
   const { query } = req;
 
-  setHeaders(res);
+  const origin = req.get('origin') || '';
+  setHeaders(origin, res)
   res.send(
     await getGrades(query)
   );
@@ -29,7 +30,8 @@ app.get('/grades', async (req: GetGradesRequest, res) => {
 app.get('/groups', async (req: GetGroupsRequest, res) => {
   const { query } = req;
 
-  setHeaders(res);
+  const origin = req.get('origin') || '';
+  setHeaders(origin, res)
   res.send(
     await getGroups(query)
   );
@@ -37,7 +39,8 @@ app.get('/groups', async (req: GetGroupsRequest, res) => {
 
 app.get('/levels', async (_, res) => {
 
-  setHeaders(res);
+  const origin = _.get('origin') || '';
+  setHeaders(origin, res)
   res.send(
     await getLevels()
   );
@@ -46,7 +49,8 @@ app.get('/levels', async (_, res) => {
 app.get('/schedules', async (req: GetSchedulesRequest, res) => {
   const { query } = req;
 
-  setHeaders(res);
+  const origin = req.get('origin') || '';
+  setHeaders(origin, res)
   res.send(
     await getSchedules(query)
   );
@@ -54,7 +58,8 @@ app.get('/schedules', async (req: GetSchedulesRequest, res) => {
 
 app.get('/calendar', async (req: GetSchedulesRequest, res) => {
   try {
-    setHeaders(res)
+    const origin = req.get('origin') || '';
+    setHeaders(origin, res)
     if (!req.query.group) {
       return res.status(400).send(wrapInError('no_group_param'))
     }
