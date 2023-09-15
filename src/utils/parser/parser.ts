@@ -73,19 +73,20 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     result.type = 'project_work'
   }
 
-  /*const subgroups = [...text.matchAll(/Группа [0-9][A-z]?/gi)].map((el) => el[0]);
+  const groups = [...text.matchAll(/Группа [0-9][А-яA-z]/gi)].map((el) => el[0]);
+  if (groups.length) {
+    text = text.replace(groups[0], '');
+    result.group = groups[0][groups[0].length - 1];
+    text = text.trim();
+  }
+
+
+  const subgroups = [...text.matchAll(/Подгруппа [0-9]/gi)].map((el) => el[0]);
   if (subgroups.length) {
-    if (subgroups.length === 1) {
-      text = text.replace(subgroups[0], '');
-      result.subgroup = subgroups[0].split(' ')[1];
-      text = text.trim();
-    } else if (subgroups.length > 1) {
-      text = text.replace(subgroups.join(' И '), '');
-      text = text.replace(subgroups.join(' и '), '');
-      result.subgroup = subgroups.map((sg) => sg.replace('Группа ', '')).join(', ');
-      text = text.trim();
-    }
-  }*/
+    text = text.replace(subgroups[0], '');
+    result.subgroup = subgroups[0][subgroups[0].length - 1];
+    text = text.trim();
+  }
 
   const parsedUrls = detectURLs(text);
   if (parsedUrls !== null) {

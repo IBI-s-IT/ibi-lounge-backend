@@ -31,6 +31,7 @@ export interface AdditionalLessonData {
   is_online?:    boolean;
   type?:         AdditionalLessonDataType;
   url?:          string;
+  group?:        string;
   subgroup?:     string;
   location?:     string;
   custom_time?:  CustomTime;

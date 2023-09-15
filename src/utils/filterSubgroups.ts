@@ -3,31 +3,28 @@ import {Subgroup} from "../types/subgroup";
 
 export const filterSubgroups = (lessons: LessonDay[], subgroups: Subgroup[]) => {
 
-    const filtered_lessons = [];
+    const filteredLessons = [];
     for (const date of lessons) {
-        const filtered_date_lessons = [];
+        const filteredDateLessons = [];
         for (const lesson of date.lessons) {
-            if (!lesson.text.includes(', Группа ')) {
-                filtered_date_lessons.push(lesson);
+            if (!lesson.additional?.subgroup) {
+                filteredDateLessons.push(lesson);
                 continue;
-            } // if the lesson doesn't have a group, add it to the filtered lessons
-
-            const [lesson_subject, lesson_group] = lesson.text.split(', Группа ');
-            const lesson_subgroup = lesson.additional?.subgroup;
+            }
             for (const subject_props of subgroups) {
-                if (lesson_subject == subject_props.subject &&
-                    lesson_group.includes(subject_props.group) &&
-                    lesson_subgroup == subject_props.subgroup
+                if (lesson.text === subject_props.subject &&
+                    lesson.additional?.group === subject_props.group &&
+                    lesson.additional?.subgroup === subject_props.subgroup
                 ) {
-                    filtered_date_lessons.push(lesson);
+                    filteredDateLessons.push(lesson);
                 }
             }
         }
-        filtered_lessons.push({
+        filteredLessons.push({
             date: date.date,
-            lessons: filtered_date_lessons
+            lessons: filteredDateLessons
         });
 
     }
-    return filtered_lessons;
+    return filteredLessons;
 }
