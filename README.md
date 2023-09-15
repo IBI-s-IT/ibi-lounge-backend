@@ -31,6 +31,7 @@ Backend server which is used to retrieve schedules in more readable format than 
 - `/schedules`
   - **requires** `group` param, can be retrieved by fetching `/getGroups` endpoint;
   - **requires** `dateStart` and `dateEnd` params. It's a date in `dd.MM.yyyy` format.
+  - **optional** `subgroups` param. It's an array of objects containing `subject: "Subject Name"`, `group: "Group"`, `subgroup: "Number"`, stringified to JSON.
   - **returns** an array of days with schedules. Examples can be found at `test/parser.mocks.ts` file.
 - `/calendar`
   - **requires** `group` param, can be retrieved by fetching `/getGroups` endpoint;
