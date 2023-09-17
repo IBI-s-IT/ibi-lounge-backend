@@ -11,10 +11,10 @@ export const filterSubgroups = (lessons: LessonDay[], subgroups: Subgroup[]) => 
                 filteredDateLessons.push(lesson);
                 continue;
             }
-            for (const subject_props of subgroups) {
-                if (lesson.text === subject_props.subject &&
-                    lesson.additional?.group === subject_props.group &&
-                    lesson.additional?.subgroup === subject_props.subgroup
+            for (const subjectProps of subgroups) {
+                if (lesson.text === subjectProps.subject &&
+                    lesson.additional.group?.includes(subjectProps.group) &&
+                    lesson.additional.subgroup?.includes(subjectProps.subgroup)
                 ) {
                     filteredDateLessons.push(lesson);
                 }

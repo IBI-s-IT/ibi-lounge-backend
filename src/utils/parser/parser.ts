@@ -73,19 +73,31 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     result.type = 'project_work'
   }
 
-  const groups = [...text.matchAll(/Группа [0-9][А-яA-z]/gi)].map((el) => el[0]);
-  if (groups.length) {
-    text = text.replace(groups[0], '');
-    result.group = groups[0][groups[0].length - 1];
+  const subgroups = [...text.matchAll(/Подгруппа [0-9][A-zА-я]?/gi)].map((el) => el[0]);
+  const groupNames: string[] = [];
+  if (subgroups.length) {
+    const subgroupsList: string[] = [];
+    subgroups.forEach((subgroup: string) => {
+      text = text.replace(subgroup, '');
+      if (subgroup.match(/Подгруппа [0-9][A-zА-я]/gi)) {
+        groupNames.push(subgroup[subgroup.length - 1]);
+        subgroup = subgroup.slice(0, -1);
+      }
+      subgroupsList.push(subgroup[subgroup.length - 1]);
+    })
     text = text.trim();
+    result.subgroup = [... new Set(subgroupsList)]
   }
 
-
-  const subgroups = [...text.matchAll(/Подгруппа [0-9]/gi)].map((el) => el[0]);
-  if (subgroups.length) {
-    text = text.replace(subgroups[0], '');
-    result.subgroup = subgroups[0][subgroups[0].length - 1];
+  const groups = [...text.matchAll(/Группа [0-9][А-яA-z]/gi)].map((el) => el[0]);
+  if (groups.length || groupNames.length) {
+    const groupList = [...groupNames];
+    groups.forEach((group) => {
+      text = text.replace(group, '');
+      groupList.push(group[group.length - 1]);
+    })
     text = text.trim();
+    result.group = [... new Set(groupList)]
   }
 
   const parsedUrls = detectURLs(text);
@@ -127,7 +139,9 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
   }
 
   text = text.replace(/^,|,$/g,'');
-  text = text.trim();
+  text = text.replace(/\s+/g, ' ').trim()
+  // text = text.trim();
+  text = text.replace(/, и/gi, '')
   text = text.replace(/^,|,$/g,'');
 
   return [result, text];
