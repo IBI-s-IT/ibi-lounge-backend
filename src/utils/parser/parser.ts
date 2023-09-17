@@ -140,7 +140,6 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
 
   text = text.replace(/^,|,$/g,'');
   text = text.replace(/\s+/g, ' ').trim()
-  // text = text.trim();
   text = text.replace(/, и/gi, '')
   text = text.replace(/^,|,$/g,'');
 
