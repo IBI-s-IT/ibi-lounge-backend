@@ -73,19 +73,32 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     result.type = 'project_work'
   }
 
-  /*const subgroups = [...text.matchAll(/Группа [0-9][A-z]?/gi)].map((el) => el[0]);
+  const subgroups = [...text.matchAll(/Подгруппа [0-9][A-zА-я]?/gi)].map((el) => el[0]);
+  const group_names: string[] = [];
   if (subgroups.length) {
-    if (subgroups.length === 1) {
-      text = text.replace(subgroups[0], '');
-      result.subgroup = subgroups[0].split(' ')[1];
-      text = text.trim();
-    } else if (subgroups.length > 1) {
-      text = text.replace(subgroups.join(' И '), '');
-      text = text.replace(subgroups.join(' и '), '');
-      result.subgroup = subgroups.map((sg) => sg.replace('Группа ', '')).join(', ');
-      text = text.trim();
-    }
-  }*/
+    const subgroups_list: string[] = [];
+    subgroups.forEach((subgroup: string) => {
+      text = text.replace(subgroup, '');
+      if (subgroup.match(/Подгруппа [0-9][A-zА-я]/gi)) {
+        group_names.push(subgroup[subgroup.length - 1]);
+        subgroup = subgroup.slice(0, -1);
+      }
+      subgroups_list.push(subgroup[subgroup.length - 1]);
+    })
+    text = text.trim();
+    result.subgroup = [... new Set(subgroups_list)]
+  }
+
+  const groups = [...text.matchAll(/Группа [0-9][А-яA-z]/gi)].map((el) => el[0]);
+  if (groups.length || group_names.length) {
+    const group_list = [...group_names];
+    groups.forEach((group) => {
+      text = text.replace(group, '');
+      group_list.push(group[group.length - 1]);
+    })
+    text = text.trim();
+    result.group = [... new Set(group_list)]
+  }
 
   const parsedUrls = detectURLs(text);
   if (parsedUrls !== null) {
@@ -126,7 +139,8 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
   }
 
   text = text.replace(/^,|,$/g,'');
-  text = text.trim();
+  text = text.replace(/\s+/g, ' ').trim()
+  text = text.replace(/, и/gi, '')
   text = text.replace(/^,|,$/g,'');
 
   return [result, text];

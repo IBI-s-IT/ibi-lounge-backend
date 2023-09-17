@@ -52,7 +52,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T07:30:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1А",
+          "group": ["А"],
+          "subgroup": ["1"],
           "location": "МС-22",
           "teacher_name": "Иванова Е.В."
         }
@@ -63,7 +64,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T07:30:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1С",
+          "group": ["С"],
+          "subgroup": ["1"],
           "location": "МС-44-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -74,7 +76,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T09:10:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1А",
+          "group": ["А"],
+          "subgroup": ["1"],
           "location": "МС-22",
           "teacher_name": "Иванова Е.В."
         }
@@ -85,7 +88,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T09:10:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1С",
+          "group": ["С"],
+          "subgroup": ["1"],
           "location": "МС-44-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -96,7 +100,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T11:20:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2В",
+          "group": ["В"],
+          "subgroup": ["2"],
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
@@ -107,7 +112,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T11:20:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2А",
+          "group": ["А"],
+          "subgroup": ["2"],
           "location": "МС-22",
           "teacher_name": "Иванова Е.В."
         }
@@ -118,7 +124,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T11:20:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2С",
+          "group": ["С"],
+          "subgroup": ["2"],
           "location": "МС-44-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -129,7 +136,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T13:00:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2В",
+          "group": ["В"],
+          "subgroup": ["2"],
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
@@ -140,7 +148,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T13:00:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2А",
+          "group": ["А"],
+          "subgroup": ["2"],
           "location": "МС-22",
           "teacher_name": "Иванова Е.В."
         }
@@ -151,7 +160,8 @@ export const combinedEventsReceive = [
         "time_end": "2023-04-20T13:00:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2С",
+          "group": ["С"],
+          "subgroup": ["2"],
           "location": "МС-44-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -283,7 +293,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T07:30:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1В, 3В",
+          "group": ["В"],
+          "subgroup": ["1", "3"],
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
@@ -294,7 +305,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T07:30:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1А, 3А",
+          "group": ["А"],
+          "subgroup": ["1", "3"],
           "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
@@ -305,7 +317,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T07:30:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1С, 3С",
+          "group": ["С"],
+          "subgroup": ["1", "3"],
           "location": "МС-43-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -316,7 +329,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T09:10:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "3В",
+          "group": ["В"],
+          "subgroup": ["3"],
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
@@ -327,7 +341,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T09:10:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1А, 3А",
+          "group": ["А"],
+          "subgroup": ["1", "3"],
           "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
@@ -338,7 +353,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T09:10:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "1, 3С",
+          "group": ["С"],
+          "subgroup": ["1", "3"],
           "location": "МС-43-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -349,7 +365,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T11:20:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2В, 4В",
+          "group": ["В"],
+          "subgroup": ["2", "4"],
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
@@ -360,7 +377,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T11:20:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2А, 4А",
+          "group": ["А"],
+          "subgroup": ["2", "4"],
           "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
@@ -371,7 +389,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T11:20:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2С, 4С",
+          "group": ["С"],
+          "subgroup": ["2", "4"],
           "location": "МС-43-к",
           "teacher_name": "Штылева Е.В."
         }
@@ -382,7 +401,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T13:00:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2В, 4В",
+          "group": ["В"],
+          "subgroup": ["2", "4"],
           "location": "МС-54",
           "teacher_name": "Бурчакова Н.Ю."
         }
@@ -393,7 +413,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T13:00:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2А, 4А",
+          "group": ["А"],
+          "subgroup": ["2", "4"],
           "location": "МС-53",
           "teacher_name": "Иванова Е.В."
         }
@@ -404,7 +425,8 @@ export const combinedMultipleSubgroupsReceived = [
         "time_end": "2023-04-27T13:00:00.000Z",
         "additional": {
           "type": "practice",
-          "subgroup": "2С, 4С",
+          "group": ["С"],
+          "subgroup": ["2", "4"],
           "location": "МС-43-к",
           "teacher_name": "Штылева Е.В."
         }
