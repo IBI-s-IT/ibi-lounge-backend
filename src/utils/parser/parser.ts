@@ -33,8 +33,8 @@ export function parseAdditionals(text: string, date: Date): [AdditionalLessonDat
     text = text.replace(', ауд. Дистанцион', '');
   }
 
-  if (text.includes('-Лекц')) {
-    text = text.replace(' -Лекц', '');
+  if (text.match(/ ?-?Лекц/gi)) {
+    text = text.replace(/ ?-?Лекц/gi, '');
     result.type = 'lecture';
   }
 
