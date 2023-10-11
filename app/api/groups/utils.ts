@@ -1,4 +1,12 @@
-import {EducationLevel} from "../types/schedules";
+/**
+ * (cod)
+ * - `undergraduate`: бакалавриат - 1
+ * - `specialty`: специалитет - 2
+ * - `magistracy`: магистратура - 3
+ * - `postgraduate`: аспирантура - 4
+ * - `additionals`: ДПО - 5
+ */
+export type EducationLevel = 'undergraduate' | 'specialty' | 'magistracy' | 'postgraduate' | 'additionals';
 
 /**
  * @deprecated Use `level_id` instead from /levels

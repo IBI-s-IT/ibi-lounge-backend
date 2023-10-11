@@ -1,4 +1,4 @@
-import {BackendError, BackendResponse} from "../types/response";
+import {BackendError, BackendResponse} from "./types";
 
 export function wrapInResponse<T>(content: T): BackendResponse<T> {
   return {
