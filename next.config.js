@@ -9,6 +9,9 @@ const nextConfig = {
             { source: '/calendar', destination: '/api/calendar' },
         ]
     },
+    experimental: {
+        instrumentationHook: true,
+    }
 }
 
 module.exports = nextConfig

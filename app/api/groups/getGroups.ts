@@ -3,7 +3,7 @@ import {IdName} from "../shared/types";
 import {JSDOM} from 'jsdom';
 import {wrapInError, wrapInResponse} from "../shared/wrapper";
 import {getCodFromEducationLevel} from "./utils";
-import {EducationLevel} from "../../../src/types/schedules";
+import {EducationLevel} from "./utils";
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 

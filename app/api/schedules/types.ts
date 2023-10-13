@@ -40,7 +40,7 @@ export interface AdditionalLessonData {
 }
 
 export interface Subgroup {
-  subject: string;
-  group: string;
+  subject:  string;
+  group:    string;
   subgroup: string;
 }
