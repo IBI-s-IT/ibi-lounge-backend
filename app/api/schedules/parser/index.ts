@@ -1,4 +1,4 @@
-import {AdditionalLessonData, LessonDay} from "../../types/parser";
+import {AdditionalLessonData, LessonDay} from "../types";
 import {JSDOM} from "jsdom";
 import {detectCustomTime} from "./features/customTime";
 import {detectURLs} from "./features/url";

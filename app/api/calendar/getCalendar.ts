@@ -1,14 +1,16 @@
-import {LessonDay} from "../types/parser";
 import ical, {ICalAlarmType, ICalEventBusyStatus} from "ical-generator";
+import {getSchedules} from "../schedules/getSchedules";
 
-export async function convertLessonDaysToiCalendarEvents(days: LessonDay[]) {
-  if (!days || !days.length) {
+export async function getCalendar(query: URLSearchParams) {
+  const data = await getSchedules(query);
+
+  if (!('response' in data) || data.response.length === 0) {
     throw new Error('no_data');
   }
 
   const calendar = ical({name: 'Учёба'});
 
-  days.map((day) => {
+  data.response.map((day) => {
     day.lessons.map((lesson) => {
       const event = calendar.createEvent({
         start: lesson.time_start,

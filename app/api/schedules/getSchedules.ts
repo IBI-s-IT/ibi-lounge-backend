@@ -1,13 +1,14 @@
-import {GetSchedulesRequestQuery} from "../types/request";
 import axios from "axios";
-import {wrapInError, wrapInResponse} from "../utils/response";
-import {parse} from "../utils/parser/parser";
-import {filterSubgroups} from "../utils/filterSubgroups";
-
+import {wrapInError, wrapInResponse} from "../shared/wrapper";
+import {parse} from "./parser";
+import {filterSubgroups} from "./utils";
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
-export async function getSchedules(query: GetSchedulesRequestQuery) {
-  const {group, dateStart, dateEnd, subgroups} = query;
+export async function getSchedules(query: URLSearchParams) {
+  const group = query.get('group');
+  const dateStart = query.get('dateStart');
+  const dateEnd = query.get('dateEnd');
+  const subgroups = query.get('subgroups');
 
   try {
     const data = await axios.postForm(BASE_URL, {

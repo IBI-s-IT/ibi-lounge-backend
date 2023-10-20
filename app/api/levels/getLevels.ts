@@ -1,7 +1,7 @@
 import axios from "axios";
-import {Group} from "../types/groups";
+import {IdName} from "../shared/types";
 import {JSDOM} from 'jsdom';
-import {wrapInError, wrapInResponse} from "../utils/response";
+import {wrapInError, wrapInResponse} from "../shared/wrapper";
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=1';
 
@@ -15,16 +15,16 @@ export async function getLevels() {
 
     const dom = new JSDOM(data.data);
 
-    let groups: Group[] = [];
+    let levels: IdName[] = [];
 
     dom.window.document.querySelectorAll('#ucstep > option').forEach((ch: Element) => {
-      groups.push({
+      levels.push({
         name: ch.textContent,
         id: ch.getAttribute('value'),
       });
     });
 
-    return wrapInResponse(groups);
+    return wrapInResponse(levels);
   } catch (e: any) {
     return wrapInError(e.message);
   }

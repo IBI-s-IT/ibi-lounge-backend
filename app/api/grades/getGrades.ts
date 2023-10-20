@@ -1,13 +1,13 @@
-import {GetGradesRequestQuery} from "../types/request";
 import axios from "axios";
-import {wrapInError, wrapInResponse} from "../utils/response";
-import {Grade} from "../types/grades";
+import {wrapInError, wrapInResponse} from "../shared/wrapper";
+import {Grade} from "./types";
 import {JSDOM} from "jsdom";
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
-export async function getGrades(query: GetGradesRequestQuery) {
-  const {last_name, pin} = query;
+export async function getGrades(query: URLSearchParams) {
+  const last_name = query.get('last_name');
+  const pin = query.get('pin');
 
   try {
     const data = await axios.postForm(BASE_URL, {

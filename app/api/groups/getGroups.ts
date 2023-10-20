@@ -1,21 +1,24 @@
-import {GetGroupsRequestQuery} from "../types/request";
 import axios from "axios";
-import {Group} from "../types/groups";
+import {IdName} from "../shared/types";
 import {JSDOM} from 'jsdom';
-import {wrapInError, wrapInResponse} from "../utils/response";
-import {getCodFromEducationLevel} from "../utils/educationLevels";
+import {wrapInError, wrapInResponse} from "../shared/wrapper";
+import {getCodFromEducationLevel} from "./utils";
+import {EducationLevel} from "./utils";
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 
-export async function getGroups(query: GetGroupsRequestQuery) {
+export async function getGroups(query: URLSearchParams) {
   try {
     let url = BASE_URL;
 
-    if (!query.education_level && !query.level_id) {
+    if (!query.has('education_level') && !query.has('level_id')) {
       throw new Error('no_education_level_specified');
     }
 
-    url += `&cod=${query.education_level ? getCodFromEducationLevel(query.education_level) : query.level_id}`
+    const education_level = query.get('education_level');
+    const level_id = query.get('level_id');
+
+    url += `&cod=${query.has('education_level') ? getCodFromEducationLevel(education_level as EducationLevel) : level_id}`;
 
     const data = await axios.get(url);
     if (data.data.includes("Соединение не установлено")) {
@@ -23,7 +26,7 @@ export async function getGroups(query: GetGroupsRequestQuery) {
     }
     const dom = new JSDOM(data.data);
 
-    let groups: Group[] = [];
+    let groups: IdName[] = [];
 
     dom.window.document.querySelectorAll('#group > option').forEach((ch: Element) => {
       groups.push({

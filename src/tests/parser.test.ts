@@ -1,5 +1,5 @@
 import {describe, expect, test} from '@jest/globals';
-import {parse} from '../utils/parser/parser';
+import {parse} from '../../app/api/schedules/parser';
 import {
   onlineEventsHtml,
   onlineEventsReceive,
