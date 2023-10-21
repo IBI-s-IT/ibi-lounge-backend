@@ -164,6 +164,8 @@ const LinksMenu = new Menu<BotContext>("links")
   .url(Strings.employees, "https://ibispb.ru/sveden/employees/")
   .row()
   .url(Strings.contacts, "https://ibispb.ru/contacts/")
+  .row()
+  .url(Strings.iosApp, "https://apps.apple.com/ru/app/ibi-lounge/id6459472308")
   .back(Strings.back);
 
 const IndexMenu = new Menu<BotContext>("index")
