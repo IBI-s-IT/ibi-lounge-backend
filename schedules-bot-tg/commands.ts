@@ -2,7 +2,7 @@ import { BotContext } from "./context";
 import { cachedRequest, getSpecialDate, getTimeFromDate } from "./utils";
 import { getSchedules } from "../app/api/schedules/getSchedules";
 import Strings from "./strings";
-import { Lesson, LessonDay } from "../app/api/schedules/types";
+import { Lesson } from "../app/api/schedules/types";
 import { SCHEDULE_TTL } from "./consts";
 
 function isValidDate(d) {
@@ -55,12 +55,12 @@ async function getForDay(
   date.setUTCHours(0, 0, 0, 0);
   const formattedDate = getSpecialDate(date);
   const cached = await cachedRequest(
-    `schedules-${formattedDate}-${ctx.session.groupId}`,
+    `schedules-${formattedDate}-${ctx.session.group}`,
     async () => {
       const search = new URLSearchParams();
       search.append("dateStart", formattedDate);
       search.append("dateTo", formattedDate);
-      search.append("group", ctx.session.groupId);
+      search.append("group", ctx.session.group);
 
       return await getSchedules(search);
     },

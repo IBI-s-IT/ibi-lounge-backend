@@ -24,18 +24,18 @@ const LevelKeyboard = new Menu<BotContext>("levelSelect")
       return range;
     }
 
-    if (!ctx.session.levelId) {
-      ctx.session.levelId = "1";
+    if (!ctx.session.education_level) {
+      ctx.session.education_level = "1";
     }
 
     cached.response.forEach((level) => {
-      const nameText = `${level.id === ctx.session.levelId ? "✅" : ""} ${
+      const nameText = `${level.id === ctx.session.education_level ? "✅" : ""} ${
         level.name
       }`;
 
       range
         .text(nameText, async (ctx) => {
-          ctx.session.levelId = level.id;
+          ctx.session.education_level = level.id;
           ctx.session.levelName = level.name;
           await ctx.editMessageText(Strings.settingsMenu(ctx), {
             parse_mode: "HTML",
@@ -59,10 +59,10 @@ const GroupKeyboard = new Menu<BotContext>("groupSelect")
     const range = new MenuRange<BotContext>();
 
     const cached = await cachedRequest(
-      `groups-level-${ctx.session.levelId ?? "1"}`,
+      `groups-level-${ctx.session.education_level ?? "1"}`,
       async () => {
         const search = new URLSearchParams();
-        search.append("level_id", ctx.session.levelId ?? "1");
+        search.append("level_id", ctx.session.education_level ?? "1");
 
         return await getGroups(search);
       },
@@ -79,12 +79,12 @@ const GroupKeyboard = new Menu<BotContext>("groupSelect")
     for (let i = 0; i < cached.response.length; i += chunkSize) {
       const chunk = cached.response.slice(i, i + chunkSize);
       chunk.forEach((group) => {
-        const nameText = `${group.id === ctx.session.groupId ? "✅" : ""} ${
+        const nameText = `${group.id === ctx.session.group ? "✅" : ""} ${
           group.name
         }`;
         range.text(nameText, async (ctx) => {
           ctx.session.groupName = group.name;
-          ctx.session.groupId = group.id;
+          ctx.session.group = group.id;
           await ctx.editMessageText(Strings.settingsMenu(ctx), {
             parse_mode: "HTML",
           });
