@@ -1,9 +1,9 @@
 import { Context, SessionFlavor } from "grammy";
 
 export interface SessionData {
-  levelId?: string;
+  education_level?: string;
   levelName?: string;
-  groupId?: string;
+  group?: string;
   groupName?: string;
 
   customDate?: string;
