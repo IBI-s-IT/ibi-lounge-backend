@@ -1,9 +1,10 @@
 import { BotContext } from "./context";
-import { cachedRequest, getSpecialDate, getTimeFromDate } from "./utils";
+import { cachedRequest, getTimeFromDate } from "./utils";
 import { getSchedules } from "../app/api/schedules/getSchedules";
 import Strings from "./strings";
 import { Lesson } from "../app/api/schedules/types";
 import { SCHEDULE_TTL } from "./consts";
+import { getRaspDate } from "../app/api/shared/date";
 
 function isValidDate(d) {
   // @ts-ignore хаки
@@ -53,7 +54,7 @@ async function getForDay(
 ): Promise<[Lesson[], string]> {
   date = new Date(date);
   date.setUTCHours(0, 0, 0, 0);
-  const formattedDate = getSpecialDate(date);
+  const formattedDate = getRaspDate(date);
   const cached = await cachedRequest(
     `schedules-${formattedDate}-${ctx.session.group}`,
     async () => {
