@@ -17,16 +17,29 @@ function formatLessons(lessons: Lesson[]) {
   lessons.forEach((lesson) => {
     const time_start =
       lesson.additional?.custom_time?.start ?? lesson.time_start;
+
     const time_end = lesson.additional?.custom_time?.end ?? lesson.time_end;
+
     const place = lesson.additional?.is_online
       ? Strings.isOnline
       : lesson.additional.location
       ? Strings.location(lesson.additional.location)
       : Strings.location("Незвестно");
 
+    let groups = null;
+    if (lesson.additional.subgroup && lesson.additional.group) {
+      groups = lesson.additional.subgroup.map((sub) => sub + lesson.additional.group[0]).join(', ')
+    }
+
     result += `${getTimeFromDate(time_start)} - ${getTimeFromDate(
       time_end,
-    )} • ${place}\n`;
+    )} • ${place}`;
+
+    if (groups) {
+      result += ` • ${groups}`;
+    }
+
+    result += `\n`;
 
     if (lesson.additional.url) {
       result += `<a href="${lesson.additional.url}"><b>${lesson.text}</b></a>\n`;
