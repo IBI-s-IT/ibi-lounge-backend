@@ -12,7 +12,7 @@ export async function cachedRequest<T>(
     const data = await fetchData();
 
     // @ts-ignore
-    if ("error" in data && data.error !== "no_schedules") {
+    if ("error" in data) {
       if (retryN > 4) {
         console.error(data);
         throw new Error("Something happened while fetching data");
