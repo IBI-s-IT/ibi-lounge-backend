@@ -8,11 +8,15 @@ export async function cachedRequest<T>(
 ): Promise<T> {
   let cached = await redisInstance.get(key);
 
-  if (cached === null || cached.length === 0) {
+  if (
+    cached === null ||
+    cached.length === 0 ||
+    (JSON.parse(cached) !== null && "error" in JSON.parse(cached))
+  ) {
     const data = await fetchData();
 
     // @ts-ignore
-    if ("error" in data) {
+    if ("error" in data && data.error !== 'no_schedules') {
       if (retryN > 4) {
         console.error(data);
         throw new Error("Something happened while fetching data");
