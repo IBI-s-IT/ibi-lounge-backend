@@ -1,6 +1,6 @@
 {
   "name": "ibi-raspisan-backend",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Backend for IBI's schedules and grades",
   "main": "index.js",
   "repository": "git@github.com:IBIRaspNG/backend.git",
@@ -43,7 +43,7 @@
     "@grammyjs/runner": "^2.0.3",
     "@grammyjs/storage-redis": "^2.4.0",
     "@grammyjs/transformer-throttler": "^1.2.1",
-    "axios": "^1.5.0",
+    "axios": "1.6.0",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",

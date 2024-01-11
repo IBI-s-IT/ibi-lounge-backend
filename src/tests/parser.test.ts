@@ -29,57 +29,57 @@ function toSafeData(data: any) {
 
 describe('Schedules parsing', () => {
   test('parse exam event', () => {
-    const data = parse(examEventHtml);
+    const data = parse(examEventHtml, null);
     expect(toSafeData(data)).toEqual(examEventReceived);
   })
 
   test('parse subject report events', () => {
-    const data = parse(subjectReportEventHtml);
+    const data = parse(subjectReportEventHtml, null);
     expect(toSafeData(data)).toEqual(subjectReportEventReceived);
   })
 
   test ('parse subject report with grade and consultation events', () => {
-    const data = parse(subjectReportWithGradeHtml);
+    const data = parse(subjectReportWithGradeHtml, null);
     expect(toSafeData(data)).toEqual(subjectReportWithGradeReceived);
   })
 
   test('parse lecture event', () => {
-    const data = parse(lectureEventHtml);
+    const data = parse(lectureEventHtml, null);
     expect(toSafeData(data)).toEqual(lectureEventReceived);
   })
 
   test('parse online event', () => {
-    const data = parse(onlineEventsHtml);
+    const data = parse(onlineEventsHtml, null);
     expect(toSafeData(data)).toEqual(onlineEventsReceive);
   })
 
   test('parse custom timed event', () => {
-    const data = parse(customTimeEventHtml);
+    const data = parse(customTimeEventHtml, null);
     expect(toSafeData(data)).toEqual(customTimeEventReceived);
   })
 
   test('parse custom timed with dot event', () => {
-    const data = parse(customTimeDotHtml);
+    const data = parse(customTimeDotHtml, null);
     expect(toSafeData(data)).toEqual(customTimeDotReceived);
   })
 
   test('parse combined event', () => {
-    const data = parse(combinedEventsHtml);
+    const data = parse(combinedEventsHtml, null);
     expect(toSafeData(data)).toEqual(combinedEventsReceive);
   })
 
   test('parse combined event with multiple subgroups', () => {
-    const data = parse(combinedMultipleSubgroupsHtml);
+    const data = parse(combinedMultipleSubgroupsHtml, null);
     expect(toSafeData(data)).toEqual(combinedMultipleSubgroupsReceived);
   })
 
   test('parse lecture event without subject', () => {
-    const data = parse(noSubjectLectureHtml);
+    const data = parse(noSubjectLectureHtml, null);
     expect(toSafeData(data)).toEqual(noSubjectLectureReceived);
   })
 
   test('parse compensation', () => {
-    const data = parse(compensationHtml);
+    const data = parse(compensationHtml, null);
     expect(toSafeData(data)).toEqual(compensationReceived);
   })
 });

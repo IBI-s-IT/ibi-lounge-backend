@@ -7,6 +7,7 @@ const nextConfig = {
             { source: '/levels', destination: '/api/levels' },
             { source: '/groups', destination: '/api/groups' },
             { source: '/calendar', destination: '/api/calendar' },
+            { source: '/teachers', destination: '/api/teachers' },
         ]
     },
     experimental: {

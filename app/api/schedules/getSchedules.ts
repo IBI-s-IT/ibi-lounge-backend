@@ -9,25 +9,37 @@ export async function getSchedules(query: URLSearchParams) {
   const dateStart = query.get('dateStart');
   const dateEnd = query.get('dateEnd');
   const subgroups = query.get('subgroups');
+  const teacher = query.get('teacher');
+
+  const defParams = {
+    exam: 0,
+    formo: 0,
+    allp: 0,
+    hour: 0,
+  };
 
   try {
-    const data = await axios.postForm(BASE_URL, {
+    const data = await axios.postForm(BASE_URL, teacher === null ? {
       rtype: 1,
       group,
-      exam: 0,
-      formo: 0,
-      allp: 0,
-      hour: 0,
-      tuttabl: 0,
+      ...defParams,
       datafrom: dateStart,
       dataend: dateEnd,
+      tuttabl: 0,
+    } : {
+      rtype: 2,
+      ...defParams,
+      datafrom: dateStart,
+      dataend: dateEnd,
+      teacher,
+      kafedra: 0,
     })
 
     if (data.data.includes("Информации для отображения отчета не обнаружено! Измените период.")) {
       throw new Error('no_schedules')
     }
 
-    const lessons_new = parse(data.data);
+    const lessons_new = parse(data.data, teacher);
 
     if (subgroups) return wrapInResponse(filterSubgroups(lessons_new, JSON.parse(subgroups)));
     return wrapInResponse(lessons_new);
