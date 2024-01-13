@@ -6,8 +6,8 @@ import { getGroups } from "@server/list/getGroups";
 import {cachedRequest, checkForValidContext} from "./utils";
 import { getCustom, getToday, getTomorrow } from "./commands";
 import { GROUPS_TTL, LEVELS_TTL } from "./consts";
-import {ListEntry} from "@shared/types";
 import {logger} from "@bot/logger";
+import {ListEntry} from "@server/list/types";
 
 const LevelKeyboard = new Menu<BotContext>("levelSelect")
   .dynamic(async (ctx) => {
