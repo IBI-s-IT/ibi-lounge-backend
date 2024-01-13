@@ -1,12 +1,12 @@
 import { BotContext } from "./context";
-import { cachedRequest } from "./utils";
+import {cachedRequest, checkForValidContext} from "./utils";
 import { getSchedules } from "@server/schedules/getSchedules";
 import Strings from "./strings";
 import { Lesson } from "@server/schedules/types";
 import { SCHEDULE_TTL } from "./consts";
 import { getRaspDate } from "@shared//date";
 
-function isValidDate(d: Date) {
+function isValidDate(d: unknown) {
   // @ts-ignore хаки
   return d instanceof Date && !isNaN(d);
 }
@@ -61,38 +61,39 @@ async function getForDay(
   ctx: BotContext,
   date: Date,
 ): Promise<[Lesson[], string]> {
+  checkForValidContext(ctx);
+
   date = new Date(date);
   date.setUTCHours(0, 0, 0, 0);
   const formattedDate = getRaspDate(date);
-  const cached = await cachedRequest(
-    `schedules-${formattedDate}-${ctx.session.group}`,
-    async () => {
-      return await getSchedules({
-        dateStart: formattedDate,
-        dateEnd: formattedDate,
-        group: ctx.session.group
-      });
-    },
-    SCHEDULE_TTL,
-  );
+  const header = `<b>Расписание на ${getRaspDate(date)}</b>\n\n`;
 
-  if ("error" in cached) {
-    switch (cached.error) {
-      case "no_schedules":
+  try {
+    const cached = await cachedRequest(
+      `schedules-${formattedDate}-${ctx.session.group}`,
+      async () => {
+        return await getSchedules({
+          dateStart: formattedDate,
+          dateEnd: formattedDate,
+          group: ctx.session.group
+        });
+      },
+      SCHEDULE_TTL,
+    );
+
+    return [cached.response[0].lessons, header];
+  } catch (error) {
+    switch ((error as Error).message) {
+      case 'no_schedules':
         return [[], Strings.noSchedules(formattedDate)];
       default:
-        return [[], Strings.error(JSON.stringify(cached))];
+        return [[], Strings.error((error as Error).message!)]
     }
   }
-
-  const header = `<b>Расписание на ${formattedDate}</b>\n\n`;
-
-  return [cached.response[0].lessons, header];
 }
 
 export async function getToday(ctx: BotContext) {
   const [lessons, header] = await getForDay(ctx, new Date());
-
   return `${header}${formatLessons(lessons)}`;
 }
 

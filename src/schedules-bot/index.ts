@@ -14,12 +14,14 @@ import Strings from "./strings";
 import { apiThrottler } from "@grammyjs/transformer-throttler";
 import { autoRetry } from "@grammyjs/auto-retry";
 import { getCustom, getToday, getTomorrow } from "./commands";
+import {BOT_DEFAULT_SESSION} from "@bot/consts";
+import {logger} from "@bot/logger";
 
 // Storage initialization
 export const redisInstance = new Redis();
 const storage = new RedisAdapter({ instance: redisInstance });
 
-export const bot = new Bot<BotContext>(process.env["SCHEDULES_BOT_TOKEN"] ?? '');
+export const bot = new Bot<BotContext>(process.env["BOT_TOKEN"] ?? '');
 
 // Menus
 const menu = IndexMenu;
@@ -37,14 +39,7 @@ bot.api.config.use(autoRetry());
 bot.use(
   session({
     storage,
-    initial: () => ({
-      groupName: "113-ПИвЭ",
-      groupId: "2352",
-      levelId: "1",
-      levelName: "бакалавриат",
-      groupListPage: 0,
-      customDate: new Date().toString(),
-    }),
+    initial: () => (BOT_DEFAULT_SESSION),
     getSessionKey: (ctx) => {
       return `schedules_bot${ctx.chat?.id}`;
     },
@@ -104,7 +99,7 @@ bot.command(
     }),
 );
 
-bot.api.setMyCommands([
+void bot.api.setMyCommands([
   { command: "start", description: Strings.startDesc },
   { command: "today", description: Strings.todayDesc },
   { command: "tomorrow", description: Strings.tomorrowDesc },
@@ -113,4 +108,4 @@ bot.api.setMyCommands([
   { command: "settings", description: Strings.settingsDesc },
 ]);
 
-bot.catch(console.error);
+bot.catch(logger.error);

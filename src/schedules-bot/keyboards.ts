@@ -1,11 +1,13 @@
 import Strings from "./strings";
 import { Menu, MenuRange } from "@grammyjs/menu";
 import { BotContext } from "./context";
-import { getLevels } from "@server/api/list/getLevels";
-import { getGroups } from "@server/api/list/getGroups";
-import { cachedRequest } from "./utils";
+import { getLevels } from "@server/list/getLevels";
+import { getGroups } from "@server/list/getGroups";
+import {cachedRequest, checkForValidContext} from "./utils";
 import { getCustom, getToday, getTomorrow } from "./commands";
 import { GROUPS_TTL, LEVELS_TTL } from "./consts";
+import {ListEntry} from "@shared/types";
+import {logger} from "@bot/logger";
 
 const LevelKeyboard = new Menu<BotContext>("levelSelect")
   .dynamic(async (ctx) => {
@@ -20,7 +22,7 @@ const LevelKeyboard = new Menu<BotContext>("levelSelect")
 
     if (!("response" in cached)) {
       await ctx.reply("Произошла ошибка запроса");
-      console.error("Hard error while getting levels");
+      logger.error("Hard error while getting levels");
       return range;
     }
 
@@ -28,7 +30,7 @@ const LevelKeyboard = new Menu<BotContext>("levelSelect")
       ctx.session.education_level = "1";
     }
 
-    cached.response.forEach((level) => {
+    cached.response.forEach((level: ListEntry) => {
       const nameText = `${level.id === ctx.session.education_level ? "✅" : ""} ${
         level.name
       }`;
@@ -68,14 +70,14 @@ const GroupKeyboard = new Menu<BotContext>("groupSelect")
 
     if (!("response" in cached)) {
       await ctx.reply("Произошла ошибка запроса");
-      console.error("Hard error while getting groups");
+      logger.error("Hard error while getting groups");
       return range;
     }
 
     const chunkSize = 3;
     for (let i = 0; i < cached.response.length; i += chunkSize) {
       const chunk = cached.response.slice(i, i + chunkSize);
-      chunk.forEach((group) => {
+      chunk.forEach((group: ListEntry) => {
         const nameText = `${group.id === ctx.session.group ? "✅" : ""} ${
           group.name
         }`;
@@ -118,6 +120,7 @@ const SettingsKeyboard = new Menu<BotContext>("settings")
 
 const DaysKeyboard = new Menu<BotContext>("daily")
   .text(Strings.backwards, async (ctx) => {
+    checkForValidContext(ctx)
     const date = new Date(ctx.session.customDate);
 
     const dayBefore = new Date(
@@ -130,12 +133,14 @@ const DaysKeyboard = new Menu<BotContext>("daily")
     });
   })
   .text(Strings.toToday, async (ctx) => {
+    checkForValidContext(ctx)
     ctx.session.customDate = new Date().toString();
     await ctx.editMessageText(await getCustom(ctx, new Date()), {
       parse_mode: "HTML",
     });
   })
   .text(Strings.forward, async (ctx) => {
+    checkForValidContext(ctx)
     const date = new Date(ctx.session.customDate);
 
     const dayAfter = new Date(

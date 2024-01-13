@@ -2,7 +2,7 @@ import axios from "axios";
 import {ListEntry} from "@shared/types";
 import {JSDOM} from 'jsdom';
 import {wrapInResponse} from "@shared/wrapper";
-import {ListGroupsQuery} from "@server/api/list/index";
+import {ListGroupsQuery} from "@server/list";
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 
 export async function getGroups(query: ListGroupsQuery) {

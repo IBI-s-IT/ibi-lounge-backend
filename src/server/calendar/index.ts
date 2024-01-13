@@ -1,5 +1,5 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
-import {getCalendar} from "@server/api/calendar/getCalendar";
+import {getCalendar} from "@server/calendar/getCalendar";
 
 export type CalendarQuery = { group: string };
 

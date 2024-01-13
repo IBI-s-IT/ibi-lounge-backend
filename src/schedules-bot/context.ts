@@ -5,7 +5,6 @@ export interface SessionData {
   levelName: string;
   group: string;
   groupName: string;
-
   customDate: string;
 }
 

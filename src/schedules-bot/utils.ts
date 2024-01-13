@@ -1,4 +1,7 @@
 import { redisInstance } from "./index";
+import {BotContext} from "@bot/context";
+import {BOT_DEFAULT_SESSION} from "@bot/consts";
+import Strings from "@bot/strings";
 
 export async function cachedRequest<T>(
   key: string,
@@ -18,8 +21,9 @@ export async function cachedRequest<T>(
     // @ts-ignore
     if ("error" in data && data.error !== 'no_schedules') {
       if (retryN > 4) {
-        console.error(data);
-        throw new Error("Something happened while fetching data");
+        throw new Error("Did not succeed at fetching new data", {
+          cause: `DATA: ${JSON.stringify(data)}\n\nKEY: ${key}`,
+        });
       }
       return cachedRequest(key, fetchData, ttl, retryN + 1);
     }
@@ -31,10 +35,12 @@ export async function cachedRequest<T>(
   return JSON.parse(cached) as T;
 }
 
-export function getTimeFromDate(date: Date) {
-  date = new Date(date);
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
+export function checkForValidContext(ctx: BotContext) {
+  if (!ctx.session?.customDate) {
+    void ctx.reply(Strings.resetSession);
+    ctx.session = BOT_DEFAULT_SESSION;
+    return false;
+  }
 
-  return `${hours}:${minutes}`;
+  return true;
 }

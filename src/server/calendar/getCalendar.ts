@@ -1,7 +1,7 @@
 import ical, {ICalAlarmType, ICalEventBusyStatus} from "ical-generator";
 import {getSchedules} from "../schedules/getSchedules";
 import {getRaspDate, startEndOfYear} from "@shared/date";
-import {CalendarQuery} from "@server/api/calendar";
+import {CalendarQuery} from "@server/calendar";
 
 export async function getCalendar(query: CalendarQuery) {
   const [start, end] = startEndOfYear();

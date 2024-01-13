@@ -1,5 +1,5 @@
 {
-  "name": "ibi-raspisan-backend",
+  "name": "ibi-lounge-backend",
   "version": "2.0.0",
   "description": "Backend for IBI's schedules and grades",
   "main": "index.js",
@@ -8,9 +8,9 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon --watch src src/server.ts",
-    "dev:bot": "env $(cat .env.local) nodemon --watch src src/bot.ts",
-    "dev:all": "nodemon --watch src src/index.ts",
+    "dev": "nodemon src/server.ts",
+    "dev:bot": "nodemon src/bot.ts",
+    "dev:all": "nodemon src/index.ts",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepare": "husky install .husky",
@@ -57,6 +57,21 @@
     "ical-generator": "^6.0.1",
     "ioredis": "^5.3.2",
     "jsdom": "^22.1.0",
+    "pino": "^8.17.2",
     "stream": "^0.0.2"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "src"
+    ],
+    "execMap": {
+      "ts": "ts-node -r dotenv/config {{filename}} | pino-pretty"
+    },
+    "ignore": [
+      ".git",
+      "node_modules/**/node_modules",
+      "*.test.ts",
+      "*.mocks.ts"
+    ]
   }
 }

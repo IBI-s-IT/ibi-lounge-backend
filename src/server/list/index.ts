@@ -1,7 +1,7 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
-import {getGroups} from "@server/api/list/getGroups";
-import {getTeachers} from "@server/api/list/getTeachers";
-import {getLevels} from "@server/api/list/getLevels";
+import {getGroups} from "@server/list/getGroups";
+import {getTeachers} from "@server/list/getTeachers";
+import {getLevels} from "@server/list/getLevels";
 
 export type ListGroupsQuery = {
   type: 'groups';
@@ -26,7 +26,7 @@ export async function listRoutes(fastify: FastifyInstance) {
   fastify.route({
     method: 'GET',
     url: '/list',
-    handler: async (request: ListRequest, reply) => {
+    handler: async (request: ListRequest) => {
       switch (request.query.type) {
         case "groups":
           return getGroups(request.query);
