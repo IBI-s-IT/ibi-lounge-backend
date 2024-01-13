@@ -1,7 +1,7 @@
 import axios from "axios";
-import {ListEntry} from "@shared/types";
 import {JSDOM} from 'jsdom';
 import {wrapInResponse} from "@shared/wrapper";
+import {ListEntry} from "@server/list/types";
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=1';
 
@@ -18,8 +18,8 @@ export async function getLevels() {
 
   dom.window.document.querySelectorAll('#ucstep > option').forEach((ch: Element) => {
     levels.push({
-      name: ch.textContent,
-      id: ch.getAttribute('value'),
+      name: ch.textContent!,
+      id: ch.getAttribute('value')!,
     });
   });
 

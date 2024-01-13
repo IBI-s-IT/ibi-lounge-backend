@@ -37,11 +37,15 @@
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "json-schema-to-ts": "^2.0.0"
   },
   "dependencies": {
     "@fastify/cors": "^8.5.0",
     "@fastify/helmet": "^11.1.1",
+    "@fastify/swagger": "^8.13.0",
+    "@fastify/swagger-ui": "^2.0.1",
+    "@fastify/type-provider-json-schema-to-ts": "^2.2.2",
     "@grammyjs/auto-retry": "^1.1.1",
     "@grammyjs/menu": "^1.2.1",
     "@grammyjs/runner": "^2.0.3",

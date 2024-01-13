@@ -1,4 +1,4 @@
-import {AdditionalLessonData, LessonDay} from "../types";
+import {SchedulesDay, SchedulesLessonAdditional} from "../types";
 import {JSDOM} from "jsdom";
 import {detectCustomTime} from "./features/customTime";
 import {detectURLs} from "./features/url";
@@ -13,8 +13,8 @@ function detectCompensation(text: string): [string | null, string] {
   return [null, text]
 }
 
-export function parseAdditionals(text: string, teacher: boolean): [AdditionalLessonData, string] {
-  let result: AdditionalLessonData = {};
+export function parseAdditionals(text: string, teacher: boolean): [SchedulesLessonAdditional, string] {
+  let result: SchedulesLessonAdditional = {};
 
   if (text.includes('ОНЛАЙН!')) {
     text = text.replace('ОНЛАЙН!', '');
@@ -158,7 +158,7 @@ export function parse(html: string, teacher: boolean = false) {
 
   let lesson_num = rows[1].childElementCount + 2;
 
-  let lessons_new: LessonDay[] = [];
+  let lessons_new: SchedulesDay[] = [];
 
   for (let rowcol = 2; rowcol < rows.length; rowcol++) {
     const day_month_el = rows[rowcol].childNodes[1];

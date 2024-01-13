@@ -12,7 +12,9 @@
       "@server/*": ["src/server/*"],
       "@shared/*": ["src/shared/*"],
       "@bot/*": ["src/schedules-bot/*"]
-    }
+    },
+    "strict": true,
+    "noStrictGenericChecks": false
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]

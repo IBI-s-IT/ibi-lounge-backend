@@ -2,7 +2,7 @@ import { BotContext } from "./context";
 import {cachedRequest, checkForValidContext} from "./utils";
 import { getSchedules } from "@server/schedules/getSchedules";
 import Strings from "./strings";
-import { Lesson } from "@server/schedules/types";
+import {SchedulesLesson} from "@server/schedules/types";
 import { SCHEDULE_TTL } from "./consts";
 import { getRaspDate } from "@shared//date";
 
@@ -11,7 +11,7 @@ function isValidDate(d: unknown) {
   return d instanceof Date && !isNaN(d);
 }
 
-function formatLessons(lessons: Lesson[]) {
+function formatLessons(lessons: SchedulesLesson[]) {
   let result = "";
 
   lessons.forEach((lesson) => {
@@ -60,7 +60,7 @@ function formatLessons(lessons: Lesson[]) {
 async function getForDay(
   ctx: BotContext,
   date: Date,
-): Promise<[Lesson[], string]> {
+): Promise<[SchedulesLesson[], string]> {
   checkForValidContext(ctx);
 
   date = new Date(date);

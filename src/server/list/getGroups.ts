@@ -1,11 +1,10 @@
 import axios from "axios";
-import {ListEntry} from "@shared/types";
 import {JSDOM} from 'jsdom';
 import {wrapInResponse} from "@shared/wrapper";
-import {ListGroupsQuery} from "@server/list";
+import {ListEntry, ListQuery} from "@server/list/types";
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 
-export async function getGroups(query: ListGroupsQuery) {
+export async function getGroups(query: ListQuery) {
   const url = `${BASE_URL}&cod=${query.level}`;
 
   const data = await axios.get(url);
@@ -20,8 +19,8 @@ export async function getGroups(query: ListGroupsQuery) {
 
   dom.window.document.querySelectorAll('#group > option').forEach((ch: Element) => {
     groups.push({
-      name: ch.textContent,
-      id: ch.getAttribute('value'),
+      name: ch.textContent!,
+      id: ch.getAttribute('value')!,
     });
   });
 

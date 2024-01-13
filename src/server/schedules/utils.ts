@@ -1,6 +1,6 @@
-import {LessonDay, Subgroup} from "./types";
-export const filterSubgroups = (lessons: LessonDay[], subgroups: Subgroup[]): LessonDay[] => {
-  const filtered_lessons: LessonDay[] = [];
+import {SchedulesDay, Subgroup} from "./types";
+export const filterSubgroups = (lessons: SchedulesDay[], subgroups: Subgroup[]): SchedulesDay[] => {
+  const filtered_lessons: SchedulesDay[] = [];
 
   for (const date of lessons) {
     const { lessons, ...rest } = date;

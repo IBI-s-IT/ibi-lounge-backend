@@ -77,7 +77,7 @@ export async function getGrades(query: GradesQuery) {
       }
 
       grades.push({
-        name: name?.textContent?.trim() ?? 'Не найден',
+        name: name?.textContent?.trim() ?? 'Неизвестный предмет',
         type: formattedType,
         grade: formattedGrade,
       })

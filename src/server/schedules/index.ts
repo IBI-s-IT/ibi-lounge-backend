@@ -1,17 +1,14 @@
 import {FastifyInstance, FastifyRequest} from "fastify";
 import {getSchedules} from "@server/schedules/getSchedules";
-import {SchedulesQuery} from "@server/schedules/types";
+import {schedulesRequestQuery, schedulesSchema as schema} from "@server/schedules/schema";
+import {FromSchema} from "json-schema-to-ts";
 
 type SchedulesRequest = FastifyRequest<{
-  Querystring: SchedulesQuery
+  Querystring: FromSchema<typeof schedulesRequestQuery>;
 }>
 
 export async function schedulesRoutes(fastify: FastifyInstance) {
-  fastify.route({
-    method: 'GET',
-    url: '/schedules',
-    handler: async (request: SchedulesRequest, reply) => {
-      return getSchedules(request.query);
-    }
-  })
+  fastify.get('/schedules', { schema }, async (request: SchedulesRequest) => {
+    return getSchedules(request.query);
+  });
 }
