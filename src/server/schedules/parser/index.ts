@@ -4,12 +4,18 @@ import { detectCustomTime } from './features/customTime';
 import { detectURLs } from './features/url';
 import { detectCompensation } from './features/compensation';
 import { detectType } from '@server/schedules/parser/features/type';
+import {
+  detectClassroomSimple,
+  expandLocationData,
+} from '@server/schedules/parser/features/location';
 
 export function parseAdditionals(
   text: string,
   teacher: boolean
 ): [SchedulesLessonAdditional, string] {
-  let result: SchedulesLessonAdditional = {};
+  let result: SchedulesLessonAdditional = {
+    type: 'unknown',
+  };
 
   if (text.includes('ОНЛАЙН!')) {
     text = text.replace('ОНЛАЙН!', '');
@@ -80,18 +86,17 @@ export function parseAdditionals(
     result.teacher_groups = teachers_groups;
   }
 
-  const [compensation, left] = detectCompensation(text);
+  const [compensation, leftCompensation] = detectCompensation(text);
   if (compensation) {
     result.compensation = compensation;
-    text = left;
+    text = leftCompensation;
   }
 
-  const loc = text.match(/, ауд\. ?\W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к|-н)?/i);
-  if (loc !== null) {
-    const location = loc[0].replace(', ', '');
-    text = text.replace(loc[0], '');
-    result.location =
-      location.split(' ')[1]?.replace(',', '') ?? location.replace('ауд.', '');
+  const [location, leftLocation] = detectClassroomSimple(text);
+  if (location) {
+    result.classroom = location;
+    result.classroom_details = expandLocationData(location);
+    text = leftLocation;
   }
 
   const teacher_name = text.match(/, .* .\..\./i);

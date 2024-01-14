@@ -2,6 +2,7 @@ import ical, { ICalAlarmType, ICalEventBusyStatus } from 'ical-generator';
 import { getSchedules } from '../schedules/getSchedules';
 import { getRaspDate, startEndOfYear } from '@shared/date';
 import { CalendarQuery } from '@server/calendar/types';
+import Strings from '@bot/strings';
 
 export async function getCalendar(query: CalendarQuery) {
   const [start, end] = startEndOfYear();
@@ -42,34 +43,7 @@ export async function getCalendar(query: CalendarQuery) {
       let description = '';
 
       if (lesson?.additional?.type) {
-        switch (lesson.additional.type) {
-          case 'lecture':
-            description += `📖 Лекция\n`;
-            break;
-          case 'practice':
-            description += `💻 Практика\n`;
-            break;
-          case 'project_work':
-            description += `🔨 Проектная деятельность\n`;
-            break;
-          case 'library_day':
-            description += `📚 Библиотечный день\n`;
-            break;
-          case 'subject_report':
-            description += `⚠️ Зачёт\n`;
-            break;
-          case 'exam':
-            description += `🚨 Экзамен\n`;
-            break;
-          case 'consultation':
-            description += `ℹ️ Консультация`;
-            break;
-          case 'subject_report_with_grade':
-            description += `⚠️ Диф. зачёт`;
-            break;
-          default:
-            description += `⚠️ Неизвестный тип занятия\n`;
-        }
+        description += `${Strings[lesson.additional.type]}\n`;
       }
 
       if (lesson?.additional?.is_online) {
@@ -83,8 +57,11 @@ export async function getCalendar(query: CalendarQuery) {
         if (lesson?.additional?.url) {
           event.location(lesson.additional.url);
         }
-      } else if (lesson?.additional?.location) {
-        event.location(lesson.additional.location);
+      } else if (lesson?.additional?.classroom) {
+        event.location({
+          title: lesson.additional.classroom,
+          address: lesson.additional.classroom_details!.address,
+        });
         description += `🗺️ Место: ${lesson.additional.location}\n`;
         event.createAlarm({
           type: ICalAlarmType.display,

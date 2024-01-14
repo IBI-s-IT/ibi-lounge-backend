@@ -1,4 +1,5 @@
 import { BotContext } from './context';
+import { lessonTypeMap } from '@shared/type_map';
 
 const Strings = {
   mainPlaceholder: '⚡️ Выбери действие',
@@ -28,16 +29,7 @@ const Strings = {
   backwards: '◀️',
   forward: '▶️',
 
-  unknown: '⚠️ Неизвестно',
-  practice: 'Практика',
-  lecture: 'Лекция',
-  library_day: 'Библ. день',
-  project_work: 'Проект. деят.',
-  exam: '🚨 Экзамен',
-  subject_report: '⚠️ Зачёт',
-  consultation: 'ℹ️ Консультация',
-  subject_report_with_grade: '⚠️ Диф. зачёт',
-  course_work_defend: '⚠️ Защита курсовых',
+  ...lessonTypeMap,
 
   isOnline: '<i>Онлайн 🌍️</i>',
   location: (place: string) => `<i>${place} 🗺️</i>`,

@@ -34,6 +34,7 @@ const schedulesRequestSchema = {
 
 export const schedulesLessonAdditional = {
   type: 'object',
+  required: ['type'],
   properties: {
     is_online: {
       type: 'boolean',
@@ -67,7 +68,7 @@ export const schedulesLessonAdditional = {
     url: { type: 'string', description: 'Ссылка' },
     group: { type: 'array', items: { type: 'string' } },
     subgroup: { type: 'array', items: { type: 'string' } },
-    location: { type: 'string', description: 'Аудитория' },
+    classroom: { type: 'string', description: 'Аудитория (простой вариант)' },
     teacher_name: {
       type: 'string',
       description: 'Фамилия и инициалы преподавателя',
@@ -78,7 +79,16 @@ export const schedulesLessonAdditional = {
       items: { type: 'string' },
       description: 'Группы которые будут на паре (только у учителей)',
     },
-    additionalProperties: false,
+    classroom_details: {
+      type: 'object',
+      properties: {
+        address: { type: 'string' },
+        classroom_number: { type: 'string' },
+        computer_classroom: { type: 'boolean' },
+      },
+      description: 'Аудитория (расширенный вариант)',
+      additionalProperties: false,
+    },
   },
 } as const;
 

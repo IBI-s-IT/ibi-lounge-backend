@@ -20,8 +20,8 @@ function formatLessons(lessons: SchedulesLesson[]) {
 
     const place = lesson.additional?.is_online
       ? Strings.isOnline
-      : lesson.additional?.location
-        ? Strings.location(lesson.additional.location)
+      : lesson.additional?.classroom
+        ? Strings.location(lesson.additional.classroom)
         : Strings.location('Незвестно');
 
     let groups = null;
