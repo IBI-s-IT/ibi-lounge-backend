@@ -11,7 +11,7 @@
     "dev": "nodemon src/server.ts",
     "dev:bot": "nodemon src/bot.ts",
     "dev:all": "nodemon src/index.ts",
-    "build": "tsc -p tsconfig.json",
+    "start": "ts-node -r dotenv/config src/index.ts | pino-pretty",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepare": "husky install .husky",
