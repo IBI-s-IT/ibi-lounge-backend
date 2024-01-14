@@ -1,11 +1,14 @@
-import {SchedulesDay, SchedulesLessonAdditional} from "../types";
-import {JSDOM} from "jsdom";
-import {detectCustomTime} from "./features/customTime";
-import {detectURLs} from "./features/url";
-import {detectCompensation} from "./features/compensation";
-import {detectType} from "@server/schedules/parser/features/type";
+import { SchedulesDay, SchedulesLessonAdditional } from '../types';
+import { JSDOM } from 'jsdom';
+import { detectCustomTime } from './features/customTime';
+import { detectURLs } from './features/url';
+import { detectCompensation } from './features/compensation';
+import { detectType } from '@server/schedules/parser/features/type';
 
-export function parseAdditionals(text: string, teacher: boolean): [SchedulesLessonAdditional, string] {
+export function parseAdditionals(
+  text: string,
+  teacher: boolean
+): [SchedulesLessonAdditional, string] {
   let result: SchedulesLessonAdditional = {};
 
   if (text.includes('ОНЛАЙН!')) {
@@ -29,7 +32,9 @@ export function parseAdditionals(text: string, teacher: boolean): [SchedulesLess
   text = textAfterType;
   result.type = type;
 
-  const subgroups = [...text.matchAll(/Подгруппа [0-9][A-zА-я]?/gi)].map((el) => el[0]);
+  const subgroups = [...text.matchAll(/Подгруппа [0-9][A-zА-я]?/gi)].map(
+    (el) => el[0]
+  );
   const group_names: string[] = [];
   if (subgroups.length) {
     const subgroups_list: string[] = [];
@@ -40,20 +45,22 @@ export function parseAdditionals(text: string, teacher: boolean): [SchedulesLess
         subgroup = subgroup.slice(0, -1);
       }
       subgroups_list.push(subgroup[subgroup.length - 1]);
-    })
+    });
     text = text.trim();
-    result.subgroup = [... new Set(subgroups_list)]
+    result.subgroup = [...new Set(subgroups_list)];
   }
 
-  const groups = [...text.matchAll(/Группа [0-9][А-яA-z]/gi)].map((el) => el[0]);
+  const groups = [...text.matchAll(/Группа [0-9][А-яA-z]/gi)].map(
+    (el) => el[0]
+  );
   if (groups.length || group_names.length) {
     const group_list = [...group_names];
     groups.forEach((group) => {
       text = text.replace(group, '');
       group_list.push(group[group.length - 1]);
-    })
+    });
     text = text.trim();
-    result.group = [... new Set(group_list)]
+    result.group = [...new Set(group_list)];
   }
 
   const parsedUrls = detectURLs(text);
@@ -64,16 +71,14 @@ export function parseAdditionals(text: string, teacher: boolean): [SchedulesLess
   }
 
   if (teacher && text.match(/гр\.(.*)/gi) !== null) {
-    const teachers_groups =
-      text
-        .match(/гр\.(.*)/gi)![0]
-        ?.replace('гр.', '')
-        .split(',')
-        .filter(n => n);
+    const teachers_groups = text
+      .match(/гр\.(.*)/gi)![0]
+      ?.replace('гр.', '')
+      .split(',')
+      .filter((n) => n);
     text = text.replace(/гр\.(.*)/gi, '');
     result.teacher_groups = teachers_groups;
   }
-
 
   const [compensation, left] = detectCompensation(text);
   if (compensation) {
@@ -86,8 +91,7 @@ export function parseAdditionals(text: string, teacher: boolean): [SchedulesLess
     const location = loc[0].replace(', ', '');
     text = text.replace(loc[0], '');
     result.location =
-      location.split(' ')[1]?.replace(',', '') ??
-      location.replace('ауд.', '');
+      location.split(' ')[1]?.replace(',', '') ?? location.replace('ауд.', '');
   }
 
   const teacher_name = text.match(/, .* .\..\./i);
@@ -97,18 +101,20 @@ export function parseAdditionals(text: string, teacher: boolean): [SchedulesLess
     text = text.trim();
   }
 
-  text = text.replace(/^,|,$/g,'');
-  text = text.replace(/\s+/g, ' ').trim()
-  text = text.replace(/, и/gi, '')
-  text = text.replace(/^,|,$/g,'');
+  text = text.replace(/^,|,$/g, '');
+  text = text.replace(/\s+/g, ' ').trim();
+  text = text.replace(/, и/gi, '');
+  text = text.replace(/^,|,$/g, '');
 
   return [result, text];
 }
 
 export function parse(html: string, teacher: boolean = false) {
   const el = new JSDOM(html);
-  const times = el.window.document.querySelectorAll("table > tbody > tr > td > b");
-  const rows = el.window.document.querySelectorAll("table > tbody > tr");
+  const times = el.window.document.querySelectorAll(
+    'table > tbody > tr > td > b'
+  );
+  const rows = el.window.document.querySelectorAll('table > tbody > tr');
 
   if (!rows.length) throw new Error('bad_error_159');
 
@@ -118,7 +124,8 @@ export function parse(html: string, teacher: boolean = false) {
 
   for (let rowcol = 2; rowcol < rows.length; rowcol++) {
     const day_month_el = rows[rowcol].childNodes[1];
-    if (day_month_el.textContent === null) throw new Error('Failed to parse day/month element');
+    if (day_month_el.textContent === null)
+      throw new Error('Failed to parse day/month element');
 
     const day_month = day_month_el.textContent!.trim().split(' ')[0].split('.');
 
@@ -136,12 +143,14 @@ export function parse(html: string, teacher: boolean = false) {
       const textEl = cols[col];
       const timeEl = times[col];
 
-      if (timeEl.textContent === null) throw new Error('Failed to parse time rows');
-      if (textEl.textContent === null) throw new Error('Failed to parse text rows/cols');
+      if (timeEl.textContent === null)
+        throw new Error('Failed to parse time rows');
+      if (textEl.textContent === null)
+        throw new Error('Failed to parse text rows/cols');
 
       const [time_start, time_end] = timeEl.textContent.split('-');
 
-      if (textEl.textContent.trim() !== "") {
+      if (textEl.textContent.trim() !== '') {
         const text = textEl.textContent.trim();
 
         if (text.includes('--------')) {

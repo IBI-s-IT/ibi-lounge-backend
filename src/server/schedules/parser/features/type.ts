@@ -1,6 +1,8 @@
-import {SchedulesLessonAdditional} from "@server/schedules/types";
+import { SchedulesLessonAdditional } from '@server/schedules/types';
 
-export function detectType(text: string): [SchedulesLessonAdditional['type'], string] {
+export function detectType(
+  text: string
+): [SchedulesLessonAdditional['type'], string] {
   let type: SchedulesLessonAdditional['type'] = 'unknown';
 
   if (text.match(/,? ?-?Лекц/gi)) {
@@ -47,6 +49,6 @@ export function detectType(text: string): [SchedulesLessonAdditional['type'], st
     text = text.replace(/,? ?-?ПроД/gi, '');
     type = 'project_work';
   }
-  
+
   return [type, text];
 }

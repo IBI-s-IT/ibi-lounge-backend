@@ -5,5 +5,5 @@ export function detectCompensation(text: string): [string | null, string] {
     return [compensation[0], text];
   }
 
-  return [null, text]
+  return [null, text];
 }

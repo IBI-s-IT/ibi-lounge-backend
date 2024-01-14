@@ -1,7 +1,7 @@
-import axios from "axios";
-import {wrapInResponse} from "@shared/wrapper";
-import {Grade, GradesQuery} from "./types";
-import {JSDOM} from "jsdom";
+import axios from 'axios';
+import { wrapInResponse } from '@shared/wrapper';
+import { Grade, GradesQuery } from './types';
+import { JSDOM } from 'jsdom';
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
@@ -12,7 +12,7 @@ export async function getGrades(query: GradesQuery) {
     rtype: 6,
     fio1: last_name,
     pin1: pin,
-  })
+  });
 
   const dom = new JSDOM(data.data);
 
@@ -24,55 +24,55 @@ export async function getGrades(query: GradesQuery) {
       let formattedType: Grade['type'];
 
       switch (type.textContent?.trim()) {
-        case "Дифференцированный зачет":
-          formattedType = "subject_report_with_grade";
+        case 'Дифференцированный зачет':
+          formattedType = 'subject_report_with_grade';
           break;
-        case "Курсовая работа (очно)":
-          formattedType = "offline_course_work";
+        case 'Курсовая работа (очно)':
+          formattedType = 'offline_course_work';
           break;
-        case "Экзамен":
-          formattedType = "exam";
+        case 'Экзамен':
+          formattedType = 'exam';
           break;
-        case "Зачёт":
-          formattedType = "subject_report";
+        case 'Зачёт':
+          formattedType = 'subject_report';
           break;
-        case "Курсовая работа (заочно)":
-          formattedType = "online_course_work";
+        case 'Курсовая работа (заочно)':
+          formattedType = 'online_course_work';
           break;
         default:
-          formattedType = "unknown"
+          formattedType = 'unknown';
           break;
       }
 
       let formattedGrade: Grade['grade'];
 
       switch (grade.textContent?.trim()) {
-        case "н/я":
-          formattedGrade = "absence"
+        case 'н/я':
+          formattedGrade = 'absence';
           break;
-        case "зач.":
-          formattedGrade = "passed"
+        case 'зач.':
+          formattedGrade = 'passed';
           break;
-        case "н/зач.":
-          formattedGrade = "failed"
+        case 'н/зач.':
+          formattedGrade = 'failed';
           break;
-        case "5":
-          formattedGrade = "5";
+        case '5':
+          formattedGrade = '5';
           break;
-        case "4":
-          formattedGrade = "4";
+        case '4':
+          formattedGrade = '4';
           break;
-        case "3":
-          formattedGrade = "3";
+        case '3':
+          formattedGrade = '3';
           break;
-        case "2":
-          formattedGrade = "2";
+        case '2':
+          formattedGrade = '2';
           break;
-        case "н/доп.":
-          formattedGrade = "not_admitted";
+        case 'н/доп.':
+          formattedGrade = 'not_admitted';
           break;
         default:
-          formattedGrade = "unknown";
+          formattedGrade = 'unknown';
           break;
       }
 
@@ -80,7 +80,7 @@ export async function getGrades(query: GradesQuery) {
         name: name?.textContent?.trim() ?? 'Неизвестный предмет',
         type: formattedType,
         grade: formattedGrade,
-      })
+      });
     }
   });
 

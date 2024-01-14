@@ -1,5 +1,8 @@
-import {SchedulesDay, Subgroup} from "./types";
-export const filterSubgroups = (lessons: SchedulesDay[], subgroups: Subgroup[]): SchedulesDay[] => {
+import { SchedulesDay, Subgroup } from './types';
+export const filterSubgroups = (
+  lessons: SchedulesDay[],
+  subgroups: Subgroup[]
+): SchedulesDay[] => {
   const filtered_lessons: SchedulesDay[] = [];
 
   for (const date of lessons) {
@@ -13,7 +16,8 @@ export const filterSubgroups = (lessons: SchedulesDay[], subgroups: Subgroup[]):
       }
 
       for (const subject_props of subgroups) {
-        if (lesson.text === subject_props.subject &&
+        if (
+          lesson.text === subject_props.subject &&
           lesson.additional.group?.includes(subject_props.group) &&
           lesson.additional.subgroup?.includes(subject_props.subgroup)
         ) {
@@ -24,9 +28,9 @@ export const filterSubgroups = (lessons: SchedulesDay[], subgroups: Subgroup[]):
 
     filtered_lessons.push({
       ...rest,
-      lessons: filtered_date_lessons
+      lessons: filtered_date_lessons,
     });
   }
 
   return filtered_lessons;
-}
+};

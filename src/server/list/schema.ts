@@ -18,7 +18,7 @@ export const listEntry = {
   properties: {
     id: { type: 'string' },
     name: { type: 'string' },
-  }
+  },
 } as const;
 
 const listResponseSchema = {
@@ -27,13 +27,13 @@ const listResponseSchema = {
     response: {
       type: 'array',
       items: listEntry,
-    }
-  }
-}
+    },
+  },
+};
 
 export const listSchema = {
   ...listRequestSchema,
   response: {
     200: listResponseSchema,
-  }
-}
+  },
+};

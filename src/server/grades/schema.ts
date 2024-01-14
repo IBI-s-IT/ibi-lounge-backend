@@ -9,8 +9,8 @@ export const gradesQuery = {
 
 export const gradesRequestSchema = {
   description: 'Выдаёт список оценок студента',
-  querystring: gradesQuery
-}
+  querystring: gradesQuery,
+};
 
 export const gradesGrade = {
   type: 'object',
@@ -25,7 +25,7 @@ export const gradesGrade = {
         'online_course_work',
         'offline_course_work',
         'unknown',
-      ]
+      ],
     },
     grade: {
       type: 'string',
@@ -39,9 +39,9 @@ export const gradesGrade = {
         '4',
         '5',
         'unknown',
-      ]
+      ],
     },
-  }
+  },
 } as const;
 
 export const gradesResponseSchema = {
@@ -50,13 +50,13 @@ export const gradesResponseSchema = {
     response: {
       type: 'array',
       items: gradesGrade,
-    }
-  }
-}
+    },
+  },
+};
 
 export const gradesSchema = {
   ...gradesRequestSchema,
   response: {
     200: gradesResponseSchema,
-  }
-}
+  },
+};

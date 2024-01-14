@@ -1,8 +1,8 @@
-import axios from "axios";
-import {wrapInResponse} from "@shared/wrapper";
-import {parse} from "./parser";
-import {filterSubgroups} from "./utils";
-import {SchedulesQuery} from "@server/schedules/types";
+import axios from 'axios';
+import { wrapInResponse } from '@shared/wrapper';
+import { parse } from './parser';
+import { filterSubgroups } from './utils';
+import { SchedulesQuery } from '@server/schedules/types';
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
@@ -36,14 +36,20 @@ export async function getSchedules(query: SchedulesQuery) {
 
   const data = await axios.postForm(BASE_URL, params);
 
-  if (data.data.includes("Информации для отображения отчета не обнаружено! Измените период.")) {
-    throw new Error('no_schedules')
+  if (
+    data.data.includes(
+      'Информации для отображения отчета не обнаружено! Измените период.'
+    )
+  ) {
+    throw new Error('no_schedules');
   }
 
   const lessons = parse(data.data, 'teacher' in query);
 
   if (query.subgroups) {
-    return wrapInResponse(filterSubgroups(lessons, JSON.parse(query.subgroups)));
+    return wrapInResponse(
+      filterSubgroups(lessons, JSON.parse(query.subgroups))
+    );
   }
 
   return wrapInResponse(lessons);

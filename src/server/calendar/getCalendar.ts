@@ -1,7 +1,7 @@
-import ical, {ICalAlarmType, ICalEventBusyStatus} from "ical-generator";
-import {getSchedules} from "../schedules/getSchedules";
-import {getRaspDate, startEndOfYear} from "@shared/date";
-import {CalendarQuery} from "@server/calendar/types";
+import ical, { ICalAlarmType, ICalEventBusyStatus } from 'ical-generator';
+import { getSchedules } from '../schedules/getSchedules';
+import { getRaspDate, startEndOfYear } from '@shared/date';
+import { CalendarQuery } from '@server/calendar/types';
 
 export async function getCalendar(query: CalendarQuery) {
   const [start, end] = startEndOfYear();
@@ -9,15 +9,15 @@ export async function getCalendar(query: CalendarQuery) {
     dateStart: getRaspDate(start),
     dateEnd: getRaspDate(end),
     group: query.group,
-  }
+  };
 
   const data = await getSchedules(schedulesQuery);
 
-  if (!("response" in data) || data.response.length === 0) {
-    throw new Error("no_data");
+  if (!('response' in data) || data.response.length === 0) {
+    throw new Error('no_data');
   }
 
-  const calendar = ical({ name: "Учёба" });
+  const calendar = ical({ name: 'Учёба' });
 
   data.response.map((day) => {
     day.lessons.map((lesson) => {
@@ -39,32 +39,32 @@ export async function getCalendar(query: CalendarQuery) {
         summary: lesson.text,
       });
 
-      let description = "";
+      let description = '';
 
       if (lesson?.additional?.type) {
         switch (lesson.additional.type) {
-          case "lecture":
+          case 'lecture':
             description += `📖 Лекция\n`;
             break;
-          case "practice":
+          case 'practice':
             description += `💻 Практика\n`;
             break;
-          case "project_work":
+          case 'project_work':
             description += `🔨 Проектная деятельность\n`;
             break;
-          case "library_day":
+          case 'library_day':
             description += `📚 Библиотечный день\n`;
             break;
-          case "subject_report":
+          case 'subject_report':
             description += `⚠️ Зачёт\n`;
             break;
-          case "exam":
+          case 'exam':
             description += `🚨 Экзамен\n`;
             break;
-          case "consultation":
+          case 'consultation':
             description += `ℹ️ Консультация`;
             break;
-          case "subject_report_with_grade":
+          case 'subject_report_with_grade':
             description += `⚠️ Диф. зачёт`;
             break;
           default:

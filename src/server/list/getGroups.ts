@@ -1,7 +1,7 @@
-import axios from "axios";
-import {JSDOM} from 'jsdom';
-import {wrapInResponse} from "@shared/wrapper";
-import {ListEntry, ListQuery} from "@server/list/types";
+import axios from 'axios';
+import { JSDOM } from 'jsdom';
+import { wrapInResponse } from '@shared/wrapper';
+import { ListEntry, ListQuery } from '@server/list/types';
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 
 export async function getGroups(query: ListQuery) {
@@ -9,20 +9,22 @@ export async function getGroups(query: ListQuery) {
 
   const data = await axios.get(url);
 
-  if (data.data.includes("Соединение не установлено")) {
-    throw new Error("Error on platform's side, no connection")
+  if (data.data.includes('Соединение не установлено')) {
+    throw new Error("Error on platform's side, no connection");
   }
 
   const dom = new JSDOM(data.data);
 
   let groups: ListEntry[] = [];
 
-  dom.window.document.querySelectorAll('#group > option').forEach((ch: Element) => {
-    groups.push({
-      name: ch.textContent!,
-      id: ch.getAttribute('value')!,
+  dom.window.document
+    .querySelectorAll('#group > option')
+    .forEach((ch: Element) => {
+      groups.push({
+        name: ch.textContent!,
+        id: ch.getAttribute('value')!,
+      });
     });
-  });
 
   return wrapInResponse(groups);
 }

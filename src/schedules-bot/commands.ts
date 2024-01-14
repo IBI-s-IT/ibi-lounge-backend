@@ -1,10 +1,10 @@
-import { BotContext } from "./context";
-import {cachedRequest, checkForValidContext} from "./utils";
-import { getSchedules } from "@server/schedules/getSchedules";
-import Strings from "./strings";
-import {SchedulesLesson} from "@server/schedules/types";
-import { SCHEDULE_TTL } from "./consts";
-import { getRaspDate } from "@shared//date";
+import { BotContext } from './context';
+import { cachedRequest, checkForValidContext } from './utils';
+import { getSchedules } from '@server/schedules/getSchedules';
+import Strings from './strings';
+import { SchedulesLesson } from '@server/schedules/types';
+import { SCHEDULE_TTL } from './consts';
+import { getRaspDate } from '@shared//date';
 
 function isValidDate(d: unknown) {
   // @ts-ignore хаки
@@ -12,7 +12,7 @@ function isValidDate(d: unknown) {
 }
 
 function formatLessons(lessons: SchedulesLesson[]) {
-  let result = "";
+  let result = '';
 
   lessons.forEach((lesson) => {
     const time_start = lesson.time_start;
@@ -21,12 +21,14 @@ function formatLessons(lessons: SchedulesLesson[]) {
     const place = lesson.additional?.is_online
       ? Strings.isOnline
       : lesson.additional?.location
-      ? Strings.location(lesson.additional.location)
-      : Strings.location("Незвестно");
+        ? Strings.location(lesson.additional.location)
+        : Strings.location('Незвестно');
 
     let groups = null;
     if (lesson.additional?.subgroup && lesson.additional.group) {
-      groups = lesson.additional.subgroup.map((sub: string) => sub + lesson.additional!.group![0]).join(', ')
+      groups = lesson.additional.subgroup
+        .map((sub: string) => sub + lesson.additional!.group![0])
+        .join(', ');
     }
 
     result += `${time_start} - ${time_end} • ${place}`;
@@ -59,7 +61,7 @@ function formatLessons(lessons: SchedulesLesson[]) {
 
 async function getForDay(
   ctx: BotContext,
-  date: Date,
+  date: Date
 ): Promise<[SchedulesLesson[], string]> {
   checkForValidContext(ctx);
 
@@ -75,10 +77,10 @@ async function getForDay(
         return await getSchedules({
           dateStart: formattedDate,
           dateEnd: formattedDate,
-          group: ctx.session.group
+          group: ctx.session.group,
         });
       },
-      SCHEDULE_TTL,
+      SCHEDULE_TTL
     );
 
     return [cached.response[0].lessons, header];
@@ -87,7 +89,7 @@ async function getForDay(
       case 'no_schedules':
         return [[], Strings.noSchedules(formattedDate)];
       default:
-        return [[], Strings.error((error as Error).message!)]
+        return [[], Strings.error((error as Error).message!)];
     }
   }
 }

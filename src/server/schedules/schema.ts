@@ -11,7 +11,8 @@ export const schedulesRequestQuery = {
     },
     group: {
       type: 'string',
-      description: 'Группа студента, можно найти через /list?type=groups&level=*',
+      description:
+        'Группа студента, можно найти через /list?type=groups&level=*',
     },
     teacher: {
       type: 'string',
@@ -28,7 +29,7 @@ export const schedulesRequestQuery = {
 
 const schedulesRequestSchema = {
   description: 'Выдаёт расписание группы/преподавателя',
-  querystring: schedulesRequestQuery
+  querystring: schedulesRequestQuery,
 };
 
 export const schedulesLessonAdditional = {
@@ -49,19 +50,19 @@ export const schedulesLessonAdditional = {
         'subject_report',
         'consultation',
         'subject_report_with_grade',
-        'course_work_defend'
+        'course_work_defend',
       ],
       description:
-        "unknown: Неизвестно; " +
-        "practice: Практика; " +
-        "lecture: Лекция; " +
-        "library_day: Библиотечный день (в 2023 году не встречался); " +
-        "project_work: Проектная деятельность (в 2023 году не встречался); " +
-        "exam: Экзамен; " +
-        "subject_report: Зачёт; " +
-        "consultation: Консультация; " +
-        "subject_report_with_grade: Дифференцированный зачёт; " +
-        "course_work_defend: Защита курсовых работ;"
+        'unknown: Неизвестно; ' +
+        'practice: Практика; ' +
+        'lecture: Лекция; ' +
+        'library_day: Библиотечный день (в 2023 году не встречался); ' +
+        'project_work: Проектная деятельность (в 2023 году не встречался); ' +
+        'exam: Экзамен; ' +
+        'subject_report: Зачёт; ' +
+        'consultation: Консультация; ' +
+        'subject_report_with_grade: Дифференцированный зачёт; ' +
+        'course_work_defend: Защита курсовых работ;',
     },
     url: { type: 'string', description: 'Ссылка' },
     group: { type: 'array', items: { type: 'string' } },
@@ -69,13 +70,13 @@ export const schedulesLessonAdditional = {
     location: { type: 'string', description: 'Аудитория' },
     teacher_name: {
       type: 'string',
-      description: 'Фамилия и инициалы преподавателя'
+      description: 'Фамилия и инициалы преподавателя',
     },
     compensation: { type: 'string', description: 'Возмещение пары' },
     teacher_groups: {
       type: 'array',
       items: { type: 'string' },
-      description: 'Группы которые будут на паре (только у учителей)'
+      description: 'Группы которые будут на паре (только у учителей)',
     },
     additionalProperties: false,
   },
@@ -98,7 +99,7 @@ export const schedulesDay = {
   properties: {
     day: { type: 'string' },
     month: { type: 'string' },
-    week_day: {type: 'string' },
+    week_day: { type: 'string' },
     lessons: {
       type: 'array',
       items: schedulesLesson,
@@ -114,13 +115,13 @@ const schedulesResponseSchema = {
     response: {
       type: 'array',
       items: schedulesDay,
-    }
-  }
+    },
+  },
 };
 
 export const schedulesSchema = {
   ...schedulesRequestSchema,
   response: {
     200: schedulesResponseSchema,
-  }
+  },
 };
