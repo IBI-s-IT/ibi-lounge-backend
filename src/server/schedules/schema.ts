@@ -40,6 +40,7 @@ export const schedulesLessonAdditional = {
     type: {
       type: 'string',
       enum: [
+        'unknown',
         'practice',
         'lecture',
         'library_day',
@@ -47,9 +48,11 @@ export const schedulesLessonAdditional = {
         'exam',
         'subject_report',
         'consultation',
-        'subject_report_with_grade'
+        'subject_report_with_grade',
+        'course_work_defend'
       ],
       description:
+        "unknown: Неизвестно; " +
         "practice: Практика; " +
         "lecture: Лекция; " +
         "library_day: Библиотечный день (в 2023 году не встречался); " +
@@ -57,7 +60,8 @@ export const schedulesLessonAdditional = {
         "exam: Экзамен; " +
         "subject_report: Зачёт; " +
         "consultation: Консультация; " +
-        "subject_report_with_grade: Дифференцированный зачёт"
+        "subject_report_with_grade: Дифференцированный зачёт; " +
+        "course_work_defend: Защита курсовых работ;"
     },
     url: { type: 'string', description: 'Ссылка' },
     group: { type: 'array', items: { type: 'string' } },

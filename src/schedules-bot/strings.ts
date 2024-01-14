@@ -28,6 +28,7 @@ const Strings = {
   backwards: "◀️",
   forward: "▶️",
 
+  unknown: "⚠️ Неизвестно",
   practice: "Практика",
   lecture: "Лекция",
   library_day: "Библ. день",
@@ -36,6 +37,7 @@ const Strings = {
   subject_report: "⚠️ Зачёт",
   consultation: "ℹ️ Консультация",
   subject_report_with_grade: "⚠️ Диф. зачёт",
+  course_work_defend: "⚠️ Защита курсовых",
 
   isOnline: "<i>Онлайн 🌍️</i>",
   location: (place: string) => `<i>${place} 🗺️</i>`,

@@ -2,16 +2,8 @@ import {SchedulesDay, SchedulesLessonAdditional} from "../types";
 import {JSDOM} from "jsdom";
 import {detectCustomTime} from "./features/customTime";
 import {detectURLs} from "./features/url";
-
-function detectCompensation(text: string): [string | null, string] {
-  const compensation = text.match(/[0-9]{2}\.[0-9]{2}\.[0-9]{2}/i);
-  if (compensation !== null) {
-    text = text.replace(`Возмещение за ${compensation[0]}`, '');
-    return [compensation[0], text];
-  }
-
-  return [null, text]
-}
+import {detectCompensation} from "./features/compensation";
+import {detectType} from "@server/schedules/parser/features/type";
 
 export function parseAdditionals(text: string, teacher: boolean): [SchedulesLessonAdditional, string] {
   let result: SchedulesLessonAdditional = {};
@@ -33,45 +25,9 @@ export function parseAdditionals(text: string, teacher: boolean): [SchedulesLess
     text = text.replace(', ауд. Дистанцион', '');
   }
 
-  if (text.match(/,? ?-?Лекц/gi)) {
-    text = text.replace(/,? ?-?Лекц/gi, '');
-    result.type = 'lecture';
-  }
-
-  if (text.match(/,? ?-?Прак/gi)) {
-    text = text.replace(/,? ?-?Прак/gi, '');
-    result.type = 'practice';
-  }
-
-  if (text.match(/,? ?-?Конс/gi)) {
-    text = text.replace(/,? ?-?Конс/gi, '');
-    result.type = 'consultation';
-  }
-
-  if (text.match(/,? ?-?ДифЗ/gi)) {
-    text = text.replace(/,? ?-?ДифЗ/gi, '');
-    result.type = 'subject_report_with_grade';
-  }
-
-  if (text.match(/,? ?-?Экз/gi)) {
-    text = text.replace(/,? ?-?Экз/gi, '');
-    result.type = 'exam';
-  }
-
-  if (text.match(/,? ?-?Зач/gi)) {
-    text = text.replace(/,? ?-?Зач/gi, '');
-    result.type = 'subject_report';
-  }
-
-  if (text.includes('БИБЛИОТЕЧНЫЙ ДЕНЬ!  ')) {
-    text = text.replace('БИБЛИОТЕЧНЫЙ ДЕНЬ!  ', '');
-    result.type = 'library_day';
-  }
-
-  if (text.match(/,? ?-?ПроД/gi)) {
-    text = text.replace(/,? ?-?ПроД/gi, '');
-    result.type = 'project_work';
-  }
+  const [type, textAfterType] = detectType(text);
+  text = textAfterType;
+  result.type = type;
 
   const subgroups = [...text.matchAll(/Подгруппа [0-9][A-zА-я]?/gi)].map((el) => el[0]);
   const group_names: string[] = [];
