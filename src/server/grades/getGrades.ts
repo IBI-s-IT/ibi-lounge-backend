@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { wrapInResponse } from '@shared/wrapper';
 import { Grade, GradesQuery } from './types';
 import { JSDOM } from 'jsdom';
+import { GradesDataMismatchError } from '@shared/errors';
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
@@ -14,6 +14,9 @@ export async function getGrades(query: GradesQuery) {
     pin1: pin,
   });
 
+  if (data.data.includes('Введенная фамилия не соответствует пин коду!')) {
+    return GradesDataMismatchError();
+  }
   const dom = new JSDOM(data.data);
 
   let grades: Grade[] = [];
@@ -84,5 +87,5 @@ export async function getGrades(query: GradesQuery) {
     }
   });
 
-  return wrapInResponse(grades);
+  return grades;
 }

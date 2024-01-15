@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
-import { wrapInResponse } from '@shared/wrapper';
 import { ListEntry, ListQuery } from '@server/list/types';
+import { IbiServerDownError } from '@shared/errors';
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 
 export async function getGroups(query: ListQuery) {
@@ -10,7 +10,7 @@ export async function getGroups(query: ListQuery) {
   const data = await axios.get(url);
 
   if (data.data.includes('Соединение не установлено')) {
-    throw new Error("Error on platform's side, no connection");
+    return IbiServerDownError();
   }
 
   const dom = new JSDOM(data.data);
@@ -26,5 +26,5 @@ export async function getGroups(query: ListQuery) {
       });
     });
 
-  return wrapInResponse(groups);
+  return groups;
 }

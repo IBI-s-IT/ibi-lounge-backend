@@ -22,13 +22,8 @@ export const listEntry = {
 } as const;
 
 const listResponseSchema = {
-  type: 'object',
-  properties: {
-    response: {
-      type: 'array',
-      items: listEntry,
-    },
-  },
+  type: 'array',
+  items: listEntry,
 };
 
 export const listSchema = {

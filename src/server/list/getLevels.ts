@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
-import { wrapInResponse } from '@shared/wrapper';
 import { ListEntry } from '@server/list/types';
+import { IbiServerDownError } from '@shared/errors';
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=1';
 
@@ -9,7 +9,7 @@ export async function getLevels() {
   const data = await axios.get(BASE_URL);
 
   if (data.data.includes('Соединение не установлено')) {
-    throw new Error("Error on platform's side, no connection");
+    return IbiServerDownError();
   }
 
   const dom = new JSDOM(data.data);
@@ -25,5 +25,5 @@ export async function getLevels() {
       });
     });
 
-  return wrapInResponse(levels);
+  return levels;
 }

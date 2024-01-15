@@ -108,4 +108,4 @@ void bot.api.setMyCommands([
   { command: 'settings', description: Strings.settingsDesc },
 ]);
 
-bot.catch(logger.error);
+bot.catch((error) => logger.error(error));

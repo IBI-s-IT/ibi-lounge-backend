@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { wrapInResponse } from '@shared/wrapper';
-import { parse } from './parser';
+import { parseTable } from './parser';
 import { filterSubgroups } from './utils';
 import { SchedulesQuery } from '@server/schedules/types';
 
@@ -30,25 +29,28 @@ export async function getSchedules(query: SchedulesQuery) {
       group: query.group,
       tuttabl: 0,
     });
-  } else {
-    throw 'no group or teacher param';
   }
 
-  const data = await axios.postForm(BASE_URL, params);
+  const response = await axios.postForm(BASE_URL, params);
 
   if (
-    data.data.includes(
+    response.data.includes(
       'Информации для отображения отчета не обнаружено! Измените период.'
     )
   ) {
-    throw new Error('no_schedules');
+    // Пустой список при отсутствии информации - тоже успешный ответ
+    return [];
   }
 
-  const lessons = parse(data.data, 'teacher' in query);
+  const schedulesDays = parseTable(response.data, 'teacher' in query);
+
+  if ('name' in schedulesDays) {
+    return schedulesDays;
+  }
 
   if (query.subgroups) {
-    return wrapInResponse(filterSubgroups(lessons, query.subgroups));
+    return filterSubgroups(schedulesDays, query.subgroups);
   }
 
-  return wrapInResponse(lessons);
+  return schedulesDays;
 }

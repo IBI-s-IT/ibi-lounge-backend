@@ -45,13 +45,8 @@ export const gradesGrade = {
 } as const;
 
 export const gradesResponseSchema = {
-  type: 'object',
-  properties: {
-    response: {
-      type: 'array',
-      items: gradesGrade,
-    },
-  },
+  type: 'array',
+  items: gradesGrade,
 };
 
 export const gradesSchema = {

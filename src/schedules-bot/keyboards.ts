@@ -30,7 +30,11 @@ const LevelKeyboard = new Menu<BotContext>('levelSelect')
       ctx.session.education_level = '1';
     }
 
-    cached.response.forEach((level: ListEntry) => {
+    if ('code' in cached) {
+      throw cached;
+    }
+
+    cached.forEach((level: ListEntry) => {
       const nameText = `${level.id === ctx.session.education_level ? '✅' : ''} ${
         level.name
       }`;
@@ -71,15 +75,13 @@ const GroupKeyboard = new Menu<BotContext>('groupSelect')
       GROUPS_TTL
     );
 
-    if (!('response' in cached)) {
-      await ctx.reply('Произошла ошибка запроса');
-      logger.error('Hard error while getting groups');
-      return range;
+    if ('code' in cached) {
+      throw cached;
     }
 
     const chunkSize = 3;
-    for (let i = 0; i < cached.response.length; i += chunkSize) {
-      const chunk = cached.response.slice(i, i + chunkSize);
+    for (let i = 0; i < cached.length; i += chunkSize) {
+      const chunk = cached.slice(i, i + chunkSize);
       chunk.forEach((group: ListEntry) => {
         const nameText = `${group.id === ctx.session.group ? '✅' : ''} ${
           group.name

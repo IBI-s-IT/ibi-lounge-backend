@@ -14,13 +14,13 @@ export async function getCalendar(query: CalendarQuery) {
 
   const data = await getSchedules(schedulesQuery);
 
-  if (!('response' in data) || data.response.length === 0) {
-    throw new Error('no_data');
-  }
-
   const calendar = ical({ name: 'Учёба' });
 
-  data.response.map((day) => {
+  if ('name' in data) {
+    return data;
+  }
+
+  data.map((day) => {
     day.lessons.map((lesson) => {
       const event = calendar.createEvent({
         start: new Date(

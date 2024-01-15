@@ -133,13 +133,8 @@ export const schedulesDay = {
 } as const;
 
 const schedulesResponseSchema = {
-  type: 'object',
-  properties: {
-    response: {
-      type: 'array',
-      items: schedulesDay,
-    },
-  },
+  type: 'array',
+  items: schedulesDay,
 };
 
 export const schedulesSchema = {

@@ -70,28 +70,27 @@ async function getForDay(
   const formattedDate = getRaspDate(date);
   const header = `<b>Расписание на ${getRaspDate(date)}</b>\n\n`;
 
-  try {
-    const cached = await cachedRequest(
-      `schedules-${formattedDate}-${ctx.session.group}`,
-      async () => {
-        return await getSchedules({
-          dateStart: formattedDate,
-          dateEnd: formattedDate,
-          group: ctx.session.group,
-        });
-      },
-      SCHEDULE_TTL
-    );
+  const cached = await cachedRequest(
+    `schedules-${formattedDate}-${ctx.session.group}`,
+    async () => {
+      return await getSchedules({
+        dateStart: formattedDate,
+        dateEnd: formattedDate,
+        group: ctx.session.group,
+      });
+    },
+    SCHEDULE_TTL
+  );
 
-    return [cached.response[0].lessons, header];
-  } catch (error) {
-    switch ((error as Error).message) {
-      case 'no_schedules':
-        return [[], Strings.noSchedules(formattedDate)];
-      default:
-        return [[], Strings.error((error as Error).message!)];
-    }
+  if ('name' in cached) {
+    return [[], Strings.error(JSON.stringify(cached))];
   }
+
+  if (cached.length === 0) {
+    return [[], Strings.noSchedules(formattedDate)];
+  }
+
+  return [cached[0].lessons, header];
 }
 
 export async function getToday(ctx: BotContext) {

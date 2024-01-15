@@ -1,4 +1,8 @@
-import { SchedulesDay, SchedulesLessonAdditional } from '../types';
+import {
+  SchedulesDay,
+  SchedulesLesson,
+  SchedulesLessonAdditional,
+} from '../types';
 import { JSDOM } from 'jsdom';
 import { detectCustomTime } from './features/customTime';
 import { detectURLs } from './features/url';
@@ -8,8 +12,9 @@ import {
   detectClassroomSimple,
   expandLocationData,
 } from '@server/schedules/parser/features/location';
+import { SchedulesParsingError } from '@shared/errors';
 
-export function parseAdditionals(
+export function parseAdditional(
   text: string,
   teacher: boolean
 ): [SchedulesLessonAdditional, string] {
@@ -114,27 +119,49 @@ export function parseAdditionals(
   return [result, text];
 }
 
-export function parse(html: string, teacher: boolean = false) {
+function parseLesson(
+  timeStart: string,
+  timeEnd: string,
+  lessonText: string,
+  isTeachers: boolean
+): SchedulesLesson {
+  const [additional, left] = parseAdditional(lessonText, isTeachers);
+  const custom = detectCustomTime(left);
+
+  return {
+    text: custom === undefined ? left : custom[2],
+    time_start: custom === undefined ? timeStart.trim() : custom[0],
+    time_end: custom === undefined ? timeEnd.trim() : custom[1],
+    additional: additional,
+  };
+}
+
+export function parseTable(html: string, teacher: boolean = false) {
   const el = new JSDOM(html);
   const times = el.window.document.querySelectorAll(
     'table > tbody > tr > td > b'
   );
   const rows = el.window.document.querySelectorAll('table > tbody > tr');
 
-  if (!rows.length) throw new Error('bad_error_159');
+  if (!rows.length)
+    return SchedulesParsingError(
+      'Возникла проблема с обработкой данных (rows)'
+    );
 
   let lesson_num = rows[1].childElementCount + 2;
 
-  let lessons_new: SchedulesDay[] = [];
+  let days: SchedulesDay[] = [];
 
   for (let rowcol = 2; rowcol < rows.length; rowcol++) {
     const day_month_el = rows[rowcol].childNodes[1];
     if (day_month_el.textContent === null)
-      throw new Error('Failed to parse day/month element');
+      return SchedulesParsingError(
+        'Возникла проблема с обработкой данных (day/month)'
+      );
 
     const day_month = day_month_el.textContent!.trim().split(' ')[0].split('.');
 
-    lessons_new[rowcol - 2] = {
+    days[rowcol - 2] = {
       day: day_month[0],
       month: day_month[1],
       week_day: day_month_el.textContent.split(' ')[1].trim(),
@@ -149,41 +176,34 @@ export function parse(html: string, teacher: boolean = false) {
       const timeEl = times[col];
 
       if (timeEl.textContent === null)
-        throw new Error('Failed to parse time rows');
+        return SchedulesParsingError(
+          'Возникла проблема с обработкой данных (timeEl)'
+        );
+
       if (textEl.textContent === null)
-        throw new Error('Failed to parse text rows/cols');
+        return SchedulesParsingError(
+          'Возникла проблема с обработкой данных (textEl)'
+        );
 
       const [time_start, time_end] = timeEl.textContent.split('-');
 
       if (textEl.textContent.trim() !== '') {
-        const text = textEl.textContent.trim();
+        const lessonText = textEl.textContent.trim();
 
-        if (text.includes('--------')) {
-          text.split('--------').forEach((splitted) => {
-            const [additional, left] = parseAdditionals(splitted, teacher);
-            const custom = detectCustomTime(left);
-
-            lessons_new[rowcol - 2].lessons.push({
-              text: custom === undefined ? left : custom[2],
-              time_start: custom === undefined ? time_start.trim() : custom[0],
-              time_end: custom === undefined ? time_end.trim() : custom[1],
-              additional: additional,
-            });
+        if (lessonText.includes('--------')) {
+          lessonText.split('--------').forEach((splitLessonText) => {
+            days[rowcol - 2].lessons.push(
+              parseLesson(time_start, time_end, splitLessonText, teacher)
+            );
           });
         } else {
-          const [additional, left] = parseAdditionals(text, teacher);
-          const custom = detectCustomTime(left);
-
-          lessons_new[rowcol - 2].lessons.push({
-            text: custom === undefined ? left : custom[2],
-            time_start: custom === undefined ? time_start.trim() : custom[0],
-            time_end: custom === undefined ? time_end.trim() : custom[1],
-            additional: additional,
-          });
+          days[rowcol - 2].lessons.push(
+            parseLesson(time_start, time_end, lessonText, teacher)
+          );
         }
       }
     }
   }
 
-  return lessons_new;
+  return days;
 }
