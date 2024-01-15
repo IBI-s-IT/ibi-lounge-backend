@@ -28,17 +28,6 @@ export function parseAdditional(
     result.is_online = true;
   }
 
-  if (text.includes('ОНЛАЙН ЛЕКЦИЯ!')) {
-    text = text.replace('ОНЛАЙН ', '');
-    text = text.trim();
-    result.is_online = true;
-    result.type = 'lecture';
-  }
-
-  if (text.includes(', ауд. Дистанцион')) {
-    text = text.replace(', ауд. Дистанцион', '');
-  }
-
   const [type, textAfterType] = detectType(text);
   text = textAfterType;
   result.type = type;
@@ -119,7 +108,7 @@ export function parseAdditional(
   return [result, text];
 }
 
-function parseLesson(
+export function parseLesson(
   timeStart: string,
   timeEnd: string,
   lessonText: string,
