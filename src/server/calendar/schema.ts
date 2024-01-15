@@ -2,8 +2,16 @@ export const calendarQuery = {
   type: 'object',
   properties: {
     group: { type: 'string' },
+    teacher: { type: 'string' },
   },
-  required: ['group'],
+  anyOf: [
+    {
+      required: ['group'],
+    },
+    {
+      required: ['teacher'],
+    },
+  ],
 } as const;
 
 const calendarRequestSchema = {

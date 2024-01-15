@@ -2,14 +2,14 @@ import ical, { ICalAlarmType, ICalEventBusyStatus } from 'ical-generator';
 import { getSchedules } from '../schedules/getSchedules';
 import { getRaspDate, startEndOfYear } from '@shared/date';
 import { CalendarQuery } from '@server/calendar/types';
-import Strings from '@bot/strings';
+import Strings from '@shared/strings';
 
 export async function getCalendar(query: CalendarQuery) {
   const [start, end] = startEndOfYear();
   const schedulesQuery = {
     dateStart: getRaspDate(start),
     dateEnd: getRaspDate(end),
-    group: query.group,
+    ...query,
   };
 
   const data = await getSchedules(schedulesQuery);
@@ -46,6 +46,10 @@ export async function getCalendar(query: CalendarQuery) {
         description += `${Strings[lesson.additional.type]}\n`;
       }
 
+      if (lesson?.additional?.teacher_groups) {
+        description += `Группы: ${lesson.additional.teacher_groups.join(',')}`;
+      }
+
       if (lesson?.additional?.is_online) {
         event.busystatus(ICalEventBusyStatus.FREE);
         event.createAlarm({
@@ -62,15 +66,21 @@ export async function getCalendar(query: CalendarQuery) {
           title: lesson.additional.classroom,
           address: lesson.additional.classroom_details!.address,
         });
-        description += `🗺️ Место: ${lesson.additional.location}\n`;
+        description += `🗺️ Место: ${lesson.additional.classroom}\n`;
         event.createAlarm({
           type: ICalAlarmType.display,
           trigger: 3600 * 2,
         });
       }
 
-      if (lesson?.additional?.subgroup) {
-        description += `👥 Подгруппа: ${lesson.additional.subgroup}\n`;
+      if (
+        !lesson?.additional?.teacher_groups &&
+        lesson?.additional?.subgroup?.length &&
+        lesson?.additional?.group?.length
+      ) {
+        description += `👥 Подгруппа: ${lesson.additional.subgroup.map(
+          (sub) => `${sub}${lesson!.additional!.group![0]}`
+        )}\n`;
       }
 
       if (lesson?.additional?.teacher_name) {

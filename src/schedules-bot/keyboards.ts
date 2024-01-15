@@ -1,4 +1,4 @@
-import Strings from './strings';
+import Strings from '@shared/strings';
 import { Menu, MenuRange } from '@grammyjs/menu';
 import { BotContext } from './context';
 import { getLevels } from '@server/list/getLevels';

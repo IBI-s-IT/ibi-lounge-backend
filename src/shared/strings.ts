@@ -1,4 +1,4 @@
-import { BotContext } from './context';
+import { BotContext } from '@bot/context';
 import { lessonTypeMap } from '@shared/type_map';
 
 const Strings = {

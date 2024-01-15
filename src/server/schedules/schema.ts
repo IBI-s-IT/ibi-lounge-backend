@@ -37,7 +37,6 @@ export const schedulesRequestQuery = {
     { required: ['dateStart', 'dateEnd', 'group'] },
     { required: ['dateStart', 'dateEnd', 'teacher'] },
   ],
-  required: ['dateStart', 'dateEnd'],
   additionalProperties: false,
 } as const;
 

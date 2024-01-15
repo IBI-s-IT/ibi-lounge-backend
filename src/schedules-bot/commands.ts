@@ -1,7 +1,7 @@
 import { BotContext } from './context';
 import { cachedRequest, checkForValidContext } from './utils';
 import { getSchedules } from '@server/schedules/getSchedules';
-import Strings from './strings';
+import Strings from '@shared/strings';
 import { SchedulesLesson } from '@server/schedules/types';
 import { SCHEDULE_TTL } from './consts';
 import { getRaspDate } from '@shared//date';
