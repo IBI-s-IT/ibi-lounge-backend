@@ -1,7 +1,7 @@
-import { SchedulesDay, Subgroup } from './types';
+import { SchedulesDay, SchedulesQuery } from './types';
 export const filterSubgroups = (
   lessons: SchedulesDay[],
-  subgroups: Subgroup[]
+  subgroups: SchedulesQuery['subgroups']
 ): SchedulesDay[] => {
   const filtered_lessons: SchedulesDay[] = [];
 
@@ -15,7 +15,7 @@ export const filterSubgroups = (
         continue;
       }
 
-      for (const subject_props of subgroups) {
+      for (const subject_props of subgroups!) {
         if (
           lesson.text === subject_props.subject &&
           lesson.additional.group?.includes(subject_props.group) &&

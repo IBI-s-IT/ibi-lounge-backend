@@ -1,5 +1,6 @@
 import Fastify from 'fastify';
-import qs from 'querystring';
+import qs from 'qs';
+import Ajv from 'ajv/dist/2020';
 import { schedulesRoutes } from 'src/server/schedules';
 import { fastifyHelmet } from '@fastify/helmet';
 import { fastifyCors } from '@fastify/cors';
@@ -8,13 +9,22 @@ import { calendarRoutes } from '@server/calendar';
 import { listRoutes } from '@server/list';
 import { gradesRoutes } from '@server/grades';
 import fastifySwagger from '@fastify/swagger';
+// @ts-ignore
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import { JsonSchemaToTsProvider } from '@fastify/type-provider-json-schema-to-ts';
+
+const ajv = new Ajv({
+  removeAdditional: 'all',
+});
 
 const fastify = Fastify({
   logger: true,
   querystringParser: (str) => qs.parse(str),
-}).withTypeProvider<JsonSchemaToTsProvider>();
+})
+  .withTypeProvider<JsonSchemaToTsProvider>()
+  .setValidatorCompiler(({ schema, method, url, httpPart }) => {
+    return ajv.compile(schema);
+  });
 
 fastify.register(fastifyHelmet, { global: true });
 fastify.register(fastifyCors, {

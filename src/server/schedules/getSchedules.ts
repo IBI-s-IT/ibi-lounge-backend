@@ -47,9 +47,7 @@ export async function getSchedules(query: SchedulesQuery) {
   const lessons = parse(data.data, 'teacher' in query);
 
   if (query.subgroups) {
-    return wrapInResponse(
-      filterSubgroups(lessons, JSON.parse(query.subgroups))
-    );
+    return wrapInResponse(filterSubgroups(lessons, query.subgroups));
   }
 
   return wrapInResponse(lessons);

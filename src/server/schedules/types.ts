@@ -13,9 +13,3 @@ export type SchedulesLesson = FromSchema<typeof schedulesLesson>;
 export type SchedulesLessonAdditional = FromSchema<
   typeof schedulesLessonAdditional
 >;
-
-export interface Subgroup {
-  subject: string;
-  group: string;
-  subgroup: string;
-}

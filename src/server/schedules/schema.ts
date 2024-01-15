@@ -11,18 +11,32 @@ export const schedulesRequestQuery = {
     },
     group: {
       type: 'string',
-      description:
-        'Группа студента, можно найти через /list?type=groups&level=*',
+      description: 'ID группы, можно найти через /list?type=groups&level=*',
     },
     teacher: {
       type: 'string',
       description: 'ID преподавателя, можно найти через /list?type=teachers',
     },
     subgroups: {
-      description: 'JSON массив подгрупп',
-      type: 'string',
+      description:
+        'Массив объектов подгрупп: [{ subject: "string", group: "string", subgroup: "string" }]',
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          subject: { type: 'string' },
+          group: { type: 'string' },
+          subgroup: { type: 'string' },
+        },
+        additionalProperties: false,
+        required: ['subject', 'group', 'subgroup'],
+      },
     },
   },
+  anyOf: [
+    { required: ['dateStart', 'dateEnd', 'group'] },
+    { required: ['dateStart', 'dateEnd', 'teacher'] },
+  ],
   required: ['dateStart', 'dateEnd'],
   additionalProperties: false,
 } as const;
