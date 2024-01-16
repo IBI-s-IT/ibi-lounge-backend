@@ -1,15 +1,10 @@
 import { BotContext } from './context';
 import { cachedRequest, checkForValidContext } from './utils';
 import { getSchedules } from '@server/schedules/getSchedules';
-import Strings from '@shared/strings';
+import Strings from '@bot/strings';
 import { SchedulesLesson } from '@server/schedules/types';
 import { SCHEDULE_TTL } from './consts';
-import { getRaspDate } from '@shared//date';
-
-function isValidDate(d: unknown) {
-  // @ts-ignore хаки
-  return d instanceof Date && !isNaN(d);
-}
+import { getRaspDate, isValidDate } from '@shared//date';
 
 function formatLessons(lessons: SchedulesLesson[]) {
   let result = '';

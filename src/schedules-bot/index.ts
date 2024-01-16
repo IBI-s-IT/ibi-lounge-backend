@@ -10,7 +10,7 @@ import {
   LinksMenu,
   SettingsKeyboard,
 } from './keyboards';
-import Strings from '@shared/strings';
+import Strings from '@bot/strings';
 import { apiThrottler } from '@grammyjs/transformer-throttler';
 import { autoRetry } from '@grammyjs/auto-retry';
 import { getCustom, getToday, getTomorrow } from './commands';

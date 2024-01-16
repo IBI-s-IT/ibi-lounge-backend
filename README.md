@@ -6,8 +6,8 @@ Backend server which is used to retrieve schedules in more readable format than 
 
 - Schedules (for students and teachers)
 - Grades
-- Lists of teachers, groups and education levels
-- Calendar feed (for students only)
+- List of teachers, groups and education levels
+- Calendar feed (for students and teachers)
 - Telegram bot
 
 ### Contributing
@@ -15,4 +15,8 @@ Backend server which is used to retrieve schedules in more readable format than 
 1. Fork this repo and clone it somewhere
 2. Run `yarn` in root project directory to install project dependencies
 3. Run `yarn dev` to start server locally, default port is `3000`
-4. Make your changes, cover them with tests if possible and submit pull request.
+4. Make your changes, update schema and tests accordingly
+
+### Links
+
+- Swagger: [JSON](https://lounge.utme.space/docs/json), [YAML](https://lounge.utme.space/docs/json)

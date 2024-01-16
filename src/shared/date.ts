@@ -13,3 +13,8 @@ export function startEndOfYear() {
   const year = new Date().getFullYear();
   return [new Date(year, 0, 1), new Date(year, 11, 31)];
 }
+
+export function isValidDate(d: unknown) {
+  // @ts-ignore хаки
+  return d instanceof Date && !isNaN(d);
+}

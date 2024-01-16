@@ -5,7 +5,7 @@ export function detectClassroomSimple(
 ): [SchedulesLessonAdditional['classroom'], string] {
   let result;
 
-  const loc = text.match(/, ауд\. ?\W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к|-н)?/i);
+  const loc = text.match(/, ауд\. ?\W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к)?/i);
   if (loc !== null) {
     const location = loc[0].replace(', ', '');
     text = text.replace(loc[0], '');
@@ -36,11 +36,17 @@ export function expandLocationData(
       break;
   }
 
-  if (rest[rest.length - 1] === 'к') {
-    result.computer_classroom = true;
-    result.classroom_number = rest.slice(0, -1).join('-');
-  } else {
-    result.classroom_number = rest.join('-');
+  switch (rest[rest.length - 1]) {
+    case 'к':
+      result.computer_classroom = true;
+      result.classroom_number = rest.slice(0, -1).join('-');
+      break;
+    case 'web':
+      result.online_classroom = true;
+      result.classroom_number = rest.slice(0, -1).join('-');
+      break;
+    default:
+      result.classroom_number = rest.join('-');
   }
 
   return result;

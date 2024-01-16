@@ -2,7 +2,7 @@ import ical, { ICalAlarmType, ICalEventBusyStatus } from 'ical-generator';
 import { getSchedules } from '../schedules/getSchedules';
 import { getRaspDate, startEndOfYear } from '@shared/date';
 import { CalendarQuery } from '@server/calendar/types';
-import Strings from '@shared/strings';
+import { lessonTypeMap } from '@shared/type_map';
 
 export async function getCalendar(query: CalendarQuery) {
   const [start, end] = startEndOfYear();
@@ -43,7 +43,7 @@ export async function getCalendar(query: CalendarQuery) {
       let description = '';
 
       if (lesson?.additional?.type) {
-        description += `${Strings[lesson.additional.type]}\n`;
+        description += `${lessonTypeMap[lesson.additional.type]}\n`;
       }
 
       if (lesson?.additional?.teacher_groups) {

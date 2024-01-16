@@ -1,7 +1,7 @@
 import { redisInstance } from './index';
 import { BotContext } from '@bot/context';
 import { BOT_DEFAULT_SESSION } from '@bot/consts';
-import Strings from '@shared/strings';
+import Strings from '@bot/strings';
 export async function cachedRequest<T>(
   key: string,
   fetchData: () => Promise<T>,
@@ -15,10 +15,9 @@ export async function cachedRequest<T>(
     cached.length === 0 ||
     (JSON.parse(cached) !== null && 'error' in JSON.parse(cached))
   ) {
-    const data = await fetchData();
+    const data: any = await fetchData();
 
-    // @ts-ignore
-    if ('code' in data) {
+    if ('name' in data) {
       if (retryN > 4) {
         throw new Error('Did not succeed at fetching new data', {
           cause: `DATA: ${JSON.stringify(data)}\n\nKEY: ${key}`,

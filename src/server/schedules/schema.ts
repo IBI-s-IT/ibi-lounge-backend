@@ -98,6 +98,7 @@ export const schedulesLessonAdditional = {
         address: { type: 'string' },
         classroom_number: { type: 'string' },
         computer_classroom: { type: 'boolean' },
+        online_classroom: { type: 'boolean' },
       },
       description: 'Аудитория (расширенный вариант)',
       additionalProperties: false,
