@@ -6,7 +6,6 @@ import { getGroups } from '@server/list/getGroups';
 import { cachedRequest, checkForValidContext } from './utils';
 import { getCustom, getToday, getTomorrow } from './commands';
 import { GROUPS_TTL, LEVELS_TTL } from './consts';
-import { logger } from '@bot/logger';
 import { ListEntry } from '@server/list/types';
 
 const LevelKeyboard = new Menu<BotContext>('levelSelect')
@@ -19,12 +18,6 @@ const LevelKeyboard = new Menu<BotContext>('levelSelect')
       },
       LEVELS_TTL
     );
-
-    if (!('response' in cached)) {
-      await ctx.reply('Произошла ошибка запроса');
-      logger.error('Hard error while getting levels');
-      return range;
-    }
 
     if (!ctx.session.education_level) {
       ctx.session.education_level = '1';
