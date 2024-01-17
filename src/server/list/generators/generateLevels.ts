@@ -5,7 +5,7 @@ import { IbiServerDownError } from '@shared/errors';
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=1';
 
-export async function getLevels() {
+export async function generateLevels() {
   const data = await axios.get(BASE_URL);
 
   if (data.data.includes('Соединение не установлено')) {

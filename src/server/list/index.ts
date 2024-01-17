@@ -1,23 +1,29 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { getGroups } from '@server/list/getGroups';
-import { getTeachers } from '@server/list/getTeachers';
-import { getLevels } from '@server/list/getLevels';
-import { listQuery, listSchema as schema } from '@server/list/schema';
-import { FromSchema } from 'json-schema-to-ts';
+import { generateGroups } from '@server/list/generators/generateGroups';
+import { generateTeachers } from '@server/list/generators/generateTeachers';
+import { generateLevels } from '@server/list/generators/generateLevels';
+import { groupsSchema } from '@server/list/schemas/groups';
+import { levelsSchema } from '@server/list/schemas/levels';
+import { teachersSchema } from '@server/list/schemas/teachers';
+import { GroupsQuery } from '@server/list/types';
+import { listEntry } from '@server/list/schemas/response';
 
-type ListRequest = FastifyRequest<{
-  Querystring: FromSchema<typeof listQuery>;
+type Groups = FastifyRequest<{
+  Querystring: GroupsQuery;
 }>;
 
 export async function listRoutes(fastify: FastifyInstance) {
-  fastify.get('/list', { schema }, async (request: ListRequest) => {
-    switch (request.query.type) {
-      case 'groups':
-        return getGroups(request.query);
-      case 'teachers':
-        return getTeachers();
-      default:
-        return getLevels();
-    }
+  fastify.addSchema(listEntry);
+
+  fastify.get('/groups', { schema: groupsSchema }, async (request: Groups) => {
+    return generateGroups(request.query);
+  });
+
+  fastify.get('/levels', { schema: levelsSchema }, async () => {
+    return generateLevels();
+  });
+
+  fastify.get('/teachers', { schema: teachersSchema }, () => {
+    return generateTeachers();
   });
 }

@@ -1,6 +1,6 @@
 {
   "name": "ibi-lounge-backend",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Backend for IBI's schedules and grades",
   "main": "src/index.ts",
   "repository": "git@github.com:IBIRaspNG/backend.git",
@@ -8,15 +8,17 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon src/server/index.ts",
     "dev:bot": "nodemon src/bot.ts",
+    "dev:schema": "nodemon --watch src/**/schema.ts --watch src/**/schemas/*.ts scripts/generate-schema.ts",
     "dev:all": "nodemon src/index.ts",
     "start": "ts-node -r dotenv/config src/index.ts | pino-pretty",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepare": "husky install .husky",
-    "precommit": "yarn lint",
-    "lint": "yarn prettier . --write src/"
+    "prettify": "yarn prettier . --write src/ --log-level error",
+    "check-types": "tsc --project tsconfig.json --noEmit",
+    "generate-schema": "ts-node scripts/generate-schema.ts && git add schema.json"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

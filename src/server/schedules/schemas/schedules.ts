@@ -1,4 +1,6 @@
-export const schedulesRequestQuery = {
+import { errorsSchema } from '@shared/errors';
+
+export const schedulesQuery = {
   type: 'object',
   properties: {
     dateStart: {
@@ -11,11 +13,11 @@ export const schedulesRequestQuery = {
     },
     group: {
       type: 'string',
-      description: 'ID группы, можно найти через /list?type=groups&level=*',
+      description: 'ID группы, можно найти через /groups&level=*',
     },
     teacher: {
       type: 'string',
-      description: 'ID преподавателя, можно найти через /list?type=teachers',
+      description: 'ID преподавателя, можно найти через /teachers',
     },
     subgroups: {
       description:
@@ -28,7 +30,6 @@ export const schedulesRequestQuery = {
           group: { type: 'string' },
           subgroup: { type: 'string' },
         },
-        additionalProperties: false,
         required: ['subject', 'group', 'subgroup'],
       },
     },
@@ -41,11 +42,11 @@ export const schedulesRequestQuery = {
 } as const;
 
 const schedulesRequestSchema = {
-  description: 'Выдаёт расписание группы/преподавателя',
-  querystring: schedulesRequestQuery,
+  description: 'Выдаёт расписание группы или преподавателя в JSON формате',
+  querystring: schedulesQuery,
 };
 
-export const schedulesLessonAdditional = {
+export const lessonAdditional = {
   type: 'object',
   required: ['type'],
   properties: {
@@ -77,6 +78,7 @@ export const schedulesLessonAdditional = {
         'consultation: Консультация; ' +
         'subject_report_with_grade: Дифференцированный зачёт; ' +
         'course_work_defend: Защита курсовых работ;',
+      additionalProperties: false,
     },
     url: { type: 'string', description: 'Ссылка' },
     group: { type: 'array', items: { type: 'string' } },
@@ -106,13 +108,13 @@ export const schedulesLessonAdditional = {
   },
 } as const;
 
-export const schedulesLesson = {
+export const lesson = {
   type: 'object',
   properties: {
     time_start: { type: 'string' },
     time_end: { type: 'string' },
     text: { type: 'string' },
-    additional: schedulesLessonAdditional,
+    additional: lessonAdditional,
   },
   required: ['time_start', 'time_end', 'text'],
   additionalProperties: false,
@@ -126,7 +128,7 @@ export const schedulesDay = {
     week_day: { type: 'string' },
     lessons: {
       type: 'array',
-      items: schedulesLesson,
+      items: lesson,
     },
   },
   required: ['day', 'month', 'week_day', 'lessons'],
@@ -140,7 +142,9 @@ const schedulesResponseSchema = {
 
 export const schedulesSchema = {
   ...schedulesRequestSchema,
+  tags: ['Расписание'],
   response: {
     200: schedulesResponseSchema,
+    ...errorsSchema,
   },
 };

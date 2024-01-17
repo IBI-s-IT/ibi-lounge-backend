@@ -1,10 +1,13 @@
-import ical, { ICalAlarmType, ICalEventBusyStatus } from 'ical-generator';
-import { getSchedules } from '../schedules/getSchedules';
+import iCalCalendar, {
+  ICalAlarmType,
+  ICalEventBusyStatus,
+} from 'ical-generator';
+import { generateSchedules as schedulesGenerator } from './schedules';
 import { getRaspDate, startEndOfYear } from '@shared/date';
-import { CalendarQuery } from '@server/calendar/types';
 import { lessonTypeMap } from '@shared/type_map';
+import { CalendarQuery } from '@server/schedules/types';
 
-export async function getCalendar(query: CalendarQuery) {
+export async function calendarGenerator(query: CalendarQuery) {
   const [start, end] = startEndOfYear();
   const schedulesQuery = {
     dateStart: getRaspDate(start),
@@ -12,9 +15,9 @@ export async function getCalendar(query: CalendarQuery) {
     ...query,
   };
 
-  const data = await getSchedules(schedulesQuery);
+  const data = await schedulesGenerator(schedulesQuery);
 
-  const calendar = ical({ name: 'Учёба' });
+  const calendar = iCalCalendar({ name: 'Учёба' });
 
   if ('name' in data) {
     return data;
