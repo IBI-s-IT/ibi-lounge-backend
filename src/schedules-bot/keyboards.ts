@@ -1,8 +1,8 @@
 import Strings from '@bot/strings';
 import { Menu, MenuRange } from '@grammyjs/menu';
 import { BotContext } from './context';
-import { getLevels } from '@server/list/getLevels';
-import { getGroups } from '@server/list/getGroups';
+import { getLevels } from '@server/list/generators/getLevels';
+import { getGroups } from '@server/list/generators/getGroups';
 import { cachedRequest, checkForValidContext } from './utils';
 import { getCustom, getToday, getTomorrow } from './commands';
 import { GROUPS_TTL, LEVELS_TTL } from './consts';

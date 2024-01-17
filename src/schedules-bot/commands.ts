@@ -1,6 +1,6 @@
 import { BotContext } from './context';
 import { cachedRequest, checkForValidContext } from './utils';
-import { getSchedules } from '@server/schedules/getSchedules';
+import { generator } from '@server/schedules/generator';
 import Strings from '@bot/strings';
 import { SchedulesLesson } from '@server/schedules/types';
 import { SCHEDULE_TTL } from './consts';
@@ -68,7 +68,7 @@ async function getForDay(
   const cached = await cachedRequest(
     `schedules-${formattedDate}-${ctx.session.group}`,
     async () => {
-      return await getSchedules({
+      return await generator({
         dateStart: formattedDate,
         dateEnd: formattedDate,
         group: ctx.session.group,

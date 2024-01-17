@@ -22,7 +22,6 @@ const calendarRequestSchema = {
 
 const calendarResponseSchema = {
   type: 'string',
-  contentMediaType: 'text/calendar',
 };
 
 export const calendarSchema = {

@@ -1,7 +1,7 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { getGroups } from '@server/list/getGroups';
-import { getTeachers } from '@server/list/getTeachers';
-import { getLevels } from '@server/list/getLevels';
+import { getGroups } from '@server/list/generators/getGroups';
+import { getTeachers } from '@server/list/generators/getTeachers';
+import { getLevels } from '@server/list/generators/getLevels';
 import { listQuery, listSchema as schema } from '@server/list/schema';
 import { FromSchema } from 'json-schema-to-ts';
 

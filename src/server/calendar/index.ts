@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { getCalendar } from '@server/calendar/getCalendar';
+import { generator } from '@server/calendar/generator';
 import { calendarSchema as schema } from '@server/calendar/schema';
 import { CalendarQuery } from '@server/calendar/types';
 
@@ -16,7 +16,7 @@ export async function calendarRoutes(fastify: FastifyInstance) {
         'Content-Type': 'text/calendar',
         'Content-Disposition': 'attachment; filename="schedules.ics"',
       });
-      return getCalendar(request.query);
+      return generator(request.query);
     }
   );
 }

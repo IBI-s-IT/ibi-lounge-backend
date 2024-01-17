@@ -14,9 +14,10 @@
     "start": "ts-node -r dotenv/config src/index.ts | pino-pretty",
     "test": "jest",
     "test:watch": "jest --watch",
+    "lint": "yarn pretty && yarn typecheck",
     "prepare": "husky install .husky",
-    "precommit": "yarn lint",
-    "lint": "yarn prettier . --write src/"
+    "pretty": "yarn prettier . --write src/ --log-level error",
+    "typecheck": "tsc --project tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
