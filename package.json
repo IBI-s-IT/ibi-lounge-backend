@@ -8,16 +8,16 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "nodemon src/server/index.ts",
     "dev:bot": "nodemon src/bot.ts",
     "dev:all": "nodemon src/index.ts",
     "start": "ts-node -r dotenv/config src/index.ts | pino-pretty",
     "test": "jest",
     "test:watch": "jest --watch",
-    "lint": "yarn pretty && yarn typecheck",
     "prepare": "husky install .husky",
-    "pretty": "yarn prettier . --write src/ --log-level error",
-    "typecheck": "tsc --project tsconfig.json --noEmit"
+    "prettify": "yarn prettier . --write src/ --log-level error",
+    "check-types": "tsc --project tsconfig.json --noEmit",
+    "generate-schema": "ts-node scripts/generate-schema.ts && git add schema.json"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",

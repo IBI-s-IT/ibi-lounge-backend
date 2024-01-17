@@ -1,3 +1,3 @@
 import 'dotenv/config';
-import './server';
-import './bot';
+import '@server/index';
+import '@bot/index';

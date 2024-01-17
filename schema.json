@@ -1,0 +1,390 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "IBI Lounge Backend",
+    "description": "Бекенд для получения расписания и прочего в удобном формате",
+    "version": "2.0.0"
+  },
+  "components": {
+    "schemas": {}
+  },
+  "paths": {
+    "/schedules": {
+      "get": {
+        "description": "Выдаёт расписание группы/преподавателя",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "dateStart",
+            "required": false,
+            "description": "Дата формата ДД.ММ.ГГГГ"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "dateEnd",
+            "required": false,
+            "description": "Дата формата ДД.ММ.ГГГГ"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "group",
+            "required": false,
+            "description": "ID группы, можно найти через /list?type=groups&level=*"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "teacher",
+            "required": false,
+            "description": "ID преподавателя, можно найти через /list?type=teachers"
+          },
+          {
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "subject": {
+                    "type": "string"
+                  },
+                  "group": {
+                    "type": "string"
+                  },
+                  "subgroup": {
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false,
+                "required": [
+                  "subject",
+                  "group",
+                  "subgroup"
+                ]
+              }
+            },
+            "in": "query",
+            "name": "subgroups",
+            "required": false,
+            "description": "Массив объектов подгрупп: [{ subject: \"string\", group: \"string\", subgroup: \"string\" }]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "day": {
+                        "type": "string"
+                      },
+                      "month": {
+                        "type": "string"
+                      },
+                      "week_day": {
+                        "type": "string"
+                      },
+                      "lessons": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "time_start": {
+                              "type": "string"
+                            },
+                            "time_end": {
+                              "type": "string"
+                            },
+                            "text": {
+                              "type": "string"
+                            },
+                            "additional": {
+                              "type": "object",
+                              "required": [
+                                "type"
+                              ],
+                              "properties": {
+                                "is_online": {
+                                  "type": "boolean"
+                                },
+                                "type": {
+                                  "type": "string",
+                                  "enum": [
+                                    "unknown",
+                                    "practice",
+                                    "lecture",
+                                    "library_day",
+                                    "project_work",
+                                    "exam",
+                                    "subject_report",
+                                    "consultation",
+                                    "subject_report_with_grade",
+                                    "course_work_defend"
+                                  ],
+                                  "description": "unknown: Неизвестно; practice: Практика; lecture: Лекция; library_day: Библиотечный день (в 2023 году не встречался); project_work: Проектная деятельность (в 2023 году не встречался); exam: Экзамен; subject_report: Зачёт; consultation: Консультация; subject_report_with_grade: Дифференцированный зачёт; course_work_defend: Защита курсовых работ;",
+                                  "additionalProperties": false
+                                },
+                                "url": {
+                                  "type": "string",
+                                  "description": "Ссылка"
+                                },
+                                "group": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "subgroup": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "classroom": {
+                                  "type": "string",
+                                  "description": "Аудитория (простой вариант)"
+                                },
+                                "teacher_name": {
+                                  "type": "string",
+                                  "description": "Фамилия и инициалы преподавателя"
+                                },
+                                "compensation": {
+                                  "type": "string",
+                                  "description": "Возмещение пары"
+                                },
+                                "teacher_groups": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  },
+                                  "description": "Группы которые будут на паре (только у учителей)"
+                                },
+                                "classroom_details": {
+                                  "type": "object",
+                                  "properties": {
+                                    "address": {
+                                      "type": "string"
+                                    },
+                                    "classroom_number": {
+                                      "type": "string"
+                                    },
+                                    "computer_classroom": {
+                                      "type": "boolean"
+                                    },
+                                    "online_classroom": {
+                                      "type": "boolean"
+                                    }
+                                  },
+                                  "description": "Аудитория (расширенный вариант)",
+                                  "additionalProperties": false
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "time_start",
+                            "time_end",
+                            "text"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "required": [
+                      "day",
+                      "month",
+                      "week_day",
+                      "lessons"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/calendar": {
+      "get": {
+        "description": "Выдаёт расписание группы в виде ical-календаря, который в последствии можно импортировать в календарный сервис",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "group",
+            "required": false
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "teacher",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/grades": {
+      "get": {
+        "description": "Выдаёт список оценок студента",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "maxLength": 5,
+              "minLength": 5
+            },
+            "in": "query",
+            "name": "pin",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 2
+            },
+            "in": "query",
+            "name": "last_name",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "subject_report_with_grade",
+                          "subject_report",
+                          "exam",
+                          "online_course_work",
+                          "offline_course_work",
+                          "unknown"
+                        ]
+                      },
+                      "grade": {
+                        "type": "string",
+                        "enum": [
+                          "failed",
+                          "passed",
+                          "absence",
+                          "not_admitted",
+                          "2",
+                          "3",
+                          "4",
+                          "5",
+                          "unknown"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/list": {
+      "get": {
+        "description": "Выдаёт списки с id, name в зависимости от параметра type",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "levels",
+                "groups",
+                "teachers"
+              ]
+            },
+            "in": "query",
+            "name": "type",
+            "required": true
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "level",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://lounge.utme.space",
+      "description": "production server"
+    },
+    {
+      "url": "http://localhost:3000",
+      "description": "local server"
+    }
+  ]
+}

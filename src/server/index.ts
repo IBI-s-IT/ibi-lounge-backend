@@ -1,7 +1,7 @@
 import Fastify from 'fastify';
 import qs from 'qs';
 import Ajv from 'ajv/dist/2020';
-import { schedulesRoutes } from 'src/server/schedules';
+import { schedulesRoutes } from '@server/schedules';
 import { fastifyHelmet } from '@fastify/helmet';
 import { fastifyCors } from '@fastify/cors';
 import { ALLOWED_ORIGINS } from '@shared/headers';
@@ -11,6 +11,7 @@ import { gradesRoutes } from '@server/grades';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import { JsonSchemaToTsProvider } from '@fastify/type-provider-json-schema-to-ts';
+import { openApiSchemaDescription } from '@server/schema';
 
 const ajv = new Ajv({
   removeAdditional: 'all',
@@ -30,14 +31,7 @@ fastify.register(fastifyCors, {
   origin: ALLOWED_ORIGINS,
 });
 fastify.register(fastifySwagger, {
-  openapi: {
-    info: {
-      title: 'IBI Lounge Backend',
-      description:
-        'Бекенд для получения расписания и прочего в удобном формате',
-      version: '2.0.0',
-    },
-  },
+  openapi: openApiSchemaDescription,
 });
 
 fastify.register(fastifySwaggerUi, {
@@ -64,4 +58,5 @@ const start = async () => {
     process.exit(1);
   }
 };
+
 void start();

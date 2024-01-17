@@ -16,6 +16,8 @@ import { autoRetry } from '@grammyjs/auto-retry';
 import { getCustom, getToday, getTomorrow } from './commands';
 import { BOT_DEFAULT_SESSION } from '@bot/consts';
 import { logger } from '@bot/logger';
+import process from 'process';
+import { run } from '@grammyjs/runner';
 
 // Storage initialization
 export const redisInstance = new Redis();
@@ -109,3 +111,11 @@ void bot.api.setMyCommands([
 ]);
 
 bot.catch((error) => logger.error(error));
+
+if (!process.env['BOT_TOKEN']) {
+  logger.info('BOT_TOKEN is not defined in .env');
+  logger.warn('Telegram bot will no be launched');
+} else {
+  logger.warn(`Telegram bot started`);
+  run(bot);
+}
