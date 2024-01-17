@@ -5,7 +5,6 @@ import { schedulesRoutes } from '@server/schedules';
 import { fastifyHelmet } from '@fastify/helmet';
 import { fastifyCors } from '@fastify/cors';
 import { ALLOWED_ORIGINS } from '@shared/headers';
-import { calendarRoutes } from '@server/calendar';
 import { listRoutes } from '@server/list';
 import { gradesRoutes } from '@server/grades';
 import fastifySwagger from '@fastify/swagger';
@@ -39,7 +38,6 @@ fastify.register(fastifySwaggerUi, {
 });
 
 fastify.register(schedulesRoutes);
-fastify.register(calendarRoutes);
 fastify.register(gradesRoutes);
 fastify.register(listRoutes);
 

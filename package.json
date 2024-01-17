@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "nodemon src/server/index.ts",
     "dev:bot": "nodemon src/bot.ts",
+    "dev:schema": "nodemon --watch src/**/schema.ts --watch src/**/schemas/*.ts scripts/generate-schema.ts",
     "dev:all": "nodemon src/index.ts",
     "start": "ts-node -r dotenv/config src/index.ts | pino-pretty",
     "test": "jest",

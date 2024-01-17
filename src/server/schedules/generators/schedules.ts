@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { parseTable } from './parser';
-import { filterSubgroups } from './utils';
+import { parseTable } from '../parser';
+import { filterSubgroups } from '../utils';
 import { SchedulesQuery } from '@server/schedules/types';
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
-export async function generator(query: SchedulesQuery) {
+export async function generateSchedules(query: SchedulesQuery) {
   const { dateStart, dateEnd } = query;
 
   const params = {

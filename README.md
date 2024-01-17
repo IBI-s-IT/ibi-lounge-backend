@@ -1,6 +1,6 @@
 ## IBI Lounge Backend
 
-Backend server which is used to retrieve schedules in more readable format than International Banking Institute provides by default. Also includes calendar feed generator. Made by student for students, published for sustainability over some time.
+Backend server which is used to retrieve schedules in more readable format than International Banking Institute provides by default. Also includes calendar feed schedules. Made by student for students, published for sustainability over some time.
 
 ### Features
 

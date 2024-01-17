@@ -5,7 +5,7 @@ import { GradesDataMismatchError } from '@shared/errors';
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 
-export async function getGrades(query: GradesQuery) {
+export async function generateGrades(query: GradesQuery) {
   const { last_name, pin } = query;
 
   const data = await axios.postForm(BASE_URL, {

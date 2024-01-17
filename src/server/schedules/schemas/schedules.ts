@@ -11,11 +11,11 @@ export const schedulesQuery = {
     },
     group: {
       type: 'string',
-      description: 'ID группы, можно найти через /list?type=groups&level=*',
+      description: 'ID группы, можно найти через /groups&level=*',
     },
     teacher: {
       type: 'string',
-      description: 'ID преподавателя, можно найти через /list?type=teachers',
+      description: 'ID преподавателя, можно найти через /teachers',
     },
     subgroups: {
       description:
@@ -28,7 +28,6 @@ export const schedulesQuery = {
           group: { type: 'string' },
           subgroup: { type: 'string' },
         },
-        additionalProperties: false,
         required: ['subject', 'group', 'subgroup'],
       },
     },
@@ -41,7 +40,7 @@ export const schedulesQuery = {
 } as const;
 
 const schedulesRequestSchema = {
-  description: 'Выдаёт расписание группы/преподавателя',
+  description: 'Выдаёт расписание группы или преподавателя в JSON формате',
   querystring: schedulesQuery,
 };
 
@@ -141,6 +140,7 @@ const schedulesResponseSchema = {
 
 export const schedulesSchema = {
   ...schedulesRequestSchema,
+  tags: ['Расписание'],
   response: {
     200: schedulesResponseSchema,
   },

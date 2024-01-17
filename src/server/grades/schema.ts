@@ -51,6 +51,7 @@ export const gradesResponseSchema = {
 
 export const gradesSchema = {
   ...gradesRequestSchema,
+  tags: ['Оценки'],
   response: {
     200: gradesResponseSchema,
   },

@@ -12,4 +12,18 @@ export const openApiSchemaDescription: Partial<
     { url: 'https://lounge.utme.space', description: 'production server' },
     { url: 'http://localhost:3000', description: 'local server' },
   ],
+  tags: [
+    {
+      name: 'Списки',
+      description: 'Получение списков с данными нужными для других запросов',
+    },
+    {
+      name: 'Расписание',
+      description: 'Получение расписания',
+    },
+    {
+      name: 'Оценки',
+      description: 'Получение оценок',
+    },
+  ],
 };

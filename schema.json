@@ -11,7 +11,10 @@
   "paths": {
     "/schedules": {
       "get": {
-        "description": "Выдаёт расписание группы/преподавателя",
+        "tags": [
+          "Расписание"
+        ],
+        "description": "Выдаёт расписание группы или преподавателя в JSON формате",
         "parameters": [
           {
             "schema": {
@@ -38,7 +41,7 @@
             "in": "query",
             "name": "group",
             "required": false,
-            "description": "ID группы, можно найти через /list?type=groups&level=*"
+            "description": "ID группы, можно найти через /groups&level=*"
           },
           {
             "schema": {
@@ -47,7 +50,7 @@
             "in": "query",
             "name": "teacher",
             "required": false,
-            "description": "ID преподавателя, можно найти через /list?type=teachers"
+            "description": "ID преподавателя, можно найти через /teachers"
           },
           {
             "schema": {
@@ -65,7 +68,6 @@
                     "type": "string"
                   }
                 },
-                "additionalProperties": false,
                 "required": [
                   "subject",
                   "group",
@@ -221,7 +223,10 @@
     },
     "/calendar": {
       "get": {
-        "description": "Выдаёт расписание группы в виде ical-календаря, который в последствии можно импортировать в календарный сервис",
+        "tags": [
+          "Расписание"
+        ],
+        "description": "Выдаёт расписание группы или преподавателя в iCal формате",
         "parameters": [
           {
             "schema": {
@@ -242,9 +247,9 @@
         ],
         "responses": {
           "200": {
-            "description": "Default Response",
+            "description": "test",
             "content": {
-              "application/json": {
+              "text/calendar": {
                 "schema": {
                   "type": "string"
                 }
@@ -256,6 +261,9 @@
     },
     "/grades": {
       "get": {
+        "tags": [
+          "Оценки"
+        ],
         "description": "Выдаёт список оценок студента",
         "parameters": [
           {
@@ -321,36 +329,136 @@
                 }
               }
             }
+          },
+          "4XX": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "5XX": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "error": {
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/list": {
+    "/groups": {
       "get": {
-        "description": "Выдаёт списки с id, name в зависимости от параметра type",
+        "tags": [
+          "Списки"
+        ],
+        "description": "Выдаёт список групп",
         "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "enum": [
-                "levels",
-                "groups",
-                "teachers"
-              ]
-            },
-            "in": "query",
-            "name": "type",
-            "required": true
-          },
           {
             "schema": {
               "type": "string"
             },
             "in": "query",
             "name": "level",
-            "required": false
+            "required": true
           }
         ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/levels": {
+      "get": {
+        "tags": [
+          "Списки"
+        ],
+        "description": "Выдаёт список уровней образования",
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teachers": {
+      "get": {
+        "tags": [
+          "Списки"
+        ],
+        "description": "Выдаёт список учителей",
         "responses": {
           "200": {
             "description": "Default Response",
@@ -385,6 +493,20 @@
     {
       "url": "http://localhost:3000",
       "description": "local server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Списки",
+      "description": "Получение списков с данными нужными для других запросов"
+    },
+    {
+      "name": "Расписание",
+      "description": "Получение расписания"
+    },
+    {
+      "name": "Оценки",
+      "description": "Получение оценок"
     }
   ]
 }

@@ -5,7 +5,6 @@ import { fastifyCors } from '@fastify/cors';
 import { ALLOWED_ORIGINS } from '../src/shared/headers';
 import fastifySwagger from '@fastify/swagger';
 import { schedulesRoutes } from '../src/server/schedules';
-import { calendarRoutes } from '../src/server/calendar';
 import { gradesRoutes } from '../src/server/grades';
 import { listRoutes } from '../src/server/list';
 import Ajv from 'ajv/dist/2020';
@@ -32,7 +31,6 @@ fastify.register(fastifySwagger, {
 });
 
 fastify.register(schedulesRoutes);
-fastify.register(calendarRoutes);
 fastify.register(gradesRoutes);
 fastify.register(listRoutes);
 

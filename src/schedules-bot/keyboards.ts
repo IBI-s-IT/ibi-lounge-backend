@@ -1,8 +1,8 @@
 import Strings from '@bot/strings';
 import { Menu, MenuRange } from '@grammyjs/menu';
 import { BotContext } from './context';
-import { getLevels } from '@server/list/generators/getLevels';
-import { getGroups } from '@server/list/generators/getGroups';
+import { generateLevels } from '@server/list/generators/generateLevels';
+import { generateGroups } from '@server/list/generators/generateGroups';
 import { cachedRequest, checkForValidContext } from './utils';
 import { getCustom, getToday, getTomorrow } from './commands';
 import { GROUPS_TTL, LEVELS_TTL } from './consts';
@@ -14,7 +14,7 @@ const LevelKeyboard = new Menu<BotContext>('levelSelect')
     const cached = await cachedRequest(
       'levels',
       async () => {
-        return await getLevels();
+        return await generateLevels();
       },
       LEVELS_TTL
     );
@@ -60,7 +60,7 @@ const GroupKeyboard = new Menu<BotContext>('groupSelect')
     const cached = await cachedRequest(
       `groups-level-${ctx.session.education_level ?? '1'}`,
       async () => {
-        return await getGroups({
+        return await generateGroups({
           type: 'groups',
           level: ctx.session.education_level ?? '1',
         });
