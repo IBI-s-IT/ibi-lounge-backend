@@ -3,7 +3,7 @@
   "info": {
     "title": "IBI Lounge Backend",
     "description": "Бекенд для получения расписания и прочего в удобном формате",
-    "version": "2.0.0"
+    "version": "2.1.0"
   },
   "components": {
     "schemas": {

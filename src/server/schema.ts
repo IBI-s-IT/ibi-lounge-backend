@@ -1,4 +1,5 @@
 import { OpenAPIV3, OpenAPIV3_1 } from 'openapi-types';
+import project from 'package.json';
 
 export const openApiSchemaDescription: Partial<
   OpenAPIV3.Document | OpenAPIV3_1.Document
@@ -6,7 +7,7 @@ export const openApiSchemaDescription: Partial<
   info: {
     title: 'IBI Lounge Backend',
     description: 'Бекенд для получения расписания и прочего в удобном формате',
-    version: '2.0.0',
+    version: project.version,
   },
   tags: [
     {
