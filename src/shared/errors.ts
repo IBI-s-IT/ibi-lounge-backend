@@ -14,3 +14,19 @@ export const IbiServerDownError = createError(
 
 export const SchedulesParsingError = (message: string) =>
   createError('schedules_parsing_error', message, 500);
+
+export const errorSchema = {
+  type: 'object',
+  properties: {
+    code: { type: 'string' },
+    message: { type: 'string' },
+    error: { type: 'string' },
+    statusCode: { type: 'number' },
+  },
+  required: ['code', 'message'],
+};
+
+export const errorsSchema = {
+  '4xx': errorSchema,
+  '5xx': errorSchema,
+};

@@ -1,3 +1,5 @@
+import { errorsSchema } from '@shared/errors';
+
 export const schedulesQuery = {
   type: 'object',
   properties: {
@@ -143,5 +145,6 @@ export const schedulesSchema = {
   tags: ['Расписание'],
   response: {
     200: schedulesResponseSchema,
+    ...errorsSchema,
   },
 };

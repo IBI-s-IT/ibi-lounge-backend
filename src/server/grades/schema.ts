@@ -1,3 +1,5 @@
+import { errorsSchema } from '@shared/errors';
+
 export const gradesQuery = {
   type: 'object',
   properties: {
@@ -54,5 +56,6 @@ export const gradesSchema = {
   tags: ['Оценки'],
   response: {
     200: gradesResponseSchema,
+    ...errorsSchema,
   },
 };

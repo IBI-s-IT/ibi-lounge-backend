@@ -8,10 +8,6 @@ export const openApiSchemaDescription: Partial<
     description: 'Бекенд для получения расписания и прочего в удобном формате',
     version: '2.0.0',
   },
-  servers: [
-    { url: 'https://lounge.utme.space', description: 'production server' },
-    { url: 'http://localhost:3000', description: 'local server' },
-  ],
   tags: [
     {
       name: 'Списки',

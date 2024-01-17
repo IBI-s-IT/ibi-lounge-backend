@@ -1,3 +1,5 @@
+import { errorsSchema } from '@shared/errors';
+
 export const calendarQuery = {
   type: 'object',
   properties: {
@@ -29,5 +31,6 @@ export const calendarSchema = {
   tags: ['Расписание'],
   response: {
     200: calendarResponseSchema,
+    ...errorsSchema,
   },
 };

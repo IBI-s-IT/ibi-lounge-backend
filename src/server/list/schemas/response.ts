@@ -1,4 +1,5 @@
 export const listEntry = {
+  $id: 'listEntry',
   type: 'object',
   properties: {
     id: { type: 'string' },
@@ -8,5 +9,5 @@ export const listEntry = {
 
 export const listResponse = {
   type: 'array',
-  items: listEntry,
+  items: { $ref: 'listEntry' },
 };

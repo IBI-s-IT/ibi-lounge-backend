@@ -1,4 +1,5 @@
 import { listResponse } from '@server/list/schemas/response';
+import { errorsSchema } from '@shared/errors';
 
 export const levelsQuery = {
   type: 'object',
@@ -15,5 +16,6 @@ export const levelsSchema = {
   tags: ['Списки'],
   response: {
     200: listResponse,
+    ...errorsSchema,
   },
 };

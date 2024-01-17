@@ -1,4 +1,5 @@
 import { listResponse } from '@server/list/schemas/response';
+import { errorsSchema } from '@shared/errors';
 
 export const groupsQuery = {
   type: 'object',
@@ -18,5 +19,6 @@ export const groupsSchema = {
   tags: ['Списки'],
   response: {
     200: listResponse,
+    ...errorsSchema,
   },
 };
