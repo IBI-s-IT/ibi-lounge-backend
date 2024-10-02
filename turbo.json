@@ -1,0 +1,19 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": ["BOT_TOKEN", "PORT"],
+  "tasks": {
+    "build": {
+      "outputs": ["dist/**"]
+    },
+    "lint": {},
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "persistent": true,
+      "cache": false
+    },
+    "typecheck": {},
+    "lint-fix": {}
+  }
+}

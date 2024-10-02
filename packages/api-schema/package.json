@@ -1,0 +1,19 @@
+{
+  "name": "@repo/api-schema",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf turbo && rm -rf node_modules",
+    "lint": "eslint . --quiet",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "json-schema-to-ts": "^2.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.1"
+  }
+}

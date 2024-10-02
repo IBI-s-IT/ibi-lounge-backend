@@ -1,0 +1,14 @@
+{
+  "extends": "@repo/tsconfig/tsconfig.node.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react",
+    "outDir": "dist",
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["."],
+  "exclude": ["dist", "build"],
+  "ts-node": {
+    "swc": true
+  }
+}
