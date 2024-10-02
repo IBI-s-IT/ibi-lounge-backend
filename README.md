@@ -1,22 +1,22 @@
-## IBI Lounge Backend
+## О проекте
 
-Backend server which is used to retrieve schedules in more readable format than International Banking Institute provides by default. Also includes calendar feed schedules. Made by student for students, published for sustainability over some time.
+Монорепозиторий всего связанного с получением расписания и успеваемости студентов [МБИ](https://ibispb.ru).
 
-### Features
+### Сервисы
 
-- Schedules (for students and teachers)
-- Grades
-- List of teachers, groups and education levels
-- Calendar feed (for students and teachers)
-- Telegram bot
+- [`lounge-backend`](/apps/lounge-backend/README.md):
+  Backend реализующий отдачу расписания (и для преподавателей и для студентов), успеваемости, списков групп, оценок, преподавателей и уровней образования.
+- [`lounge-bot`](/apps/lounge-bot/README.md):
+  Telegram бот позволяющий просмотривать расписание
+- [`lounge-bot-tma`](/apps/lounge-bot-tma/README.md):
+  Мини-приложение Telegram для настройки бота (выбор группы и уровня образования).
 
-### Contributing
+### Внутренние пакеты
 
-1. Fork this repo and clone it somewhere
-2. Run `yarn` in root project directory to install project dependencies
-3. Run `yarn dev` to start server locally, default port is `3000`
-4. Make your changes, update schema and tests accordingly
-
-### Links
-
-- Swagger: [JSON](https://lounge.utme.space/docs/json), [YAML](https://lounge.utme.space/docs/json)
+- [`generators`](/packages/generators/):
+  Здесь происходит парсинг и формирования JSON ответов
+- [`api-schema`](/packages/api-schema/):
+  Здесь описана схема ответов API + объекьы схемы конвертируется в типы для TypeScript
+- [`shared`](/packages/shared/):
+  Тут всё что не попало в остальные разделы, но переиспользуется
+- [`eslint`](/packages/eslint/), [`tsconfig`](/packages/tsconfig/): тут лежат конфиги tsconfig и eslint

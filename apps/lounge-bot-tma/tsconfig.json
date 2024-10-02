@@ -1,0 +1,9 @@
+{
+  "exclude": ["node_modules"],
+  "extends": "@repo/tsconfig/tsconfig.vite.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["src", "vite.config.ts"]
+}

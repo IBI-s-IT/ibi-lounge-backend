@@ -1,0 +1,21 @@
+{
+  "name": "@repo/generators",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "rm -rf turbo && rm -rf node_modules",
+    "lint": "eslint . --quiet",
+    "typecheck": "tsc --noEmit",
+    "lint-fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@fastify/error": "^3.4.1",
+    "@repo/api-schema": "*"
+  },
+  "exports": {
+    ".": "./index.ts"
+  },
+  "devDependencies": {
+    "eslint": "^9.9.1"
+  }
+}
