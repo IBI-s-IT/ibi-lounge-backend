@@ -100,7 +100,7 @@ export const Settings = () => {
   }, []);
 
   return (
-    <List>
+    <List className={styles.root}>
       <Placeholder
         header="Это настройки"
         description={`Здесь вы можете выбрать уровень образования и группу в ${chatTypeLocalized}`}

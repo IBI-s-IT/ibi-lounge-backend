@@ -1,8 +1,8 @@
-.select {
-  background: var(--tgui--bg_color);
+.root {
+  background: var(--tgui--secondary_bg_color);
 }
 
-.submitContainer {
+.submitContainer, .select {
   background: var(--tgui--bg_color);
 }
 

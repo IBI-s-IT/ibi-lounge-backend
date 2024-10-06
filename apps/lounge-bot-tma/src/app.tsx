@@ -2,9 +2,13 @@ import { Route, Routes } from 'react-router-dom';
 import { Settings } from './pages/settings';
 import { TelegramSessionProvider } from './contexts/telegram-session';
 import { SessionError } from './pages/session-error';
-import { isTMA } from '@telegram-apps/sdk-react';
+import { isTMA, themeParams } from '@telegram-apps/sdk-react';
+import { useEffect } from 'react';
 
 export function App() {
+  useEffect(() => {
+    console.log(themeParams.secondaryBackgroundColor());
+  }, []);
   return (
     <Routes location={!isTMA('simple') ? '/no-browser' : undefined}>
       <Route

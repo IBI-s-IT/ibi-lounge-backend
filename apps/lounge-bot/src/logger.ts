@@ -9,7 +9,7 @@ export const logger = pino({
         level: 'info',
         options: {},
       },
-    ]
+    ],
   },
 });
 
