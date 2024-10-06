@@ -22,10 +22,6 @@ type BotSettingsRequest = FastifyRequest<{
   Querystring: BotSettingsQuery;
 }>;
 
-type StartParam = {
-  id: number;
-};
-
 export default async function (fastify: FastifyInstance) {
   fastify.get(
     '/bot/validate',
@@ -46,14 +42,14 @@ export default async function (fastify: FastifyInstance) {
       }
 
       const data = new URLSearchParams(init);
-      const params = data.get('start_param');
+      const start_param = data.get('start_param');
 
-      if (!params) {
+      if (!start_param) {
         return { response: false };
       }
 
-      const decodedParams = JSON.parse(atob(params)) as StartParam;
-      const redisKey = `schedules_bot${decodedParams.id}`;
+      const [id] = start_param.split('_');
+      const redisKey = `schedules_bot${id}`;
 
       const currentSession = await fastify.redis.get(redisKey);
       if (!currentSession) {
@@ -81,8 +77,6 @@ export default async function (fastify: FastifyInstance) {
       const groupName = (groups as ListEntry[]).find(
         (groupFull) => groupFull?.id === group
       )?.name;
-
-      console.log(levelName, groupName);
 
       if (levelName) parsedSession.levelName = levelName;
       if (groupName) parsedSession.groupName = groupName;

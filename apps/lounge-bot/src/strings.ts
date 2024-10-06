@@ -1,5 +1,6 @@
 import { lessonTypeMap } from '@repo/shared/lesson_type_map';
 import { BotContext } from './context.js';
+import { encode } from '@msgpack/msgpack';
 
 const Strings = {
   mainPlaceholder: '⚡️ Выбери действие',
@@ -20,10 +21,18 @@ const Strings = {
 - Группа: ${ctx.session.groupName}
 
 В случае вопросов или неполадок обращаться <a href="https://t.me/gbowsky">сюда</a>`,
-  settingsMenu: (ctx: BotContext) =>
-    `⚙️ <b><a href="https://t.me/${ctx.me.username}?startapp=${btoa(JSON.stringify({ ...ctx.chat, group_id: ctx.session.group, level_id: ctx.session.education_level })) ?? ''}">Настройки</a></b>
+  settingsMenu: (ctx: BotContext) => {
+    const params = [
+      ctx.chat?.id,
+      ctx.chat?.type,
+      ctx.session.group,
+      ctx.session.education_level,
+    ];
+
+    return `⚙️ <b><a href="t.me/${ctx.me.username}/settings?startapp=${params.join('_')}">Настройки</a></b>
   
-Чтобы изменить группу или уровень образования нажми на кнопку "Запустить".`,
+Чтобы изменить группу или уровень образования нажми на кнопку "Запустить".`;
+  },
   toToday: 'Сегодня',
   backwards: '◀️',
   forward: '▶️',

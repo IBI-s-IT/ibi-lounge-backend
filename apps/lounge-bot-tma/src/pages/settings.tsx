@@ -1,7 +1,5 @@
 import { useTelegramSession } from '../contexts/telegram-session';
 import {
-  Avatar,
-  Banner,
   Button,
   Divider,
   FixedLayout,
@@ -23,15 +21,14 @@ import { closeMiniApp, useLaunchParams } from '@telegram-apps/sdk-react';
 export const Settings = () => {
   const { initDataRaw } = useLaunchParams();
   const { chat } = useTelegramSession();
-  const chatName = chat.title ?? chat.username;
   const chatTypeLocalized =
     chat.type === 'private'
-      ? 'Личные сообщения'
+      ? 'личных сообщениях'
       : chat.type === 'group'
-        ? 'Группа'
+        ? 'чате'
         : chat.type === 'channel'
-          ? 'Канал'
-          : 'Супер-группа';
+          ? 'канале'
+          : 'супер группе';
   const [levels, setLevels] = useState<ListEntry[]>([]);
   const [groups, setGroups] = useState<ListEntry[]>([]);
   const [selectedLevel, setLevel] = useState(chat.level_id);
@@ -95,26 +92,11 @@ export const Settings = () => {
     <List>
       <Placeholder
         header="Это настройки"
-        description="Здесь вы можете выбрать уровень образования и/или группу в вашем чате"
+        description={`Здесь вы можете выбрать уровень образования и группу в вашем ${chatTypeLocalized}`}
       >
         <DotLottieReact autoplay loop src="/tma/utya-personal.json" />
       </Placeholder>
-      <Section
-        header="Выбранный чат"
-        footer="Чтобы открыть настройки другого чата введите в нём команду /settings"
-      >
-        <Banner
-          before={
-            <Avatar
-              size={40}
-              acronym={chatName!.substring(0, 2).toUpperCase()}
-            />
-          }
-          header={chatName}
-          description={chatTypeLocalized}
-        />
-      </Section>
-      <Section header="Настройки">
+      <Section header={`Настройки бота в ${chatTypeLocalized}`}>
         <form onSubmit={applySettings}>
           <Select
             name="level"

@@ -15,22 +15,24 @@ import {
 
 type TelegramSessionContextType = {
   isSessionValid: boolean;
-  chat: TelegramChatData;
+  chat: TelegramChatDataDecoded;
 };
 
-type TelegramChatData = {
+type TelegramChatType = 'private' | 'group' | 'supergroup' | 'channel';
+
+type TelegramChatDataEncoded =
+  `${string}_${TelegramChatType}_${string}_${string}`;
+
+type TelegramChatDataDecoded = {
   id: number;
   type: 'private' | 'group' | 'supergroup' | 'channel';
-  title?: string;
-  username?: string;
   group_id: string;
   level_id: string;
 };
 
-const CHAT_DATA_FALLBACK: TelegramChatData = {
+const CHAT_DATA_FALLBACK: TelegramChatDataDecoded = {
   id: 0,
   type: 'private',
-  username: 'noname',
   group_id: '2352',
   level_id: '1',
 };
@@ -44,7 +46,8 @@ export const TelegramSessionProvider = ({
   children,
 }: PropsWithChildren<object>) => {
   const [isSessionValid, _setSessionValid] = useState(false);
-  const [chat, _setChat] = useState<TelegramChatData>(CHAT_DATA_FALLBACK);
+  const [chat, _setChat] =
+    useState<TelegramChatDataDecoded>(CHAT_DATA_FALLBACK);
   const { initData, initDataRaw } = useLaunchParams();
   const value = {
     isSessionValid,
@@ -70,20 +73,24 @@ export const TelegramSessionProvider = ({
   }
 
   function getInit() {
-    const data = initData?.startParam;
+    const data = initData?.startParam as TelegramChatDataEncoded | undefined;
+    const splittedData = data?.split('_');
 
-    if (!data) {
+    console.log(initData);
+
+    if (!splittedData || splittedData?.length < 3) {
       onBadSession();
       return;
     }
 
-    const chat = JSON.parse(atob(data!));
-    if (!('id' in chat)) {
-      throw new Error('InvalidChatData');
-    }
+    const [id, type, group_id, level_id] = splittedData;
 
-    console.log(chat);
-    _setChat(chat);
+    _setChat({
+      id: Number(id),
+      type: type as TelegramChatType,
+      group_id,
+      level_id,
+    });
   }
 
   function onBadSession() {
