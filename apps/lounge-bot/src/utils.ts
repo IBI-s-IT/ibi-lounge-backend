@@ -1,7 +1,7 @@
-import { redisInstance } from './main';
-import { BotContext } from './context';
-import { BOT_DEFAULT_SESSION } from './consts';
-import Strings from './strings';
+import { redisInstance } from './main.js';
+import { BotContext } from './context.js';
+import { BOT_DEFAULT_SESSION } from './consts.js';
+import Strings from './strings.js';
 
 export async function cachedRequest<T>(
   key: string,

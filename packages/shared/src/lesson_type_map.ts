@@ -1,4 +1,4 @@
-import { type SchedulesLessonAdditional } from '@repo/api-schema';
+import { type SchedulesLessonAdditional } from '@repo/api-schema/schedules';
 
 export const lessonTypeMap: Record<SchedulesLessonAdditional['type'], string> =
   {

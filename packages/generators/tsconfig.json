@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "jsx": "react",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
   },
   "include": ["."],
   "exclude": ["dist", "build"],

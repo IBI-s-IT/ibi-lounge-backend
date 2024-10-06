@@ -1,6 +1,9 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { generateGrades } from '../generators/grades';
-import { gradesSchema as schema, type GradesQuery } from '@repo/api-schema';
+import { generateGrades } from '../generators/grades.js';
+import {
+  gradesSchema as schema,
+  type GradesQuery,
+} from '@repo/api-schema/grades';
 
 type GradesRequest = FastifyRequest<{
   Querystring: GradesQuery;

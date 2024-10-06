@@ -1,6 +1,6 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { calendarGenerator } from '../generators/calendar';
-import { calendarSchema, type CalendarQuery } from '@repo/api-schema';
+import { calendarGenerator } from '../generators/calendar.js';
+import { calendarSchema, type CalendarQuery } from '@repo/api-schema/calendar';
 
 type CalendarRequest = FastifyRequest<{
   Querystring: CalendarQuery;

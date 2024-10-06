@@ -1,109 +1,25 @@
-import Strings from './strings';
-import { Menu, MenuRange } from '@grammyjs/menu';
-import { generateLevels, generateGroups } from '@repo/generators';
-import { cachedRequest, checkForValidContext } from './utils';
-import { getCustom, getToday, getTomorrow } from './commands';
-import { GROUPS_TTL, LEVELS_TTL } from './consts';
-import { ListEntry } from '@repo/api-schema';
-import { BotContext } from './context';
-
-const LevelKeyboard = new Menu<BotContext>('levelSelect')
-  .dynamic(async (ctx) => {
-    const range = new MenuRange<BotContext>();
-    const cached = await cachedRequest(
-      'levels',
-      async () => {
-        return await generateLevels();
-      },
-      LEVELS_TTL
-    );
-
-    if (!ctx.session.education_level) {
-      ctx.session.education_level = '1';
-    }
-
-    if ('code' in cached) {
-      throw cached;
-    }
-
-    cached.forEach((level: ListEntry) => {
-      const nameText = `${level.id === ctx.session.education_level ? '✅' : ''} ${
-        level.name
-      }`;
-
-      range
-        .text(nameText, async (ctx) => {
-          ctx.session.education_level = level.id!;
-          ctx.session.levelName = level.name!;
-          await ctx.editMessageText(Strings.settingsMenu(ctx), {
-            parse_mode: 'HTML',
-          });
-          ctx.menu.back();
-        })
-        .row();
-    });
-    return range;
-  })
-  .back(
-    Strings.back,
-    async (ctx) =>
-      await ctx.editMessageText(Strings.settingsMenu(ctx), {
-        parse_mode: 'HTML',
-      })
-  );
-
-const GroupKeyboard = new Menu<BotContext>('groupSelect')
-  .dynamic(async (ctx) => {
-    const range = new MenuRange<BotContext>();
-
-    const cached = await cachedRequest(
-      `groups-level-${ctx.session.education_level ?? '1'}`,
-      async () => {
-        return await generateGroups({
-          type: 'groups',
-          level: ctx.session.education_level ?? '1',
-        });
-      },
-      GROUPS_TTL
-    );
-
-    if ('code' in cached) {
-      throw cached;
-    }
-
-    const chunkSize = 3;
-    for (let i = 0; i < cached.length; i += chunkSize) {
-      const chunk = cached.slice(i, i + chunkSize);
-      chunk.forEach((group: ListEntry) => {
-        const nameText = `${group.id === ctx.session.group ? '✅' : ''} ${
-          group.name
-        }`;
-        range.text(nameText, async (ctx) => {
-          ctx.session.groupName = group.name!;
-          ctx.session.group = group.id!;
-          await ctx.editMessageText(Strings.settingsMenu(ctx), {
-            parse_mode: 'HTML',
-          });
-          ctx.menu.back();
-        });
-      });
-      range.row();
-    }
-
-    return range;
-  })
-  .back(
-    Strings.back,
-    async (ctx) =>
-      await ctx.editMessageText(Strings.settingsMenu(ctx), {
-        parse_mode: 'HTML',
-      })
-  );
+import Strings from './strings.js';
+import { Menu } from '@grammyjs/menu';
+import { checkForValidContext } from './utils.js';
+import { getCustom, getToday, getTomorrow } from './commands.js';
+import { BotContext } from './context.js';
 
 const SettingsKeyboard = new Menu<BotContext>('settings').back(
   Strings.back,
   async (ctx) =>
-    await ctx.editMessageText(Strings.greeting(ctx), { parse_mode: 'HTML' })
+    await ctx.editMessageText(Strings.greeting(ctx), {
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+    })
+);
+
+const GoBackKeyboard = new Menu<BotContext>('goback').back(
+  Strings.back,
+  async (ctx) =>
+    await ctx.editMessageText(Strings.greeting(ctx), {
+      parse_mode: 'HTML',
+      disable_web_page_preview: true,
+    })
 );
 
 const DaysKeyboard = new Menu<BotContext>('daily')
@@ -118,6 +34,7 @@ const DaysKeyboard = new Menu<BotContext>('daily')
     ctx.session.customDate = dayBefore.toString();
     await ctx.editMessageText(await getCustom(ctx, dayBefore), {
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     });
   })
   .text(Strings.toToday, async (ctx) => {
@@ -125,6 +42,7 @@ const DaysKeyboard = new Menu<BotContext>('daily')
     ctx.session.customDate = new Date().toString();
     await ctx.editMessageText(await getCustom(ctx, new Date()), {
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     });
   })
   .text(Strings.forward, async (ctx) => {
@@ -138,13 +56,17 @@ const DaysKeyboard = new Menu<BotContext>('daily')
     ctx.session.customDate = dayAfter.toString();
     await ctx.editMessageText(await getCustom(ctx, dayAfter), {
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     });
   })
   .row()
   .back(
     Strings.back,
     async (ctx) =>
-      await ctx.editMessageText(Strings.greeting(ctx), { parse_mode: 'HTML' })
+      await ctx.editMessageText(Strings.greeting(ctx), {
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+      })
   );
 
 const LinksMenu = new Menu<BotContext>('links')
@@ -162,18 +84,27 @@ const IndexMenu = new Menu<BotContext>('index')
   .text(
     Strings.today,
     async (ctx) =>
-      await ctx.editMessageText(await getToday(ctx), { parse_mode: 'HTML' })
+      await ctx.editMessageText(await getToday(ctx), {
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+        reply_markup: GoBackKeyboard,
+      })
   )
   .text(
     Strings.tomorrow,
     async (ctx) =>
-      await ctx.editMessageText(await getTomorrow(ctx), { parse_mode: 'HTML' })
+      await ctx.editMessageText(await getTomorrow(ctx), {
+        parse_mode: 'HTML',
+        disable_web_page_preview: true,
+        reply_markup: GoBackKeyboard,
+      })
   )
   .submenu(Strings.days, 'daily', async (ctx) => {
     await ctx.editMessageText(
       await getCustom(ctx, new Date(ctx.session.customDate)),
       {
         parse_mode: 'HTML',
+        disable_web_page_preview: true,
       }
     );
   })
@@ -188,11 +119,4 @@ const IndexMenu = new Menu<BotContext>('index')
       })
   );
 
-export {
-  IndexMenu,
-  LinksMenu,
-  DaysKeyboard,
-  SettingsKeyboard,
-  GroupKeyboard,
-  LevelKeyboard,
-};
+export { IndexMenu, LinksMenu, DaysKeyboard, SettingsKeyboard, GoBackKeyboard };

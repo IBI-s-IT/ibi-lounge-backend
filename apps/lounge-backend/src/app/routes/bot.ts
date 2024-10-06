@@ -1,12 +1,18 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
-import { validateInit } from '../../lib/validateTelegramInit';
+import { validateInit } from '../../lib/validateTelegramInit.js';
 import {
   botSettingsSchema,
   BotValidateQuery,
   BotSettingsQuery,
   botValidateSchema,
-} from '@repo/api-schema';
-import { SessionData } from '@repo/shared';
+} from '@repo/api-schema/bot';
+import { SessionData } from '@repo/shared/bot_session';
+import {
+  generateGroups,
+  generateLevels,
+  IbiServerDownError,
+} from '@repo/generators';
+import { ListEntry } from '@repo/api-schema/list';
 
 type BotValidateRequest = FastifyRequest<{
   Querystring: BotValidateQuery;
@@ -21,7 +27,7 @@ type StartParam = {
 };
 
 export default async function (fastify: FastifyInstance) {
-  fastify.post(
+  fastify.get(
     '/bot/validate',
     { schema: botValidateSchema },
     async (request: BotValidateRequest) => {
@@ -58,7 +64,28 @@ export default async function (fastify: FastifyInstance) {
       parsedSession.group = group;
       parsedSession.education_level = level;
 
-      console.log(parsedSession);
+      const levels = await generateLevels();
+      const groups = await generateGroups({ level });
+
+      if (
+        levels instanceof IbiServerDownError ||
+        groups instanceof IbiServerDownError
+      ) {
+        return { response: false };
+      }
+
+      const levelName = (levels as ListEntry[]).find(
+        (levelFull) => levelFull?.id === level
+      )?.name;
+
+      const groupName = (groups as ListEntry[]).find(
+        (groupFull) => groupFull?.id === group
+      )?.name;
+
+      console.log(levelName, groupName);
+
+      if (levelName) parsedSession.levelName = levelName;
+      if (groupName) parsedSession.groupName = groupName;
 
       const result = await fastify.redis.set(
         redisKey,

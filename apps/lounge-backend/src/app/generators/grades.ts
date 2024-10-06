@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Grade, GradesQuery } from '@repo/api-schema';
+import { Grade, GradesQuery } from '@repo/api-schema/grades';
 import { JSDOM } from 'jsdom';
 import { GradesDataMismatchError } from '@repo/generators';
 

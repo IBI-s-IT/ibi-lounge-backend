@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { parseTable } from './parser';
-import { filterSubgroups } from './utils';
-import { SchedulesQuery } from '@repo/api-schema';
+import { parseTable } from './parser/index.js';
+import { filterSubgroups } from './utils.js';
+import { SchedulesQuery } from '@repo/api-schema/schedules';
 
 export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 

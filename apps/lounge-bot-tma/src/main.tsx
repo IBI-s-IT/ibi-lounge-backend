@@ -6,7 +6,6 @@ import '@telegram-apps/telegram-ui/dist/styles.css';
 import { AppRoot } from '@telegram-apps/telegram-ui';
 
 import App from './app';
-import { TelegramSessionProvider } from './contexts/telegram-session';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,11 +13,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <AppRoot>
-      <TelegramSessionProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </TelegramSessionProvider>
+      <BrowserRouter basename="/tma">
+        <App />
+      </BrowserRouter>
     </AppRoot>
   </StrictMode>
 );

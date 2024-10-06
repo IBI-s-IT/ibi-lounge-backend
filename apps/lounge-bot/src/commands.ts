@@ -1,10 +1,10 @@
-import { getRaspDate, isValidDate } from '@repo/shared';
+import { getRaspDate, isValidDate } from '@repo/shared/date';
 import { generateSchedules } from '@repo/generators';
-import { SchedulesLesson } from '@repo/api-schema';
-import { cachedRequest, checkForValidContext } from './utils';
-import Strings from './strings';
-import { SCHEDULE_TTL } from './consts';
-import { BotContext } from './context';
+import { SchedulesLesson } from '@repo/api-schema/schedules';
+import { cachedRequest, checkForValidContext } from './utils.js';
+import Strings from './strings.js';
+import { SCHEDULE_TTL } from './consts.js';
+import { BotContext } from './context.js';
 
 function formatLessons(lessons: SchedulesLesson[]) {
   let result = '';

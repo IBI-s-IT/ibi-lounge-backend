@@ -1,5 +1,5 @@
-import { parseTable } from '../index';
-import { SchedulesDay } from '@repo/api-schema';
+import { parseTable } from '../index.js';
+import { SchedulesDay } from '@repo/api-schema/schedules';
 
 const customTimed = `<center>
     <h4>Расписание группы 113-ПИвЭ за период с 19.09.2023 по 19.09.2023</h4>

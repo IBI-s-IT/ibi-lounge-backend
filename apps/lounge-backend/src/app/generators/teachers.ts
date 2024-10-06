@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
-import { ListEntry } from '@repo/api-schema';
+import { ListEntry } from '@repo/api-schema/list';
 import { IbiServerDownError } from '@repo/generators';
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=2';

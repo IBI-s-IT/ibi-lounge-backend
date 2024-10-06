@@ -1,4 +1,4 @@
-import { SchedulesDay, SchedulesQuery } from '@repo/api-schema';
+import { SchedulesDay, SchedulesQuery } from '@repo/api-schema/schedules';
 
 export const filterSubgroups = (
   lessons: SchedulesDay[],

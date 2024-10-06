@@ -2,13 +2,16 @@ import {
   SchedulesDay,
   SchedulesLesson,
   SchedulesLessonAdditional,
-} from '@repo/api-schema';
+} from '@repo/api-schema/schedules';
 import { JSDOM } from 'jsdom';
-import { detectCustomTime } from './features/customTime';
-import { detectCompensation } from './features/compensation';
-import { detectType } from './features/type';
-import { detectClassroomSimple, expandLocationData } from './features/location';
-import { SchedulesParsingError } from '../errors';
+import { detectCustomTime } from './features/customTime.js';
+import { detectCompensation } from './features/compensation.js';
+import { detectType } from './features/type.js';
+import {
+  detectClassroomSimple,
+  expandLocationData,
+} from './features/location.js';
+import { SchedulesParsingError } from '../errors.js';
 
 export function parseAdditional(
   text: string,

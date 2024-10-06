@@ -1,4 +1,4 @@
-import { SchedulesLessonAdditional } from '@repo/api-schema';
+import { SchedulesLessonAdditional } from '@repo/api-schema/schedules';
 
 export function detectType(
   text: string
