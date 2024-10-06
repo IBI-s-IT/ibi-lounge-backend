@@ -1,10 +1,10 @@
 import Fastify from 'fastify';
 import qs from 'qs';
-import Ajv from 'ajv/dist/2020';
+import { Ajv2020 } from 'ajv/dist/2020.js';
 import { JsonSchemaToTsProvider } from '@fastify/type-provider-json-schema-to-ts';
-import { app } from './app/app';
+import { app } from './app/app.js';
 
-const ajv = new Ajv({
+const ajv = new Ajv2020({
   removeAdditional: 'all',
 });
 

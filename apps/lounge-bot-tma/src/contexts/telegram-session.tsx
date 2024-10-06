@@ -1,4 +1,3 @@
-import WebApp from '@twa-dev/sdk';
 import {
   createContext,
   PropsWithChildren,
@@ -7,6 +6,12 @@ import {
   useState,
 } from 'react';
 import apiClient from '../api';
+import {
+  useLaunchParams,
+  popup,
+  closeMiniApp,
+  isTMA,
+} from '@telegram-apps/sdk-react';
 
 type TelegramSessionContextType = {
   isSessionValid: boolean;
@@ -40,30 +45,36 @@ export const TelegramSessionProvider = ({
 }: PropsWithChildren<object>) => {
   const [isSessionValid, _setSessionValid] = useState(false);
   const [chat, _setChat] = useState<TelegramChatData>(CHAT_DATA_FALLBACK);
+  const { initData, initDataRaw } = useLaunchParams();
   const value = {
     isSessionValid,
     chat,
   };
 
   async function validateInit() {
-    if (!WebApp.initData) {
+    if (!isTMA('simple')) {
+      onBadSession();
+      return;
+    }
+
+    if (!initData) {
       onBadSession();
       return;
     }
     const { data } = await apiClient('/bot/validate', {
-      method: 'POST',
       params: {
-        init: WebApp.initData,
+        init: initDataRaw,
       },
     });
     _setSessionValid(data);
   }
 
   function getInit() {
-    const data = WebApp.initDataUnsafe.start_param;
+    const data = initData?.startParam;
 
     if (!data) {
       onBadSession();
+      return;
     }
 
     const chat = JSON.parse(atob(data!));
@@ -76,26 +87,16 @@ export const TelegramSessionProvider = ({
   }
 
   function onBadSession() {
-    try {
-      WebApp.showAlert(
-        'Ваша сессия устарела, перезапустите приложение!',
-        () => {
-          WebApp.close();
-        }
-      );
-    } catch {
-      alert('Ваш браузер не поддерживается');
-      window.location.href = 'about:blank';
-    }
+    popup
+      .open({ message: 'Ваша сессия устарела, перезапустите приложение!' })
+      .then(() => {
+        closeMiniApp();
+      });
   }
 
   useEffect(() => {
-    try {
-      void validateInit();
-      getInit();
-    } catch {
-      onBadSession();
-    }
+    void validateInit();
+    getInit();
   }, []);
 
   return (

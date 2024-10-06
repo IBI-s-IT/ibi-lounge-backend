@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
 import fastifySwagger from '@fastify/swagger';
-import { openApiSchemaDescription } from '../../schema';
+import { openApiSchemaDescription } from '../../schema.js';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 
 export default fp(async function (fastify: FastifyInstance) {

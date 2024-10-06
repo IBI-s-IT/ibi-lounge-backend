@@ -1,11 +1,11 @@
-import { generateGroups } from './src/parser/groups';
-import { generateSchedules } from './src/schedules';
-import { generateLevels } from './src/parser/levels';
+import { generateGroups } from './src/parser/groups.js';
+import { generateSchedules } from './src/schedules.js';
+import { generateLevels } from './src/parser/levels.js';
 import {
   IbiServerDownError,
   SchedulesParsingError,
   GradesDataMismatchError,
-} from './src/errors';
+} from './src/errors.js';
 
 export {
   generateGroups,

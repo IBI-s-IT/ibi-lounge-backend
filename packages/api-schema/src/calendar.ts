@@ -1,4 +1,4 @@
-import { errorsSchema } from './errors';
+import { errorsSchema } from './errors.js';
 import { FromSchema } from 'json-schema-to-ts';
 
 export type CalendarQuery = FromSchema<typeof calendarQuery>;

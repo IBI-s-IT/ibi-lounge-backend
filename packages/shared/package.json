@@ -2,6 +2,7 @@
   "name": "@repo/shared",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "clean": "rm -rf turbo && rm -rf node_modules",
     "lint": "eslint . --quiet",
@@ -12,7 +13,9 @@
     "@repo/api-schema": "*"
   },
   "exports": {
-    ".": "./index.ts"
+    "./bot_session": "./src/bot_session.ts",
+    "./date": "./src/date.ts",
+    "./lesson_type_map": "./src/lesson_type_map.ts"
   },
   "devDependencies": {
     "eslint": "^9.9.1"

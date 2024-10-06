@@ -1,5 +1,5 @@
-import { listResponse } from './list';
-import { errorsSchema } from './errors';
+import { listResponse } from './list.js';
+import { errorsSchema } from './errors.js';
 
 export const levelsQuery = {
   type: 'object',

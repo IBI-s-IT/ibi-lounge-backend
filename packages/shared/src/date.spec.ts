@@ -1,4 +1,4 @@
-import { getRaspDate } from './date';
+import { getRaspDate } from './date.js';
 
 describe('shared', () => {
   it('should do dates', () => {

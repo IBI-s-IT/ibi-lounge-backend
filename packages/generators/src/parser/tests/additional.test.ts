@@ -1,4 +1,4 @@
-import { parseAdditional } from '../index';
+import { parseAdditional } from '../index.js';
 
 const onlineLecture =
   'Менеджмент -Лекц, Некрасова Н.В., ауд. Н-202-web, ОНЛАЙН! https://lms.ibispb.ru/mod/bigbluebuttonbn/view.php?id=1027 ';

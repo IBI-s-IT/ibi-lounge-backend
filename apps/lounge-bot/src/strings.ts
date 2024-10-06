@@ -1,13 +1,8 @@
-import { lessonTypeMap } from '@repo/shared';
-import { BotContext } from './context';
+import { lessonTypeMap } from '@repo/shared/lesson_type_map';
+import { BotContext } from './context.js';
 
 const Strings = {
   mainPlaceholder: '⚡️ Выбери действие',
-  eduLevel: '🎓️ Выбрать уровень образования',
-  eduLevelMenu:
-    '⚙️ Выбери свой <b>уровень образования</b>\n\nОн понадобится чтобы найти свою группу',
-  group: '👥 Выбрать группу',
-  groupMenu: '⚙️ Выбери свою <b>группу</b>\n\nЭто нужно чтобы видеть свои пары',
   today: '📅 Сегодня',
   tomorrow: '📆 Завтра',
   days: '🗓️ По дням',
@@ -18,9 +13,17 @@ const Strings = {
   noSchedules: (date: string) => `🍕 На ${date} пар нет`,
   back: '⬅️ Назад',
   greeting: (ctx: BotContext) =>
-    `⚡️ Привет, ${ctx.from?.username ?? 'аноним'}!\n\nЕсли пользуешься ботом <b>впервые</b>, то зайди в настройки и установи свои уровень образования и группу!`,
+    `Привет, ${ctx.from?.username ?? 'аноним'}!
+
+<b>Текущие настройки</b>
+- Уровень образования: ${ctx.session.levelName}
+- Группа: ${ctx.session.groupName}
+
+В случае вопросов или неполадок обращаться <a href="https://t.me/gbowsky">сюда</a>`,
   settingsMenu: (ctx: BotContext) =>
-    `⚙️ <b><a href="https://t.me/${ctx.me.username}?startapp=${btoa(JSON.stringify({ ...ctx.chat, group_id: ctx.session.group, level_id: ctx.session.education_level })) ?? ''}">Настройки</a></b>\n\nЧтобы открыть настройки просто нажми на кнопку "Запустить"`,
+    `⚙️ <b><a href="https://t.me/${ctx.me.username}?startapp=${btoa(JSON.stringify({ ...ctx.chat, group_id: ctx.session.group, level_id: ctx.session.education_level })) ?? ''}">Настройки</a></b>
+  
+Чтобы изменить группу или уровень образования нажми на кнопку "Запустить".`,
   toToday: 'Сегодня',
   backwards: '◀️',
   forward: '▶️',

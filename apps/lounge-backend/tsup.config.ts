@@ -1,15 +1,16 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['./src/main.ts'],
+  entry: ['./src'],
   // bundle internal packages
   noExternal: ['@repo'],
   splitting: true,
-  bundle: true,
-  outDir: '../../dist/lounge-backend',
+  bundle: false,
+  outDir: './dist',
   clean: true,
   env: { IS_SERVER_BUILD: 'true' },
   loader: { '.json': 'copy' },
-  minify: true,
+  minify: false,
   sourcemap: true,
+  format: ['esm']
 });

@@ -1,21 +1,22 @@
 import { Bot, session } from 'grammy';
-import Redis from 'ioredis';
+import { Redis } from 'ioredis';
 import { RedisAdapter } from '@grammyjs/storage-redis';
 import {
   DaysKeyboard,
+  GoBackKeyboard,
   IndexMenu,
   LinksMenu,
   SettingsKeyboard,
-} from './keyboards';
-import Strings from './strings';
+} from './keyboards.js';
+import Strings from './strings.js';
 import { apiThrottler } from '@grammyjs/transformer-throttler';
 import { autoRetry } from '@grammyjs/auto-retry';
-import { getCustom, getToday, getTomorrow } from './commands';
-import { BOT_DEFAULT_SESSION } from './consts';
-import { logger } from './logger';
+import { getCustom, getToday, getTomorrow } from './commands.js';
+import { BOT_DEFAULT_SESSION } from './consts.js';
+import { logger } from './logger.js';
 import process from 'process';
 import { run } from '@grammyjs/runner';
-import { BotContext } from './context';
+import { BotContext } from './context.js';
 
 // Storage initialization
 export const redisInstance = new Redis();
@@ -28,6 +29,7 @@ const menu = IndexMenu;
 menu.register(LinksMenu);
 menu.register(DaysKeyboard);
 menu.register(SettingsKeyboard);
+menu.register(GoBackKeyboard);
 
 const throttler = apiThrottler();
 
@@ -51,6 +53,7 @@ bot.command('start', (ctx) =>
   ctx.reply(Strings.greeting(ctx), {
     reply_markup: IndexMenu,
     parse_mode: 'HTML',
+    disable_web_page_preview: true,
   })
 );
 
@@ -59,6 +62,7 @@ bot.command(
   async (ctx) =>
     await ctx.reply(await getToday(ctx), {
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     })
 );
 
@@ -67,6 +71,7 @@ bot.command(
   async (ctx) =>
     await ctx.reply(await getTomorrow(ctx), {
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     })
 );
 
@@ -76,6 +81,7 @@ bot.command(
     await ctx.reply(await getCustom(ctx, new Date(ctx.session.customDate)), {
       reply_markup: DaysKeyboard,
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     })
 );
 
@@ -85,6 +91,7 @@ bot.command(
     await ctx.reply(Strings.links, {
       reply_markup: LinksMenu,
       parse_mode: 'HTML',
+      disable_web_page_preview: true,
     })
 );
 

@@ -1,6 +1,9 @@
 import { FastifyInstance, FastifyRequest } from 'fastify';
 import { generateSchedules } from '@repo/generators';
-import { schedulesSchema, type SchedulesQuery } from '@repo/api-schema';
+import {
+  schedulesSchema,
+  type SchedulesQuery,
+} from '@repo/api-schema/schedules';
 
 type SchedulesRequest = FastifyRequest<{
   Querystring: SchedulesQuery;

@@ -1,4 +1,4 @@
-import { BotContext } from './context';
+import { BotContext } from './context.js';
 
 export const SCHEDULE_TTL = 3600;
 export const GROUPS_TTL = 3600 * 24 * 3;

@@ -7,7 +7,7 @@ export const SessionError = () => {
       header="Ваша сессия устарела"
       description="Перезапустите приложение"
     >
-      <DotLottieReact src="/duck-oopsie.json" loop autoplay />
+      <DotLottieReact src="/tma/duck-oopsie.json" loop autoplay />
     </Placeholder>
   );
 };

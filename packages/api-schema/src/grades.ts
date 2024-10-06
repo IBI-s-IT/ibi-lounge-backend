@@ -1,5 +1,5 @@
 import { FromSchema } from 'json-schema-to-ts';
-import { errorsSchema } from './errors';
+import { errorsSchema } from './errors.js';
 
 export type GradesQuery = FromSchema<typeof gradesQuery>;
 // Response

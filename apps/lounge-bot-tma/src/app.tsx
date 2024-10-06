@@ -1,14 +1,25 @@
 import { Route, Routes } from 'react-router-dom';
 import { Settings } from './pages/settings';
-import { useTelegramSession } from './contexts/telegram-session';
+import { TelegramSessionProvider } from './contexts/telegram-session';
 import { SessionError } from './pages/session-error';
+import { isTMA } from '@telegram-apps/sdk-react';
 
 export function App() {
-  const { isSessionValid } = useTelegramSession();
   return (
-    <Routes location={!isSessionValid ? '/session-error' : undefined}>
-      <Route path="/" element={<Settings />} />
+    <Routes location={!isTMA('simple') ? '/no-browser' : undefined}>
+      <Route
+        path="/"
+        element={
+          <TelegramSessionProvider>
+            <Settings />
+          </TelegramSessionProvider>
+        }
+      />
       <Route path="/session-error" element={<SessionError />} />
+      <Route
+        path="/no-browser"
+        element={<pre style={{ color: 'black' }}>not allowed</pre>}
+      />
     </Routes>
   );
 }

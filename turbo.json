@@ -1,9 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["BOT_TOKEN", "PORT"],
+  "globalEnv": ["BOT_TOKEN", "PORT", "NODE_ENV", "TMA_SUBPATH"],
   "tasks": {
     "build": {
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
+      "dependsOn": ["^build"] 
     },
     "lint": {},
     "check-types": {
@@ -14,6 +15,7 @@
       "cache": false
     },
     "typecheck": {},
-    "lint-fix": {}
+    "lint-fix": {},
+    "start": { "dependsOn": ["^build"] }
   }
 }

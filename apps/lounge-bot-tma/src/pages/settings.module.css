@@ -1,0 +1,16 @@
+.select {
+  background: var(--tgui--bg_color);
+}
+
+.submitContainer {
+  background: var(--tgui--bg_color);
+}
+
+.submit {
+  width: calc(100% - 44px);
+  margin: 20px 22px;
+}
+
+.submitInset {
+  height: 82px;
+}

@@ -1,5 +1,5 @@
 import { fastifyCors } from '@fastify/cors';
-import { ALLOWED_ORIGINS } from '../headers';
+import { ALLOWED_ORIGINS } from '../headers.js';
 import { FastifyInstance } from 'fastify';
 import fp from 'fastify-plugin';
 
