@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NO_CACHE=1 NODE_PATH=. tsx --watch --require dotenv/config ./src/main.ts | pino-pretty",
-    "start": "cross-env NODE_PATH=dist tsx dist/main.js",
+    "start": "cross-env NODE_PATH=dist tsx dist/main.js | pino-pretty",
     "build": "tsup-node",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm *.tsbuildinfo",
@@ -19,7 +19,6 @@
     "@grammyjs/runner": "^2.0.3",
     "@grammyjs/storage-redis": "^2.4.0",
     "@grammyjs/transformer-throttler": "^1.2.1",
-    "@msgpack/msgpack": "^3.0.0-beta2",
     "@repo/api-schema": "*",
     "@repo/generators": "*",
     "@repo/shared": "*",

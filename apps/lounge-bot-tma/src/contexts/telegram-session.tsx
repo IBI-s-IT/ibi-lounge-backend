@@ -33,8 +33,8 @@ type TelegramChatDataDecoded = {
 const CHAT_DATA_FALLBACK: TelegramChatDataDecoded = {
   id: 0,
   type: 'private',
-  group_id: '2352',
-  level_id: '1',
+  group_id: '0',
+  level_id: '0',
 };
 
 const TelegramSessionContext = createContext<TelegramSessionContextType>({

@@ -10,7 +10,7 @@ import {
   Select,
   Snackbar,
 } from '@telegram-apps/telegram-ui';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useCallback, useEffect, useState } from 'react';
 import { BotSettingsResponse } from '@repo/api-schema/bot';
 import { ListEntry } from '@repo/api-schema/list';
 import apiClient from '../api';
@@ -21,44 +21,48 @@ import { closeMiniApp, useLaunchParams } from '@telegram-apps/sdk-react';
 export const Settings = () => {
   const { initDataRaw } = useLaunchParams();
   const { chat } = useTelegramSession();
+  const [levels, setLevels] = useState<ListEntry[]>([]);
+  const [groups, setGroups] = useState<ListEntry[]>([]);
+  const [selectedLevel, setLevel] = useState('0');
+  const [selectedGroup, setGroup] = useState('0');
+  const [isGroupsLoading, setGroupsLoading] = useState(true);
+  const [snackbarShown, setSnackbarShown] = useState(false);
+
   const chatTypeLocalized =
     chat.type === 'private'
-      ? 'личных сообщениях'
+      ? 'ваших личных сообщениях'
       : chat.type === 'group'
         ? 'чате'
         : chat.type === 'channel'
           ? 'канале'
           : 'супер группе';
-  const [levels, setLevels] = useState<ListEntry[]>([]);
-  const [groups, setGroups] = useState<ListEntry[]>([]);
-  const [selectedLevel, setLevel] = useState(chat.level_id);
-  const [selectedGroup, setGroup] = useState(chat.group_id);
-  const [isGroupsLoading, setGroupsLoading] = useState(true);
-  const [snackbarShown, setSnackbarShown] = useState(false);
 
-  async function getLevels() {
+  const getLevels = useCallback(async () => {
     const { data } = await apiClient('/levels', {});
+
     if (!('length' in data)) {
       return;
     }
 
     setLevels(data);
-  }
+  }, []);
 
-  async function getGroups() {
+  const getGroups = useCallback(async () => {
     setGroupsLoading(true);
+
     const { data } = await apiClient('/groups', {
       params: {
         level: selectedLevel,
       },
     });
+
     if (!('length' in data)) {
       return;
     }
 
     setGroups(data);
     setGroupsLoading(false);
-  }
+  }, [selectedLevel]);
 
   async function applySettings(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -81,18 +85,25 @@ export const Settings = () => {
   }
 
   useEffect(() => {
-    void getLevels();
-  }, []);
+    if (chat.level_id !== '0' && chat.group_id !== '0') {
+      setGroup(chat.group_id);
+      setLevel(chat.level_id);
+    }
+  }, [chat.level_id, chat.group_id]);
 
   useEffect(() => {
     void getGroups();
   }, [selectedLevel]);
 
+  useEffect(() => {
+    void getLevels();
+  }, []);
+
   return (
     <List>
       <Placeholder
         header="Это настройки"
-        description={`Здесь вы можете выбрать уровень образования и группу в вашем ${chatTypeLocalized}`}
+        description={`Здесь вы можете выбрать уровень образования и группу в ${chatTypeLocalized}`}
       >
         <DotLottieReact autoplay loop src="/tma/utya-personal.json" />
       </Placeholder>

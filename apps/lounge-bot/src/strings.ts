@@ -1,6 +1,5 @@
 import { lessonTypeMap } from '@repo/shared/lesson_type_map';
 import { BotContext } from './context.js';
-import { encode } from '@msgpack/msgpack';
 
 const Strings = {
   mainPlaceholder: '⚡️ Выбери действие',
