@@ -1,10 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalEnv": ["BOT_TOKEN", "PORT", "NODE_ENV", "TMA_SUBPATH"],
+  "globalEnv": ["BOT_TOKEN", "PORT", "NODE_ENV", "TMA_SUBPATH", "KUMA"],
   "tasks": {
     "build": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^build"] 
+      "dependsOn": ["^build"]
     },
     "lint": {},
     "check-types": {
