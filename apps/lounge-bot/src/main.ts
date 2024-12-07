@@ -17,6 +17,7 @@ import { logger } from './logger.js';
 import process from 'process';
 import { run } from '@grammyjs/runner';
 import { BotContext } from './context.js';
+import { tryKumaHook } from './kuma.js';
 
 // Storage initialization
 export const redisInstance = new Redis();
@@ -121,4 +122,5 @@ if (!process.env['BOT_TOKEN']) {
 } else {
   logger.warn(`Telegram bot started`);
   run(bot);
+  tryKumaHook();
 }
