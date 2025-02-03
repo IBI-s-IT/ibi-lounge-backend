@@ -9,7 +9,7 @@ export function tryKumaHook() {
     setInterval(() => {
       try {
         logger.debug('Sending heartbeat');
-        fetch(env);
+        fetch(env).catch((e) => logger.error('not severe:', e));
       } catch {
         logger.error('Failed to send heartbeat!');
       }
