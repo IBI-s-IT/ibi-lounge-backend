@@ -3,12 +3,12 @@ import iCalCalendar, {
   ICalEventBusyStatus,
 } from 'ical-generator';
 import { generateSchedules as schedulesGenerator } from '@repo/generators';
-import { getRaspDate, startEndOfYear } from '@repo/shared/date';
+import { getRaspDate, calendarSpecificDates } from '@repo/shared/date';
 import { lessonTypeMap } from '@repo/shared/lesson_type_map';
 import { CalendarQuery } from '@repo/api-schema/calendar';
 
 export async function calendarGenerator(query: CalendarQuery) {
-  const [start, end] = startEndOfYear();
+  const [start, end] = calendarSpecificDates();
   const schedulesQuery = {
     dateStart: getRaspDate(start),
     dateEnd: getRaspDate(end),

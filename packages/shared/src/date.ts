@@ -7,11 +7,18 @@ export function getRaspDate(date: Date) {
 }
 
 /**
- * @returns {[Date, Date]} - start and end of year dates
+ * Get special dates for calendars: starts with first day in month, ends in next month + 2 weeks
+ * @returns {[Date, Date]}
  */
-export function startEndOfYear() {
-  const year = new Date().getFullYear();
-  return [new Date(year, 0, 1), new Date(year, 11, 31)];
+export function calendarSpecificDates() {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+
+  const monthStart = new Date(currentYear, currentMonth, 1);
+  const monthEnd = new Date(currentYear, currentMonth + 1, 14);
+
+  return [monthStart, monthEnd];
 }
 
 export function isValidDate(d: unknown) {
