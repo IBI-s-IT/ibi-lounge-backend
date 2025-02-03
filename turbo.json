@@ -16,6 +16,6 @@
     },
     "typecheck": {},
     "lint-fix": {},
-    "start": { "dependsOn": ["^build"] }
+    "start": { "dependsOn": ["^build"], "cache": false }
   }
 }

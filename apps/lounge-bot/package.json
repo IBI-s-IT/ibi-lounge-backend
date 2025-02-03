@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NO_CACHE=1 NODE_PATH=. tsx --watch --require dotenv/config ./src/main.ts | pino-pretty",
-    "start": "cross-env NODE_PATH=dist tsx dist/main.js | pino-pretty",
+    "start": "cross-env --dns-result-order=ipv4first NODE_PATH=dist tsx dist/main.js | pino-pretty",
     "build": "tsup-node",
     "typecheck": "tsc --noEmit",
     "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm *.tsbuildinfo",
