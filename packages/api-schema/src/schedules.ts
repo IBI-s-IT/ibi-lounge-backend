@@ -72,6 +72,7 @@ export const lessonAdditional = {
         'consultation',
         'subject_report_with_grade',
         'course_work_defend',
+        'meeting',
       ],
       description:
         'unknown: Неизвестно; ' +

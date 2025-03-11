@@ -5,7 +5,7 @@ export function detectClassroomSimple(
 ): [SchedulesLessonAdditional['classroom'], string] {
   let result;
 
-  const loc = text.match(/, ауд\. ?\W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к)?/i);
+  const loc = text.match(/, ?ауд\. ?\W{1,2}-?[0-9]{1,3}-?[0-9](-web|-к)?/i);
   if (loc !== null) {
     const location = loc[0].replace(', ', '');
     text = text.replace(loc[0], '');

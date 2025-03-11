@@ -32,6 +32,11 @@ export function parseAdditional(
     result.is_online = true;
   }
 
+  if (text.includes('Вход на собрание')) {
+    text = text.replace('Вход на собрание', '');
+    text = text.trim();
+  }
+
   const [type, textAfterType] = detectType(text);
   text = textAfterType;
   result.type = type;
@@ -65,6 +70,11 @@ export function parseAdditional(
     });
     text = text.trim();
     result.group = [...new Set(group_list)];
+  }
+
+  const custom = detectCustomTime(text);
+  if (custom) {
+    text = custom[2];
   }
 
   if (teacher && text.match(/гр\.(.*)/gi) !== null) {
@@ -112,11 +122,15 @@ export function parseLesson(
   isTeachers: boolean,
   maybeUrl?: string | null
 ): SchedulesLesson {
-  const [additional, left] = parseAdditional(lessonText, isTeachers, maybeUrl);
-  const custom = detectCustomTime(left);
+  const custom = detectCustomTime(lessonText);
+  const [additional, left] = parseAdditional(
+    custom === undefined ? lessonText : custom[2],
+    isTeachers,
+    maybeUrl
+  );
 
   return {
-    text: custom === undefined ? left : custom[2],
+    text: left,
     time_start: custom === undefined ? timeStart.trim() : custom[0],
     time_end: custom === undefined ? timeEnd.trim() : custom[1],
     additional: additional,

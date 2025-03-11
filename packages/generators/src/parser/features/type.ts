@@ -50,5 +50,10 @@ export function detectType(
     type = 'project_work';
   }
 
+  if (text.match(/,? ?-?Собр/i)) {
+    text = text.replace(/,? ?-?Собр/i, '');
+    type = 'meeting';
+  }
+
   return [type, text];
 }
