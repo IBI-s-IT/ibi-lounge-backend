@@ -37,6 +37,11 @@ export function parseAdditional(
     text = text.trim();
   }
 
+  if (text.includes('Вход на занятие')) {
+    text = text.replace('Вход на занятие', '');
+    text = text.trim();
+  }
+
   const [type, textAfterType] = detectType(text);
   text = textAfterType;
   result.type = type;

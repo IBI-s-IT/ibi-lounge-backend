@@ -12,5 +12,5 @@ export const lessonTypeMap: Record<SchedulesLessonAdditional['type'], string> =
     consultation: 'ℹ️ Консультация',
     subject_report_with_grade: '⚠️ Диф. зачёт',
     course_work_defend: '⚠️ Защита курсовых',
-    meeting: '📅Meeting',
+    meeting: '📅 Собрание',
   };
