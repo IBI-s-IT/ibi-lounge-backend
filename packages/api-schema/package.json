@@ -10,6 +10,7 @@
     "./grades": "./src/grades.ts",
     "./groups": "./src/groups.ts",
     "./levels": "./src/levels.ts",
+    "./links": "./src/links.ts",
     "./list": "./src/list.ts",
     "./schedules": "./src/schedules.ts",
     "./teachers": "./src/teachers.ts"

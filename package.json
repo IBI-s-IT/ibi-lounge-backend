@@ -1,6 +1,6 @@
 {
   "name": "ibi-lounge-backend",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Backend for IBI's schedules and grades",
   "main": "src/index.ts",
   "repository": "git@github.com:IBIRaspNG/backend.git",
