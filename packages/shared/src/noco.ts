@@ -42,6 +42,8 @@ export interface NewsRow extends BaseData {
   button_text_en: string | null;
   button_url: string | null;
   author: NocoUser;
+  pinned: boolean;
+  urgent: boolean;
 }
 
 export type NewsResponse = BaseResponse<NewsRow>;

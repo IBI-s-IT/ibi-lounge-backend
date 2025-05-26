@@ -34,8 +34,15 @@ export async function generateNews(query: NewsQuery) {
     button_text: item[`button_text_${lang}`] ?? undefined,
     button_url: item.button_url ?? undefined,
     created_at: item.CreatedAt.toString(),
+    updated_at: item.UpdatedAt.toString(),
+    pinned: item.pinned || item.urgent,
+    urgent: item.urgent,
     author: item.author.display_name,
   }));
+
+  if (query.mode === 'urgent') {
+    return result.filter((item) => item.urgent);
+  }
 
   return result;
 }

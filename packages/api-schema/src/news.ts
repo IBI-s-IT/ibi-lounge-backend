@@ -15,6 +15,10 @@ export const newsQuery = {
       type: 'string',
       enum: ['ru', 'en'],
     },
+    mode: {
+      type: 'string',
+      enum: ['all', 'urgent'],
+    },
   },
 } as const satisfies JSONSchema;
 
@@ -32,7 +36,10 @@ export const newsRow = {
     button_text: { type: 'string' },
     button_url: { type: 'string' },
     created_at: { type: 'string' },
+    updated_at: { type: 'string' },
     author: { type: 'string' },
+    pinned: { type: 'boolean' },
+    urgent: { type: 'boolean' },
   },
   required: ['title', 'description', 'created_at', 'author'],
   additionalProperties: false,
