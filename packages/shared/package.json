@@ -15,7 +15,8 @@
   "exports": {
     "./bot_session": "./src/bot_session.ts",
     "./date": "./src/date.ts",
-    "./lesson_type_map": "./src/lesson_type_map.ts"
+    "./lesson_type_map": "./src/lesson_type_map.ts",
+    "./noco": "./src/noco.ts"
   },
   "devDependencies": {
     "eslint": "^9.9.1"

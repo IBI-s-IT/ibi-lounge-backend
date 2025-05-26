@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { JSDOM } from 'jsdom';
-import { ListEntry } from '@repo/api-schema/list';
 import { SectionItem } from '@repo/api-schema/links';
+import { generateAdditionalLinks } from './links.additional.js';
 
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/';
 
-function buildSections(collected: Element[]): SectionItem[] {
+async function buildSections(collected: Element[]): Promise<SectionItem[]> {
   const sections: SectionItem[] = [];
   let currentSection: SectionItem = {
     title: 'Главное',
@@ -13,6 +13,15 @@ function buildSections(collected: Element[]): SectionItem[] {
   };
 
   sections.push(currentSection);
+
+  const additional = await generateAdditionalLinks();
+
+  if (additional) {
+    sections.push({
+      title: 'Студенческие организации',
+      links: additional,
+    });
+  }
 
   for (const el of collected) {
     if (el.tagName.toLowerCase() === 'h3') {
@@ -64,7 +73,7 @@ export async function generateLinks() {
       }
     });
 
-  const sections = buildSections(collected);
+  const sections = await buildSections(collected);
 
   return sections;
 }

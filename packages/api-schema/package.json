@@ -12,6 +12,7 @@
     "./levels": "./src/levels.ts",
     "./links": "./src/links.ts",
     "./list": "./src/list.ts",
+    "./news": "./src/news.ts",
     "./schedules": "./src/schedules.ts",
     "./teachers": "./src/teachers.ts"
   },
