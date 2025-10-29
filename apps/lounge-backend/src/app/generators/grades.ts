@@ -8,16 +8,24 @@ export const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/rasp.php';
 export async function generateGrades(query: GradesQuery) {
   const { last_name, pin } = query;
 
-  const data = await axios.postForm(BASE_URL, {
-    rtype: 6,
-    fio1: last_name,
-    pin1: pin,
-  });
+  const req = await axios.postForm(
+    BASE_URL,
+    {
+      rtype: 6,
+      fio1: last_name,
+      pin1: pin,
+    },
+    {
+      responseType: 'arraybuffer',
+    }
+  );
 
-  if (data.data.includes('Введенная фамилия не соответствует пин коду!')) {
+  const data = new TextDecoder('windows-1251').decode(req.data);
+
+  if (data.includes('Введенная фамилия не соответствует пин коду!')) {
     return GradesDataMismatchError();
   }
-  const dom = new JSDOM(data.data);
+  const dom = new JSDOM(data);
 
   const grades: Grade[] = [];
 

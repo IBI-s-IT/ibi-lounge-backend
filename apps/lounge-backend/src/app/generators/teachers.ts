@@ -6,13 +6,14 @@ import { IbiServerDownError } from '@repo/generators';
 const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=2';
 
 export async function generateTeachers() {
-  const data = await axios.get(BASE_URL);
+  const req = await axios.get(BASE_URL, { responseType: 'arraybuffer' });
+  const data = new TextDecoder('windows-1251').decode(req.data);
 
-  if (data.data.includes('Соединение не установлено')) {
+  if (data.includes('Соединение не установлено')) {
     return IbiServerDownError();
   }
 
-  const dom = new JSDOM(data.data);
+  const dom = new JSDOM(data);
 
   const teachers: ListEntry[] = [];
 

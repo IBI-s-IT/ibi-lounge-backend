@@ -8,13 +8,14 @@ const BASE_URL = 'http://inet.ibi.spb.ru/raspisan/menu.php?tmenu=12';
 export async function generateGroups(query: GroupsQuery) {
   const url = `${BASE_URL}&cod=${query.level}`;
 
-  const data = await axios.get(url);
+  const req = await axios.get(url, { responseType: 'arraybuffer' });
+  const response = new TextDecoder('windows-1251').decode(req.data);
 
-  if (data.data.includes('Соединение не установлено')) {
+  if (response.includes('Соединение не установлено')) {
     return IbiServerDownError();
   }
 
-  const dom = new JSDOM(data.data);
+  const dom = new JSDOM(response);
 
   const groups: ListEntry[] = [];
 

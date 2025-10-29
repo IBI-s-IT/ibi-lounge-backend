@@ -31,10 +31,14 @@ export async function generateSchedules(query: SchedulesQuery) {
     });
   }
 
-  const response = await axios.postForm(BASE_URL, params);
+  const req = await axios.postForm(BASE_URL, params, {
+    responseType: 'arraybuffer',
+  });
+
+  const response = new TextDecoder('windows-1251').decode(req.data);
 
   if (
-    response.data.includes(
+    response.includes(
       'Информации для отображения отчета не обнаружено! Измените период.'
     )
   ) {
@@ -42,7 +46,7 @@ export async function generateSchedules(query: SchedulesQuery) {
     return [];
   }
 
-  const schedulesDays = parseTable(response.data, 'teacher' in query);
+  const schedulesDays = parseTable(response, 'teacher' in query);
 
   if ('name' in schedulesDays) {
     return schedulesDays;
