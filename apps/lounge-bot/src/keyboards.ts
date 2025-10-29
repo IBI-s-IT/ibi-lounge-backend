@@ -78,6 +78,11 @@ const LinksMenu = new Menu<BotContext>('links')
   .url(Strings.contacts, 'https://ibispb.ru/contacts/')
   .row()
   .url(Strings.iosApp, 'https://apps.apple.com/ru/app/ibi-lounge/id6459472308')
+  .url(
+    Strings.androidApp,
+    'https://www.rustore.ru/catalog/app/space.utme.loungeapp'
+  )
+  .row()
   .back(Strings.back);
 
 const IndexMenu = new Menu<BotContext>('index')
