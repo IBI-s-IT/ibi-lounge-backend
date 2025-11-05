@@ -52,10 +52,8 @@ async function buildSections(collected: Element[]): Promise<SectionItem[]> {
 }
 
 export async function generateLinks() {
-  const req = await axios.get(BASE_URL, { responseType: 'arraybuffer' });
-  const data = new TextDecoder('windows-1251').decode(req.data);
-
-  const dom = new JSDOM(data);
+  const data = await axios.get(BASE_URL);
+  const dom = new JSDOM(data.data);
 
   const collected: Element[] = [];
 

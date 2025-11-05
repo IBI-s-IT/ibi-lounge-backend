@@ -66,7 +66,7 @@ async function getForDay(
   const header = `<b>Расписание на ${getRaspDate(date)}</b>\n\n`;
 
   const cached = await cachedRequest(
-    `schedules-1251-${formattedDate}-${ctx.session.group}`,
+    `schedules-${formattedDate}-${ctx.session.group}`,
     async () => {
       return await generateSchedules({
         dateStart: formattedDate,
